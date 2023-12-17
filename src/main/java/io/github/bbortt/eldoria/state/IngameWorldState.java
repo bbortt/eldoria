@@ -8,9 +8,10 @@ public class IngameWorldState extends AbstractAppState {
 
     @Override
     public void initialize(AppStateManager stateManager, Application app) {
+        super.initialize(stateManager, app);
+
         stateManager.attach(new GroundState());
         stateManager.attach(new BoxAppState());
-
-        super.initialize(stateManager, app);
+        stateManager.attach(new ThirdPersonCameraState());
     }
 }

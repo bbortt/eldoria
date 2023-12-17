@@ -6,12 +6,13 @@ import com.jme3.app.state.AbstractAppState;
 import com.jme3.app.state.AppStateManager;
 import com.jme3.asset.AssetManager;
 import com.jme3.material.Material;
-import com.jme3.math.FastMath;
 import com.jme3.math.Vector2f;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.shape.Quad;
 import com.jme3.texture.Texture;
 import io.github.bbortt.eldoria.geometry.AbstractGeometryCreator;
+
+import static com.jme3.math.FastMath.HALF_PI;
 
 public class GroundState extends AbstractAppState {
 
@@ -44,7 +45,7 @@ public class GroundState extends AbstractAppState {
             Geometry ground = new Geometry("Ground", quad);
 
             // Rotate and translate to lay it flat
-            ground.rotate(-FastMath.HALF_PI, 0, 0);
+            ground.rotate(-HALF_PI, 0, 0);
             ground.setLocalTranslation(-groundSize / 2, 0, groundSize / 2);
 
             Material mat = new Material(getAssetManager(), "Common/MatDefs/Misc/Unshaded.j3md");
