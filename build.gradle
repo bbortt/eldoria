@@ -4,8 +4,6 @@ plugins {
     id "idea"
     id "io.github.0ffz.github-packages" version "1.2.1" // Plugin for anonymous inclusion of artifacts hosted in github package registry
     id "java"
-    id "org.springframework.boot" version "${springBootVersion}"
-    id "io.spring.dependency-management" version "${springDependencyVersion}"
 }
 
 group = "io.github.bbortt.event.planner"
@@ -35,9 +33,6 @@ application {
 }
 
 dependencies {
-    implementation "org.springframework.boot:spring-boot-starter"
-    developmentOnly "org.springframework.boot:spring-boot-devtools"
-
     // You can read more about how to add dependencies here:
     //   https://docs.gradle.org/current/userguide/dependency_management.html#sec:how_to_declare_your_dependencies
 
@@ -48,7 +43,8 @@ dependencies {
 
     runtimeOnly "org.jmonkeyengine:jme3-lwjgl3:${jmonkeyengineVersion}"
 
-    testImplementation "org.springframework.boot:spring-boot-starter-test"
+    implementation 'org.apache.logging.log4j:log4j-core:2.22.0'
+    implementation 'org.apache.logging.log4j:log4j-api:2.22.0'
 }
 
 distZip {
