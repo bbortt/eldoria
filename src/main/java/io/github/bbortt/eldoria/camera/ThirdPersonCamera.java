@@ -29,8 +29,6 @@ import static java.util.Objects.isNull;
  */
 public class ThirdPersonCamera implements AnalogListener, ActionListener {
 
-    public static final Vector3f DEFAULT_CAMERA_OFFSET = new Vector3f(0, 5, 5);
-
     private static final String[] MAPPINGS = new String[]{
             FLYCAM_ROTATEDRAG,
             FLYCAM_LEFT,
@@ -50,17 +48,22 @@ public class ThirdPersonCamera implements AnalogListener, ActionListener {
     /**
      * rotation-rate multiplier (1=default)
      */
-    private float rotationSpeed = 1f;
+    private final float rotationSpeed = 10f;
 
     /**
      * zoom-rate multiplier (1=default)
      */
-    private float zoomSpeed = 1f;
+    private final float zoomSpeed = 10f;
 
     /**
      * Indicates whether this camera can currently be rotated or not.
      */
     private boolean canRotate = false;
+
+    /**
+     * The initial distance to target, before rotation
+     */
+    private Vector3f initialLocalOffset;
 
     private boolean invertY = false;
 
@@ -95,7 +98,7 @@ public class ThirdPersonCamera implements AnalogListener, ActionListener {
         inputManager.addMapping(FLYCAM_ROTATEDRAG, new MouseButtonTrigger(AXIS_WHEEL));
         inputManager.addMapping(FLYCAM_LEFT, new MouseAxisTrigger(AXIS_X, true));
         inputManager.addMapping(FLYCAM_RIGHT, new MouseAxisTrigger(AXIS_X, false));
-        
+
         // mouse only - zoom in/out with wheel, and rotate drag
         inputManager.addMapping(FLYCAM_ZOOMIN, new MouseAxisTrigger(AXIS_WHEEL, false));
         inputManager.addMapping(FLYCAM_ZOOMOUT, new MouseAxisTrigger(AXIS_WHEEL, true));
@@ -136,10 +139,10 @@ public class ThirdPersonCamera implements AnalogListener, ActionListener {
     @Override
     public void onAnalog(String name, float value, float tpf) {
         switch (name) {
-            case FLYCAM_LEFT -> rotateCamera(value * rotationSpeed*tpf);
-            case FLYCAM_RIGHT ->   rotateCamera(-value * rotationSpeed*tpf);
-            case FLYCAM_ZOOMIN -> zoomCamera(-value * zoomSpeed *tpf);
-            case FLYCAM_ZOOMOUT -> zoomCamera(value* zoomSpeed *tpf);
+            case FLYCAM_LEFT -> rotateCamera(value * rotationSpeed * tpf);
+            case FLYCAM_RIGHT -> rotateCamera(-value * rotationSpeed * tpf);
+            case FLYCAM_ZOOMIN -> zoomCamera(-value * zoomSpeed * tpf);
+            case FLYCAM_ZOOMOUT -> zoomCamera(value * zoomSpeed * tpf);
         }
     }
 
@@ -155,7 +158,7 @@ public class ThirdPersonCamera implements AnalogListener, ActionListener {
         if (FLYCAM_ROTATEDRAG.equals(name)) {
             canRotate = isPressed;
 
-            if (!isPressed ) {
+            if (!isPressed) {
                 resetCameraRotation();
             }
         } else if (name.equals(FLYCAM_INVERTY)) {
@@ -163,27 +166,31 @@ public class ThirdPersonCamera implements AnalogListener, ActionListener {
             if (!isPressed) {
                 invertY = !invertY;
             }
-        }
-        else {
+        } else {
             canRotate = false;
         }
     }
 
     private void rotateCamera(float rotation) {
-        if (!canRotate || isNull(cameraNode)|| isNull(target)) {
+        if (!canRotate || isNull(cameraNode) || isNull(target)) {
             return;
         }
 
-        // Get current distance and direction from target to camera
-        Vector3f currentOffset = camera.getLocation().subtract(target.getLocalTranslation());
+        if (initialLocalOffset == null) {
+            // Store the initial local offset of the camera node when rotation starts
+            initialLocalOffset = cameraNode.getLocalTranslation();
+        }
 
-        // Create a rotation Quaternion
-        Quaternion rotate = new Quaternion().fromAngleNormalAxis(rotation, UNIT_Y);
+        // Create a rotation Quaternion around the Y-axis
+        Quaternion rotate = new Quaternion().fromAngleAxis(rotation, UNIT_Y);
 
-        // Apply this rotation to the current offset
-        Vector3f newOffset = rotate.mult(currentOffset);
+        // Apply this rotation to the initial local offset
+        Vector3f newLocalOffset = rotate.mult(initialLocalOffset);
 
-        cameraNode.setLocalTranslation(target.getLocalTranslation().add(newOffset));
+        // Update the camera node's local translation
+        cameraNode.setLocalTranslation(newLocalOffset);
+
+        // Camera should look at the target node's local origin
         cameraNode.lookAt(target.getLocalTranslation(), UNIT_Y);
     }
 
@@ -192,8 +199,10 @@ public class ThirdPersonCamera implements AnalogListener, ActionListener {
             return;
         }
 
-        cameraNode.setLocalTranslation(DEFAULT_CAMERA_OFFSET);
-        cameraNode.lookAt(target.getLocalTranslation(), UNIT_Y);
+        cameraNode.setLocalTranslation(initialLocalOffset);
+        cameraNode.lookAt(target.getWorldTranslation(), UNIT_Y);
+
+        initialLocalOffset = null;
     }
 
     /**
@@ -202,7 +211,7 @@ public class ThirdPersonCamera implements AnalogListener, ActionListener {
      * @param value zoom amount
      */
     private void zoomCamera(float value) {
-        float newFov = camera.getFov() + value ;
+        float newFov = camera.getFov() + value;
         if (newFov > 0) {
             camera.setFov(newFov);
         }

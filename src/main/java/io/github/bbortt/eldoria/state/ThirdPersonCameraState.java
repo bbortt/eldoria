@@ -4,6 +4,7 @@ import com.jme3.app.Application;
 import com.jme3.app.state.AbstractAppState;
 import com.jme3.app.state.AppStateManager;
 import com.jme3.input.InputManager;
+import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import com.jme3.scene.CameraNode;
 import com.jme3.scene.Node;
@@ -11,7 +12,6 @@ import com.jme3.scene.control.CameraControl;
 import io.github.bbortt.eldoria.camera.ThirdPersonCamera;
 
 import static com.jme3.math.Vector3f.UNIT_Y;
-import static io.github.bbortt.eldoria.camera.ThirdPersonCamera.DEFAULT_CAMERA_OFFSET;
 
 public class ThirdPersonCameraState extends AbstractAppState {
 
@@ -31,7 +31,7 @@ public class ThirdPersonCameraState extends AbstractAppState {
         thirdPersonCamera = new ThirdPersonCamera(app.getCamera());
         thirdPersonCamera.registerWithInput(inputManager);
 
-CameraNode cameraNode=        attachCamera(boxAppState.getBox(), app.getCamera());
+        CameraNode cameraNode = attachCamera(boxAppState.getBox(), app.getCamera());
         thirdPersonCamera.setCameraNode(cameraNode);
         thirdPersonCamera.setTarget(boxAppState.getBox());
     }
@@ -44,7 +44,7 @@ CameraNode cameraNode=        attachCamera(boxAppState.getBox(), app.getCamera()
         // Attach the cameraNode to the target:
         boxNode.attachChild(cameraNode);
         // Move cameraNode, e.g. behind and above the target:
-        cameraNode.setLocalTranslation(DEFAULT_CAMERA_OFFSET);
+        cameraNode.setLocalTranslation(new Vector3f(0, 5, 5));
         // Rotate the cameraNode to look at the target:
         cameraNode.lookAt(boxNode.getLocalTranslation(), UNIT_Y);
 

@@ -13,11 +13,17 @@ public class Eldoria extends SimpleApplication {
 
     public static void main(String[] args) {
         Eldoria eldoria = new Eldoria();
-
-        AppSettings s = new AppSettings(true);
-        eldoria.setSettings(s);
-
+        eldoria.setSettings(loadSettings());
         eldoria.start();
+    }
+
+    private static AppSettings loadSettings() {
+        AppSettings appSettings = new AppSettings(true);
+
+        appSettings.setFullscreen(true);
+        appSettings.setResolution(1920, 1080);
+
+        return appSettings;
     }
 
     @Override

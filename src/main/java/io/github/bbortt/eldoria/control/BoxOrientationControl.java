@@ -16,9 +16,8 @@ public class BoxOrientationControl extends AbstractControl implements ActionList
     private static final String ROTATE_LEFT = "Box: Rotate Left";
     private static final String ROTATE_RIGHT = "Box: Rotate Right";
 
-    private static final int ROTATION_SPEED = 1;
-
-    private float rotation = 0;
+    private final int rotationSpeed = 1;
+    private float currentRotation = 0;
 
     public BoxOrientationControl(InputManager inputManager) {
         createActionListener(inputManager);
@@ -40,7 +39,7 @@ public class BoxOrientationControl extends AbstractControl implements ActionList
     }
 
     private void rotateBox(float tpf, Spatial box) {
-        box.rotate(0, rotation *tpf, 0);
+        box.rotate(0, currentRotation * tpf, 0);
     }
 
     @Override
@@ -50,9 +49,9 @@ public class BoxOrientationControl extends AbstractControl implements ActionList
     @Override
     public void onAction(String name, boolean isPressed, float tpf) {
         if (ROTATE_LEFT.equals(name)) {
-            rotation = isPressed ? -ROTATION_SPEED  : 0;
+            currentRotation = isPressed ? rotationSpeed : 0;
         } else if (ROTATE_RIGHT.equals(name)) {
-            rotation = isPressed ? ROTATION_SPEED  : 0;
+            currentRotation = isPressed ? -rotationSpeed : 0;
         }
     }
 }

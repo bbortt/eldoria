@@ -18,7 +18,7 @@ public class BoxMovementControl extends AbstractControl implements ActionListene
     private static final String MOVE_FORWARD = "Box: Move Forward";
     private static final String MOVE_BACKWARD = "Box: Move Backward";
 
-    private static final int MOVE_SPEED = 10;
+    private final int movementSpeed = 10;
 
     private boolean moveForward = false;
     private boolean moveBackward = false;
@@ -46,9 +46,9 @@ public class BoxMovementControl extends AbstractControl implements ActionListene
         Vector3f v = new Vector3f();
 
         if (moveForward) {
-            v.z -= MOVE_SPEED * tpf;
+            v.z -= movementSpeed * tpf;
         } else if (moveBackward) {
-            v.z += MOVE_SPEED * tpf;
+            v.z += movementSpeed * tpf;
         }
 
         // Transform the movement vector by the box's current rotation
