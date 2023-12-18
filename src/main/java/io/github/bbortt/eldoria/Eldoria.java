@@ -1,5 +1,6 @@
 package io.github.bbortt.eldoria;
 
+import com.jme3.app.FlyCamAppState;
 import com.jme3.app.SimpleApplication;
 import com.jme3.system.AppSettings;
 import io.github.bbortt.eldoria.state.IngameWorldState;
@@ -21,7 +22,8 @@ public class Eldoria extends SimpleApplication {
 
     @Override
     public void simpleInitApp() {
-        flyCam.setEnabled(false);
+        // Remove default FlyByCam
+        stateManager.detach(stateManager.getState(FlyCamAppState.class));
 
         stateManager.attach(new IngameWorldState());
     }

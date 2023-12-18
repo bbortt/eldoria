@@ -9,12 +9,12 @@ import com.jme3.renderer.ViewPort;
 import com.jme3.scene.Spatial;
 import com.jme3.scene.control.AbstractControl;
 
-import java.util.Objects;
+import static java.util.Objects.isNull;
 
 public class BoxOrientationControl extends AbstractControl implements ActionListener {
 
-    private static final String ROTATE_LEFT = "Rotate Left";
-    private static final String ROTATE_RIGHT = "Rotate Right";
+    private static final String ROTATE_LEFT = "Box: Rotate Left";
+    private static final String ROTATE_RIGHT = "Box: Rotate Right";
 
     private static final int ROTATION_SPEED = 1;
 
@@ -34,13 +34,13 @@ public class BoxOrientationControl extends AbstractControl implements ActionList
     @Override
     protected void controlUpdate(float tpf) {
         Spatial spatial = getSpatial();
-        if (!Objects.isNull(spatial)) {
+        if (!isNull(spatial)) {
             rotateBox(tpf, spatial);
         }
     }
 
     private void rotateBox(float tpf, Spatial box) {
-        box.rotate(0, rotation * tpf, 0);
+        box.rotate(0, rotation *tpf, 0);
     }
 
     @Override
@@ -50,9 +50,9 @@ public class BoxOrientationControl extends AbstractControl implements ActionList
     @Override
     public void onAction(String name, boolean isPressed, float tpf) {
         if (ROTATE_LEFT.equals(name)) {
-            rotation = isPressed ? -ROTATION_SPEED : 0;
+            rotation = isPressed ? -ROTATION_SPEED  : 0;
         } else if (ROTATE_RIGHT.equals(name)) {
-            rotation = isPressed ? ROTATION_SPEED : 0;
+            rotation = isPressed ? ROTATION_SPEED  : 0;
         }
     }
 }

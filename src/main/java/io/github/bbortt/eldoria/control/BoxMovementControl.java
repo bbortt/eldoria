@@ -10,13 +10,13 @@ import com.jme3.renderer.ViewPort;
 import com.jme3.scene.Spatial;
 import com.jme3.scene.control.AbstractControl;
 
-import java.util.Objects;
+import static java.util.Objects.isNull;
 
 
 public class BoxMovementControl extends AbstractControl implements ActionListener {
 
-    private static final String MOVE_FORWARD = "Move Forward";
-    private static final String MOVE_BACKWARD = "Move Backward";
+    private static final String MOVE_FORWARD = "Box: Move Forward";
+    private static final String MOVE_BACKWARD = "Box: Move Backward";
 
     private static final int MOVE_SPEED = 10;
 
@@ -37,7 +37,7 @@ public class BoxMovementControl extends AbstractControl implements ActionListene
     @Override
     protected void controlUpdate(float tpf) {
         Spatial spatial = getSpatial();
-        if (!Objects.isNull(spatial)) {
+        if (!isNull(spatial)) {
             moveBox(tpf, spatial);
         }
     }

@@ -15,10 +15,13 @@ import io.github.bbortt.eldoria.control.BoxMovementControl;
 import io.github.bbortt.eldoria.control.BoxOrientationControl;
 import io.github.bbortt.eldoria.geometry.AbstractGeometryCreator;
 
-
 public class BoxAppState extends AbstractAppState {
 
     private Node box;
+
+    public Node getBox() {
+        return box;
+    }
 
     @Override
     public void initialize(AppStateManager stateManager, Application app) {
@@ -42,10 +45,6 @@ public class BoxAppState extends AbstractAppState {
             simpleApplication.getRootNode()
                     .attachChild(box);
         }
-    }
-
-    public Node getBox() {
-        return box;
     }
 
     private static class BoxCreator extends AbstractGeometryCreator {
