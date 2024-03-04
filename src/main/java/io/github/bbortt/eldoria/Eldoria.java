@@ -1,14 +1,26 @@
+/**
+ * Copyright 2024 Timon Borter
+ * <p>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package io.github.bbortt.eldoria;
 
-import com.jme3.app.FlyCamAppState;
 import com.jme3.app.SimpleApplication;
 import com.jme3.system.AppSettings;
-import io.github.bbortt.eldoria.state.IngameWorldState;
+import io.github.bbortt.eldoria.screen.NiftyState;
+import io.github.bbortt.eldoria.screen.Playground;
 
-/**
- * This is the Main Class of your Game. It should boot up your game and do initial initialisation
- * Move your Logic into AppStates or Controls or other java classes
- */
 public class Eldoria extends SimpleApplication {
 
     public static void main(String[] args) {
@@ -20,17 +32,15 @@ public class Eldoria extends SimpleApplication {
     private static AppSettings loadSettings() {
         AppSettings appSettings = new AppSettings(true);
 
-        appSettings.setFullscreen(true);
-        appSettings.setResolution(1920, 1080);
+        // appSettings.setFullscreen(true);
+        appSettings.setResolution(1216, 832);
 
         return appSettings;
     }
 
     @Override
     public void simpleInitApp() {
-        // Remove default FlyByCam
-        stateManager.detach(stateManager.getState(FlyCamAppState.class));
-
-        stateManager.attach(new IngameWorldState());
+        stateManager.attach(new NiftyState());
+        stateManager.attach(new Playground());
     }
 }

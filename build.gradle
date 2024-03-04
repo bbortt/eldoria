@@ -2,11 +2,12 @@ plugins {
     id "application"
     id "de.undercouch.download" version "5.1.0"
     id "idea"
-    id "io.github.0ffz.github-packages" version "1.2.1" // Plugin for anonymous inclusion of artifacts hosted in github package registry
+    id "io.github.0ffz.github-packages" version "1.2.1"
+    // Plugin for anonymous inclusion of artifacts hosted in github package registry
     id "java"
 }
 
-group = "io.github.bbortt.event.planner"
+group = "io.github.bbortt.eldoria"
 version = "${version}"
 
 description = "Chronicles of Eldoria: The Shadowed Realm"
@@ -28,23 +29,29 @@ repositories {
 
 application {
     if (System.getProperty("os.name").toLowerCase().contains("mac")) {
-        applicationDefaultJvmArgs = ["-XstartOnFirstThread"] // this is when using a Mac as a development machine which requires the AppKit main UI thread to be used for GUI applications
+        applicationDefaultJvmArgs = ["-XstartOnFirstThread"]
+        // this is when using a Mac as a development machine which requires the AppKit main UI thread to be used for GUI applications
     }
 }
 
 dependencies {
     // You can read more about how to add dependencies here:
     //   https://docs.gradle.org/current/userguide/dependency_management.html#sec:how_to_declare_your_dependencies
-
     implementation "org.jmonkeyengine:jme3-core:${jmonkeyengineVersion}"
     implementation "org.jmonkeyengine:jme3-desktop:${jmonkeyengineVersion}"
+    implementation "org.jmonkeyengine:jme3-niftygui:${jmonkeyengineVersion}"
     runtimeOnly "org.jmonkeyengine:jme3-jogg:${jmonkeyengineVersion}"
     runtimeOnly "org.jmonkeyengine:jme3-plugins:${jmonkeyengineVersion}"
 
     runtimeOnly "org.jmonkeyengine:jme3-lwjgl3:${jmonkeyengineVersion}"
 
-    implementation 'org.apache.logging.log4j:log4j-core:2.22.0'
-    implementation 'org.apache.logging.log4j:log4j-api:2.22.0'
+    implementation "jakarta.validation:jakarta.validation-api:3.0.2"
+    implementation "org.apache.logging.log4j:log4j-core:${log4jVersion}"
+    implementation "org.apache.logging.log4j:log4j-api:${log4jVersion}"
+
+    testImplementation "org.assertj:assertj-core:${assertJVersion}"
+    testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
 }
 
 distZip {
@@ -72,7 +79,8 @@ task downloadAndUnzipWindowsJre(dependsOn: downloadWindowsJre, type: Copy) {
     into "${buildDir}/jres/windowsJre/"
     includeEmptyDirs(false)
     filesMatching("**") {
-        it.path = it.path.replaceAll("^[a-zA-Z0-9.+-]*[/\\\\]", "jre/") //rename the top level to something standard so the rest of the script will be easier
+        it.path = it.path.replaceAll("^[a-zA-Z0-9.+-]*[/\\\\]", "jre/")
+        //rename the top level to something standard so the rest of the script will be easier
     }
 }
 
@@ -85,7 +93,7 @@ task buildWindowsDistribution(dependsOn: [distZip, downloadAndUnzipWindowsJre], 
     exclude "bin/**" //we are adding our own run scripts, exclude the ones coming from distZip
 }
 
-task zipWindowsDistribution( dependsOn:buildWindowsDistribution, type: Zip) {
+task zipWindowsDistribution(dependsOn: buildWindowsDistribution, type: Zip) {
     group "distribution"
     archiveFileName = "Eldoria-windows.zip"
     destinationDirectory = file("$buildDir/distributions")
@@ -104,14 +112,15 @@ task downloadAndUnzipLinuxJre(dependsOn: downloadLinuxJre, type: Copy) {
     into "${buildDir}/jres/linuxJre/"
     includeEmptyDirs(false)
     filesMatching("**") {
-        it.path = it.path.replaceAll("^[a-zA-Z0-9.+-]*[/\\\\]", "jre/") //rename the top level to something standard so the rest of the script will be easier
+        it.path = it.path.replaceAll("^[a-zA-Z0-9.+-]*[/\\\\]", "jre/")
+        //rename the top level to something standard so the rest of the script will be easier
     }
 }
 
 task buildLinuxDistribution(dependsOn: [distZip, downloadAndUnzipLinuxJre], type: Copy)
 {
     group "distribution"
-    from files("${projectDir}/scripts/desktopDeployment/Eldoria.sh"){
+    from files("${projectDir}/scripts/desktopDeployment/Eldoria.sh") {
         fileMode 0755
     }
     from zipTree(distZip.archiveFile)
@@ -121,22 +130,22 @@ task buildLinuxDistribution(dependsOn: [distZip, downloadAndUnzipLinuxJre], type
     exclude "bin/**" //we are adding our own run scripts, exclude the ones coming from distZip
 }
 
-task zipLinuxDistribution( dependsOn:buildLinuxDistribution, type: Zip) {
+task zipLinuxDistribution(dependsOn: buildLinuxDistribution, type: Zip) {
     group "distribution"
     archiveFileName = "Eldoria-linux.tar.gz"
     destinationDirectory = file("$buildDir/distributions")
-    from ("$buildDir/distributions/Eldoria-linux"){
-      include("**.sh")
-      include("**/java")
-      fileMode 0755
+    from("$buildDir/distributions/Eldoria-linux") {
+        include("**.sh")
+        include("**/java")
+        fileMode 0755
     }
-    from ("$buildDir/distributions/Eldoria-linux"){
+    from("$buildDir/distributions/Eldoria-linux") {
         exclude("**.sh")
         exclude("**/java")
     }
 }
 
-task buildAllDistributions{
+task buildAllDistributions {
     group "distribution"
     dependsOn "zipWindowsDistribution"
     dependsOn "zipLinuxDistribution"
@@ -161,12 +170,12 @@ task cleanSOs(type: Delete) {
     delete fileTree(dir: ".", include: "*.so")
 }
 
-task fund(){
+task fund() {
     doLast {
-       java.awt.Desktop.desktop.browse "https://start.jmonkeyengine.org/#!funding=JME_DESKTOP,LOG4J2".toURI()
+        java.awt.Desktop.desktop.browse "https://start.jmonkeyengine.org/#!funding=JME_DESKTOP,LOG4J2".toURI()
     }
 }
 
-tasks.named('test') {
+tasks.named("test") {
     useJUnitPlatform()
 }
