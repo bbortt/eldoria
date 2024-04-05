@@ -1,0 +1,16 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        maven { url "https://repo.spring.io/release" }
+    }
+    plugins {
+        id "org.springframework.boot" version "${springBootVersion}"
+        id "io.freefair.lombok" version "${lombokPluginVersion}"
+        id "io.spring.dependency-management" version "${springDependencyManagementVersion}"
+        id "io.spring.nohttp" version "${noHttpCheckstyleVersion}"
+        id "org.sonarqube" version "${sonarqubePluginVersion}"
+        id "com.diffplug.spotless" version "${spotlessPluginVersion}"
+    }
+}
+
+rootProject.name = "${rootProject.name}"
