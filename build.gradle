@@ -15,7 +15,7 @@ version = "${version}"
 java {
 	sourceCompatibility = "${javaVersion}"
 }
-assert System.properties["java.specification.version"] == "17" || "18" || "19"
+assert System.properties["java.specification.version"] == "21"
 
 
 wrapper {

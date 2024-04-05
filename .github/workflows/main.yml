@@ -13,7 +13,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: gradle/wrapper-validation-action@v2
   app:
-    name: 'Eldoria'
+    name: 'Eldoria: Test'
     runs-on: ubuntu-latest
     if: |
       github.event_name == 'push' && !startsWith(github.ref, 'refs/tags/')
@@ -31,10 +31,52 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: 21
-      - name: Build & Test
-        run: ./gradlew --no-daemon checkstyleNohttp check -Dlogging.level.ROOT=OFF
-      - name: SonarQube
+      - name: Run Tests
+        run: ./gradlew checkstyleNohttp check --no-daemon -Dlogging.level.ROOT=OFF
+      - name: SonarQube Analysis
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: ./gradlew sonar --no-daemon -Dsonar.organization=bbortt-github -Dsonar.host.url=https://sonarcloud.io
+      - uses: actions/cache@v3
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+  native:
+    name: 'Eldoria: Build ${{ matrix.os }}'
+    runs-on: ${{ matrix.os }}
+    needs:
+      - app
+    defaults:
+      run:
+        shell: bash
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-2019]
+        java-version: ['21']
+    steps:
+      - uses: actions/checkout@v3
+      - uses: graalvm/setup-graalvm@v1
+        with:
+          java-version: ${{ matrix.java-version }}
+          distribution: 'graalvm'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Native Compilation
+        run: ./gradlew nativeCompile --no-daemon
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Eldoria CLI
+          path: build/native/nativeCompile
+      - uses: actions/cache@v3
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
