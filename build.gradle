@@ -131,3 +131,5 @@ task integrationTestReport(type: TestReport) {
 }
 
 check.dependsOn integrationTest
+
+apply from: "gradle/sonar.gradle"
