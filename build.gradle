@@ -3,6 +3,7 @@ plugins {
 	id "io.freefair.lombok"
 	id "io.spring.dependency-management"
 	id "io.spring.nohttp"
+	id "jacoco"
 	id "java"
 	id "org.springframework.boot"
 }
