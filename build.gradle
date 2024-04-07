@@ -35,7 +35,6 @@ repositories {
 
 ext {
     springShellVersion = "${springShellVersion}"
-    generatedMainJava = layout.buildDirectory.dir("generated/main/java")
 }
 
 
@@ -75,23 +74,6 @@ processResources {
     filesMatching("**/application.yml") {
         filter {
             it.replace("#spring.profiles.active#", profiles)
-        }
-    }
-}
-
-
-compileJava {
-	options.compilerArgs += ['-AaddGenerationDate=true']
-	// Specific to Hibernate JPA meta model generation processor.
-	options.annotationProcessorGeneratedSourcesDirectory = file(generatedMainJava)
-}
-checkstyleGenerated.dependsOn compileJava
-
-
-sourceSets {
-    generated {
-        java {
-            srcDirs += [rootDir.relativePath(file(generatedMainJava))]
         }
     }
 }
