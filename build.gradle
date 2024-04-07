@@ -1,13 +1,13 @@
 plugins {
-	id "com.diffplug.spotless"
-	id "io.freefair.lombok"
-	id "io.spring.dependency-management"
-	id "io.spring.nohttp"
-	id "jacoco"
-	id "java"
-	id "org.graalvm.buildtools.native"
-	id "org.sonarqube"
-	id "org.springframework.boot"
+    id "com.diffplug.spotless"
+    id "io.freefair.lombok"
+    id "io.spring.dependency-management"
+    id "io.spring.nohttp"
+    id "jacoco"
+    id "java"
+    id "org.graalvm.buildtools.native"
+    id "org.sonarqube"
+    id "org.springframework.boot"
 }
 
 
@@ -16,121 +16,140 @@ version = "${version}"
 
 
 java {
-	sourceCompatibility = "${javaVersion}"
+    sourceCompatibility = "${javaVersion}"
 }
 assert System.properties["java.specification.version"] == "21"
 
 
 wrapper {
-	gradleVersion = "8.7"
+    gradleVersion = "8.7"
 }
 
 
 repositories {
-	mavenLocal()
-	mavenCentral()
-	maven { url "https://repo.spring.io/release" }
+    mavenLocal()
+    mavenCentral()
+    maven { url "https://repo.spring.io/release" }
 }
 
 
 ext {
-	set("springShellVersion", "${springShellVersion}")
-}
-
-
-dependencies {
-	implementation "jakarta.transaction:jakarta.transaction-api:${transactionApiVersion}"
-	implementation "org.springframework.boot:spring-boot-starter-data-jpa"
-	implementation "org.springframework.shell:spring-shell-starter"
-
-	developmentOnly "org.springframework.boot:spring-boot-devtools"
-
-	runtimeOnly "com.h2database:h2"
-
-	testImplementation "org.springframework.boot:spring-boot-starter-test"
+    springShellVersion = "${springShellVersion}"
+    generatedMainJava = layout.buildDirectory.dir("generated/main/java")
 }
 
 
 dependencyManagement {
-	imports {
-		mavenBom "org.springframework.shell:spring-shell-dependencies:${springShellVersion}"
-	}
+    imports {
+        mavenBom "org.springframework.shell:spring-shell-dependencies:${springShellVersion}"
+    }
+}
+
+
+dependencies {
+    annotationProcessor "org.hibernate.orm:hibernate-jpamodelgen:${jpamodelgenVersion}"
+
+    implementation "jakarta.transaction:jakarta.transaction-api:${transactionApiVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-data-jpa"
+    implementation "org.springframework.shell:spring-shell-starter"
+
+    developmentOnly "org.springframework.boot:spring-boot-devtools"
+
+    runtimeOnly "com.h2database:h2"
+
+    testImplementation "org.springframework.boot:spring-boot-starter-test"
 }
 
 
 def profiles = ""
 if (project.hasProperty("prod")) {
-	profiles += "prod"
+    profiles += "prod"
 } else {
-	profiles += "dev"
+    profiles += "dev"
 }
 
 
 processResources {
-	inputs.property("version", version)
-	inputs.property("springProfiles", profiles)
-	filesMatching("**/application.yml") {
-		filter {
-			it.replace("#spring.profiles.active#", profiles)
-		}
-	}
+    inputs.property("version", version)
+    inputs.property("springProfiles", profiles)
+    filesMatching("**/application.yml") {
+        filter {
+            it.replace("#spring.profiles.active#", profiles)
+        }
+    }
+}
+
+
+compileJava {
+	options.compilerArgs += ['-AaddGenerationDate=true']
+	// Specific to Hibernate JPA meta model generation processor.
+	options.annotationProcessorGeneratedSourcesDirectory = file(generatedMainJava)
+}
+
+
+sourceSets {
+    generated {
+        java {
+            srcDirs += [rootDir.relativePath(file(generatedMainJava))]
+        }
+    }
 }
 
 
 bootRun {
-	args = ["--spring.profiles.active=${profiles}"]
+    args = ["--spring.profiles.active=${profiles}"]
 }
 
 
 checkstyle {
-	toolVersion "${checkstyleVersion}"
-	configFile file("checkstyle.xml")
-	checkstyleTest.enabled = false
+    toolVersion "${checkstyleVersion}"
+    configFile file("checkstyle.xml")
+    checkstyleTest.enabled = false
 }
 
 
 spotless {
-	java {
-		target "src/*/java/**/*.java"
-		removeUnusedImports()
-	}
+    java {
+        target "src/*/java/**/*.java"
+        removeUnusedImports()
+    }
 }
 
 
 test {
-	useJUnitPlatform()
-	exclude "**/*IT*", "**/*IntTest*"
-	testLogging {
-		events "FAILED", "SKIPPED"
-	}
-	jvmArgs += "-Djava.security.egd=file:/dev/./urandom -Xmx512m"
-	// ignoreFailures true
-	reports.html.required = false
+    useJUnitPlatform()
+    exclude "**/*IT*", "**/*IntTest*"
+    testLogging {
+        events "FAILED", "SKIPPED"
+    }
+    jvmArgs += "-Djava.security.egd=file:/dev/./urandom -Xmx512m"
+    // ignoreFailures true
+    reports.html.required = false
 }
 
 task testReport(type: TestReport) {
-	destinationDir = file("$buildDir/reports/tests")
-	reportOn test
+    destinationDir = file("$buildDir/reports/tests")
+    reportOn test
 }
 
 task integrationTest(type: Test) {
-	maxHeapSize = "1G"
-	useJUnitPlatform()
-	description = "Execute integration tests."
-	group = "verification"
-	include "**/*IT*", "**/*IntTest*"
-	testLogging {
-		events "FAILED", "SKIPPED"
-	}
-	systemProperty("java.security.egd", "file:/dev/./urandom")
-	// ignoreFailures true
-	reports.html.required = false
+    maxHeapSize = "1G"
+    useJUnitPlatform()
+    description = "Execute integration tests."
+    group = "verification"
+    include "**/*IT*", "**/*IntTest*"
+    testLogging {
+        events "FAILED", "SKIPPED"
+    }
+    systemProperty("java.security.egd", "file:/dev/./urandom")
+    // ignoreFailures true
+    reports.html.required = false
 }
 integrationTest.dependsOn test
 
 task integrationTestReport(type: TestReport) {
-	destinationDir = file("$buildDir/reports/tests")
-	reportOn integrationTest
+    destinationDir = file("$buildDir/reports/tests")
+    reportOn integrationTest
 }
 
 check.dependsOn integrationTest

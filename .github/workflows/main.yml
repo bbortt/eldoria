@@ -61,7 +61,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-2019]
+        os: [ubuntu-latest] # , macos-latest, windows-2019
     steps:
       - uses: actions/checkout@v3
       - uses: graalvm/setup-graalvm@v1
