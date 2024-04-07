@@ -14,21 +14,33 @@
  * limitations under the License.
  */
 
-package io.github.bbortt.eldoria.state;
+package io.github.bbortt.eldoria.domain;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.Data;
 import lombok.Getter;
 
-@Getter
-public enum GameState {
+import static jakarta.persistence.GenerationType.SEQUENCE;
+import static lombok.AccessLevel.NONE;
 
-    TUTORIAL,
-    MAIN_MENU,
-    CHARACTER_MENU,
-    INVENTORY,
-    COMBAT,
-    GAME_OVER;
+@Data
+@Table
+@Entity
+public class UserPreferences {
 
-    public static boolean isInGame(GameState gameState) {
-        return gameState == COMBAT;
+    @Id
+    @GeneratedValue(strategy = SEQUENCE)
+    private Long version;
+
+    @Column
+    @Getter(NONE)
+    private Boolean playedTutorial = false;
+
+    public Boolean hasPlayedTutorial() {
+        return playedTutorial;
     }
 }

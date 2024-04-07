@@ -17,44 +17,33 @@
 package io.github.bbortt.eldoria.command;
 
 import io.github.bbortt.eldoria.state.Game;
+import org.springframework.core.env.Environment;
 import org.springframework.shell.Availability;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellMethodAvailability;
 
-import static io.github.bbortt.eldoria.state.GameState.MAIN_MENU;
-import static io.github.bbortt.eldoria.state.GameState.isInGame;
 import static org.springframework.shell.Availability.available;
 import static org.springframework.shell.Availability.unavailable;
 
 @ShellComponent
-public class GameCommands {
+public class DevCommands {
 
+    private final Environment environment;
     private final Game game;
 
-    public GameCommands(Game game) {
+    public DevCommands(Environment environment, Game game) {
+        this.environment = environment;
         this.game = game;
     }
 
-    @ShellMethod("Starts the game.")
-    @ShellMethodAvailability("isInMainMenu")
-    public String start() {
-        // Initialize and start your game here
-        return "Game started. What's your first move?";
+    @ShellMethod("Displays the current game state.")
+    public String state() {
+        return "Current state: " + game.getCurrentState();
     }
 
-    @ShellMethod("Exits the game.")
-    @ShellMethodAvailability("isGameRunning")
-    public String exit() {
-        // Perform any cleanup or save game state before exiting
-        return "Thanks for playing!";
-    }
-
-    public Availability isInMainMenu() {
-        return MAIN_MENU.equals(game.getCurrentState()) ? unavailable("You are already in game!.") : available();
-    }
-
-    public Availability isGameRunning() {
-        return isInGame(game.getCurrentState()) ? available() : unavailable("You need to start the game first.");
+    @ShellMethodAvailability
+    public Availability isInDevMode() {
+        return environment.matchesProfiles("dev") ? available() : unavailable("This application has not been started in 'dev' mode.");
     }
 }

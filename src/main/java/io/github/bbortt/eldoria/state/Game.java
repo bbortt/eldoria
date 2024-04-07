@@ -17,18 +17,21 @@
 package io.github.bbortt.eldoria.state;
 
 import lombok.Getter;
+import org.springframework.stereotype.Component;
+
+import static io.github.bbortt.eldoria.state.GameState.MAIN_MENU;
 
 @Getter
-public enum GameState {
+@Component
+public final class Game {
 
-    TUTORIAL,
-    MAIN_MENU,
-    CHARACTER_MENU,
-    INVENTORY,
-    COMBAT,
-    GAME_OVER;
+    private GameState currentState;
 
-    public static boolean isInGame(GameState gameState) {
-        return gameState == COMBAT;
+    public Game() {
+        this.currentState = MAIN_MENU;
+    }
+
+    void transitionTo(GameState gameState) {
+        this.currentState = gameState;
     }
 }

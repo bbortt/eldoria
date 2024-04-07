@@ -14,21 +14,12 @@
  * limitations under the License.
  */
 
-package io.github.bbortt.eldoria.state;
+package io.github.bbortt.eldoria.domain.repository;
 
-import lombok.Getter;
+import io.github.bbortt.eldoria.domain.UserPreferences;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-@Getter
-public enum GameState {
-
-    TUTORIAL,
-    MAIN_MENU,
-    CHARACTER_MENU,
-    INVENTORY,
-    COMBAT,
-    GAME_OVER;
-
-    public static boolean isInGame(GameState gameState) {
-        return gameState == COMBAT;
-    }
+@Repository
+public interface UserPreferencesRepository extends JpaRepository<UserPreferences,Long> {
 }

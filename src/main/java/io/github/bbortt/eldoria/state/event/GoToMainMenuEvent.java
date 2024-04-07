@@ -14,21 +14,13 @@
  * limitations under the License.
  */
 
-package io.github.bbortt.eldoria.state;
+package io.github.bbortt.eldoria.state.event;
 
-import lombok.Getter;
+import org.springframework.context.ApplicationEvent;
 
-@Getter
-public enum GameState {
+public class GoToMainMenuEvent extends ApplicationEvent {
 
-    TUTORIAL,
-    MAIN_MENU,
-    CHARACTER_MENU,
-    INVENTORY,
-    COMBAT,
-    GAME_OVER;
-
-    public static boolean isInGame(GameState gameState) {
-        return gameState == COMBAT;
+    public GoToMainMenuEvent(Object source) {
+        super(source);
     }
 }

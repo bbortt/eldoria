@@ -16,22 +16,23 @@
 
 package io.github.bbortt.eldoria.command;
 
-import io.github.bbortt.eldoria.state.GameState;
+import io.github.bbortt.eldoria.state.Game;
 import org.springframework.shell.Availability;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellMethodAvailability;
 
+import static io.github.bbortt.eldoria.state.GameState.isInGame;
 import static org.springframework.shell.Availability.available;
 import static org.springframework.shell.Availability.unavailable;
 
 @ShellComponent
 public class CharacterCommands {
 
-    private final GameState gameState;
+    private final Game game;
 
-    public CharacterCommands(GameState gameState) {
-        this.gameState = gameState;
+    public CharacterCommands(Game game) {
+        this.game = game;
     }
 
     @ShellMethod("Display the current character stats.")
@@ -41,7 +42,7 @@ public class CharacterCommands {
     }
 
     @ShellMethodAvailability({"stats"})
-    public  Availability isGameRunning() {
-        return gameState.isInGame() ? available() : unavailable("You need to start the game first.");
+    public Availability isGameRunning() {
+        return isInGame(game.getCurrentState()) ? available() : unavailable("You need to start the game first.");
     }
 }
