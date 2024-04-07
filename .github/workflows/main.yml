@@ -30,13 +30,11 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: 21
-      - name: Run Tests
-        run: ./gradlew checkstyleNohttp check --no-daemon -Dlogging.level.ROOT=OFF
-      - name: SonarQube Analysis
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: ./gradlew sonar --no-daemon -Dsonar.organization=bbortt-github -Dsonar.host.url=https://sonarcloud.io
+      - uses: actions/cache@v3
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
       - uses: actions/cache@v3
         with:
           path: |
@@ -44,7 +42,14 @@ jobs:
             ~/.gradle/wrapper
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
           restore-keys: |
-            ${{ runner.os }}-gradle-
+            ${{ runner.os }}-gradle
+      - name: Run Tests
+        run: ./gradlew checkstyleNohttp check --no-daemon -Dlogging.level.ROOT=OFF
+      - name: SonarQube Analysis
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: ./gradlew sonar --no-daemon -Dsonar.organization=bbortt-github -Dsonar.host.url=https://sonarcloud.io
   native:
     name: 'Eldoria: Native-Build ${{ matrix.os }}'
     runs-on: ${{ matrix.os }}
@@ -64,12 +69,6 @@ jobs:
           java-version: '21'
           distribution: 'graalvm'
           github-token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Native Compilation
-        run: ./gradlew nativeCompile --no-daemon
-      - uses: actions/upload-artifact@v4
-        with:
-          name: Eldoria CLI
-          path: build/native/nativeCompile
       - uses: actions/cache@v3
         with:
           path: |
@@ -77,4 +76,10 @@ jobs:
             ~/.gradle/wrapper
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
           restore-keys: |
-            ${{ runner.os }}-gradle-
+            ${{ runner.os }}-gradle
+      - name: Native Compilation
+        run: ./gradlew nativeCompile --no-daemon
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Eldoria CLI
+          path: build/native/nativeCompile
