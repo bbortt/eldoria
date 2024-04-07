@@ -24,6 +24,8 @@ import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.Getter;
 
+import javax.annotation.Nonnull;
+
 import static jakarta.persistence.GenerationType.SEQUENCE;
 import static lombok.AccessLevel.NONE;
 
@@ -40,7 +42,7 @@ public class UserPreferences {
     @Getter(NONE)
     private Boolean playedTutorial = false;
 
-    public Boolean hasPlayedTutorial() {
+    public @Nonnull Boolean hasPlayedTutorial() {
         return playedTutorial;
     }
 }

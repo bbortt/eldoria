@@ -2,6 +2,7 @@ jacoco {
     toolVersion = "0.8.12"
 }
 
+
 jacocoTestReport {
     executionData tasks.withType(Test)
     classDirectories.from = files(sourceSets.main.output.classesDirs)
@@ -11,6 +12,8 @@ jacocoTestReport {
         xml.required = true
     }
 }
+check.dependsOn jacocoTestReport
+
 
 file("sonar-project.properties").withReader {
     Properties sonarProperties = new Properties()

@@ -25,7 +25,7 @@ class RarityTest {
     class getRandomRarity {
 
         @RepeatedTest(100)
-        public void isDistributedAccordingToProbabilities() {
+        void isDistributedAccordingToProbabilities() {
             Map<Rarity, Integer> rarityCounts = new EnumMap<>(Rarity.class);
             final int iterations = 1000; // Large number for statistical significance
 
