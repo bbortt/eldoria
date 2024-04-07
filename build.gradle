@@ -85,6 +85,7 @@ compileJava {
 	// Specific to Hibernate JPA meta model generation processor.
 	options.annotationProcessorGeneratedSourcesDirectory = file(generatedMainJava)
 }
+checkstyleGenerated.dependsOn compileJava
 
 
 sourceSets {
