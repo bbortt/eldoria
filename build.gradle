@@ -5,6 +5,7 @@ plugins {
 	id "io.spring.nohttp"
 	id "jacoco"
 	id "java"
+	id "org.graalvm.buildtools.native"
 	id "org.sonarqube"
 	id "org.springframework.boot"
 }
@@ -66,8 +67,8 @@ if (project.hasProperty("prod")) {
 
 
 processResources {
-	inputs.property('version', version)
-	inputs.property('springProfiles', profiles)
+	inputs.property("version", version)
+	inputs.property("springProfiles", profiles)
 	filesMatching("**/application.yml") {
 		filter {
 			it.replace("#spring.profiles.active#", profiles)
