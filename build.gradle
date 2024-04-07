@@ -5,6 +5,7 @@ plugins {
 	id "io.spring.nohttp"
 	id "jacoco"
 	id "java"
+	id "org.sonarqube"
 	id "org.springframework.boot"
 }
 
