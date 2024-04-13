@@ -12,13 +12,13 @@ class GameStateTest {
 
     @ParameterizedTest
     @EnumSource(value = GameState.class, names = {"COMBAT"}, mode = INCLUDE)
-    void testIsInGamePositive(GameState gameState) {
+    void isInGame(GameState gameState) {
         assertTrue(GameState.isInGame(gameState), "GameState should be considered 'in game' when in COMBAT state");
     }
 
     @ParameterizedTest
     @EnumSource(value = GameState.class, names = {"COMBAT"}, mode = EXCLUDE)
-    void testIsInGameNegative(GameState gameState) {
+    void isNotInGame(GameState gameState) {
         assertFalse(GameState.isInGame(gameState), "GameState should not be considered 'in game' for states other than COMBAT");
     }
 }

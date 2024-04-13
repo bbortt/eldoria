@@ -25,8 +25,10 @@ import lombok.Data;
 import lombok.Getter;
 
 import javax.annotation.Nonnull;
+import java.util.Locale;
 
 import static jakarta.persistence.GenerationType.SEQUENCE;
+import static java.util.Locale.forLanguageTag;
 import static lombok.AccessLevel.NONE;
 
 @Data
@@ -39,10 +41,21 @@ public class UserPreferences {
     private Long version;
 
     @Column
+    private String username;
+
+    @Column
     @Getter(NONE)
     private Boolean playedTutorial = false;
 
+    @Column
+    @Getter(NONE)
+    private String locale = "en-US";
+
     public @Nonnull Boolean hasPlayedTutorial() {
         return playedTutorial;
+    }
+
+    public Locale getLocale() {
+        return forLanguageTag(locale);
     }
 }

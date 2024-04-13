@@ -39,14 +39,14 @@ public class GameStartListener implements ApplicationListener<ApplicationStarted
 
     @Override
     public void onApplicationEvent(ApplicationStartedEvent event) {
-        log.info("Game started, deciding upon starting the tutorial or not.");
+        log.info("Game started, deciding upon starting the tutorial or not");
 
         var userPreferences = userPreferencesService.loadUserPreferences();
         if (userPreferences.hasPlayedTutorial()) {
-            log.debug("Tutorial has already been done: Going to the start screen.");
+            log.debug("Tutorial has already been done: Going to the start screen");
             applicationEventPublisher.publishEvent(new GoToMainMenuEvent(this));
         } else {
-            log.debug("Tutorial has not been done yet: Starting it now.");
+            log.debug("Tutorial has not been done yet: Starting it now");
             applicationEventPublisher.publishEvent(new StartTutorialEvent(this));
         }
     }

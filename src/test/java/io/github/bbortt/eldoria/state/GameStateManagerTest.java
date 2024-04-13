@@ -5,9 +5,11 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.stereotype.Component;
 
 import static io.github.bbortt.eldoria.state.GameState.MAIN_MENU;
 import static io.github.bbortt.eldoria.state.GameState.TUTORIAL;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith({MockitoExtension.class})
@@ -20,8 +22,13 @@ class GameStateManagerTest {
 
     @BeforeEach
     void setUp() {
-        // Initialize GameStateManager with a mock Game object
         fixture = new GameStateManager(gameMock);
+    }
+
+    @Test
+    void isSpringComponent() {
+        assertThat(GameStateManager.class)
+                .hasAnnotation(Component.class);
     }
 
     @Test
