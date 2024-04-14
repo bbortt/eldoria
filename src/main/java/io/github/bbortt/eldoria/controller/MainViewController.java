@@ -14,31 +14,31 @@
  * limitations under the License.
  */
 
-package io.github.bbortt.eldoria.state;
+package io.github.bbortt.eldoria.controller;
 
 import io.github.bbortt.eldoria.service.UserPreferencesService;
 import io.github.bbortt.eldoria.state.event.GoToMainMenuEvent;
 import io.github.bbortt.eldoria.state.event.StartTutorialEvent;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.context.event.ApplicationStartedEvent;
 import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
-public class GameStartListener implements ApplicationListener<ApplicationStartedEvent> {
+public class MainViewController {
 
     private final ApplicationEventPublisher applicationEventPublisher;
     private final UserPreferencesService userPreferencesService;
 
-    public GameStartListener(ApplicationEventPublisher applicationEventPublisher, UserPreferencesService userPreferencesService) {
+    public MainViewController(ApplicationEventPublisher applicationEventPublisher, UserPreferencesService userPreferencesService) {
         this.applicationEventPublisher = applicationEventPublisher;
         this.userPreferencesService = userPreferencesService;
     }
 
-    @Override
-    public void onApplicationEvent(ApplicationStartedEvent event) {
+    @FXML
+    void handleStartGame(ActionEvent event) {
         log.info("Game started, deciding upon starting the tutorial or not");
 
         var userPreferences = userPreferencesService.loadUserPreferences();

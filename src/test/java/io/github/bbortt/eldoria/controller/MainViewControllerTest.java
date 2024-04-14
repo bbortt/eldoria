@@ -1,18 +1,17 @@
-package io.github.bbortt.eldoria.state;
+package io.github.bbortt.eldoria.controller;
 
 import io.github.bbortt.eldoria.domain.UserPreferences;
 import io.github.bbortt.eldoria.service.UserPreferencesService;
 import io.github.bbortt.eldoria.state.event.GoToMainMenuEvent;
 import io.github.bbortt.eldoria.state.event.StartTutorialEvent;
+import javafx.event.ActionEvent;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.context.event.ApplicationStartedEvent;
 import org.springframework.context.ApplicationEventPublisher;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
@@ -20,7 +19,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith({MockitoExtension.class})
-class GameStartListenerTest {
+class MainViewControllerTest {
 
     @Mock
     private ApplicationEventPublisher applicationEventPublisherMock;
@@ -28,18 +27,11 @@ class GameStartListenerTest {
     @Mock
     private UserPreferencesService userPreferencesServiceMock;
 
-    private GameStartListener fixture;
+    private MainViewController fixture;
 
     @BeforeEach
     void setUp() {
-        fixture = new GameStartListener(applicationEventPublisherMock, userPreferencesServiceMock);
-    }
-
-    @Test
-    void allArgsConstructor() {
-        assertThat(fixture)
-                .hasFieldOrPropertyWithValue("applicationEventPublisher", applicationEventPublisherMock)
-                .hasFieldOrPropertyWithValue("userPreferencesService", userPreferencesServiceMock);
+        fixture = new MainViewController(applicationEventPublisherMock, userPreferencesServiceMock);
     }
 
     @Test
@@ -48,7 +40,7 @@ class GameStartListenerTest {
         doReturn(true).when(userPreferences).hasPlayedTutorial();
         doReturn(userPreferences).when(userPreferencesServiceMock).loadUserPreferences();
 
-        fixture.onApplicationEvent(mock(ApplicationStartedEvent.class));
+        fixture.handleStartGame(mock(ActionEvent.class));
 
         verify(applicationEventPublisherMock).publishEvent(any(GoToMainMenuEvent.class));
     }
@@ -59,7 +51,7 @@ class GameStartListenerTest {
         when(userPreferences.hasPlayedTutorial()).thenReturn(false);
         when(userPreferencesServiceMock.loadUserPreferences()).thenReturn(userPreferences);
 
-        fixture.onApplicationEvent(mock(ApplicationStartedEvent.class));
+        fixture.handleStartGame(mock(ActionEvent.class));
 
         verify(applicationEventPublisherMock).publishEvent(any(StartTutorialEvent.class));
     }
