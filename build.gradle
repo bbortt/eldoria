@@ -7,7 +7,7 @@ plugins {
     id "jacoco"
     id "java"
     id "org.graalvm.buildtools.native"
-    id "org.openjfx.javafxplugin"
+    // id "org.openjfx.javafxplugin"
     id "org.sonarqube"
     id "org.springframework.boot"
 }
