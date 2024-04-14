@@ -7,15 +7,14 @@ import io.github.bbortt.eldoria.state.event.StartTutorialEvent;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.context.event.ApplicationStartedEvent;
 import org.springframework.context.ApplicationEventPublisher;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -28,9 +27,6 @@ class GameStartListenerTest {
 
     @Mock
     private UserPreferencesService userPreferencesServiceMock;
-
-    @Captor
-    private ArgumentCaptor<Object> eventCaptor;
 
     private GameStartListener fixture;
 
@@ -49,13 +45,12 @@ class GameStartListenerTest {
     @Test
     void whenUserHasPlayedTutorial_thenPublishGoToMainMenuEvent() {
         var userPreferences = mock(UserPreferences.class);
-        when(userPreferences.hasPlayedTutorial()).thenReturn(true);
-        when(userPreferencesServiceMock.loadUserPreferences()).thenReturn(userPreferences);
+        doReturn(true).when(userPreferences).hasPlayedTutorial();
+        doReturn(userPreferences).when(userPreferencesServiceMock).loadUserPreferences();
 
         fixture.onApplicationEvent(mock(ApplicationStartedEvent.class));
 
-        verify(applicationEventPublisherMock).publishEvent(eventCaptor.capture());
-        assertInstanceOf(GoToMainMenuEvent.class, eventCaptor.getValue(), "Should publish GoToMainMenuEvent");
+        verify(applicationEventPublisherMock).publishEvent(any(GoToMainMenuEvent.class));
     }
 
     @Test
@@ -66,7 +61,6 @@ class GameStartListenerTest {
 
         fixture.onApplicationEvent(mock(ApplicationStartedEvent.class));
 
-        verify(applicationEventPublisherMock).publishEvent(eventCaptor.capture());
-        assertInstanceOf(StartTutorialEvent.class, eventCaptor.getValue(), "Should publish StartTutorialEvent");
+        verify(applicationEventPublisherMock).publishEvent(any(StartTutorialEvent.class));
     }
 }

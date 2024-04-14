@@ -16,13 +16,14 @@
 
 package io.github.bbortt.eldoria;
 
-import org.springframework.boot.SpringApplication;
+import io.github.bbortt.eldoria.javafx.EldoriaApplication;
+import javafx.application.Application;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class Eldoria {
 
-	public static void main(String[] args) {
-		SpringApplication.run(Eldoria.class, args);
-	}
+    public static void main(String[] args) {
+        Application.launch(EldoriaApplication.class, args);
+    }
 }

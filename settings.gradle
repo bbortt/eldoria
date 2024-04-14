@@ -10,6 +10,7 @@ pluginManagement {
         id "io.spring.dependency-management" version "${springDependencyManagementVersion}"
         id "io.spring.nohttp" version "${noHttpCheckstyleVersion}"
         id "org.graalvm.buildtools.native" version "${nativeBuildtoolsVersion}"
+        id "org.openjfx.javafxplugin" version "${openjfxVersion}"
         id "org.sonarqube" version "${sonarqubePluginVersion}"
         id "org.springframework.boot" version "${springBootVersion}"
     }
