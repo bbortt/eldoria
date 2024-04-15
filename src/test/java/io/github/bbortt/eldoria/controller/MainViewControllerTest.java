@@ -1,28 +1,37 @@
 package io.github.bbortt.eldoria.controller;
 
 import io.github.bbortt.eldoria.domain.UserPreferences;
+import io.github.bbortt.eldoria.service.GameService;
 import io.github.bbortt.eldoria.service.UserPreferencesService;
 import io.github.bbortt.eldoria.state.event.GoToMainMenuEvent;
 import io.github.bbortt.eldoria.state.event.StartTutorialEvent;
-import javafx.event.ActionEvent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.stage.Stage;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.context.ApplicationEventPublisher;
+import org.testfx.framework.junit5.ApplicationExtension;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.util.ReflectionTestUtils.setField;
 
-@ExtendWith({MockitoExtension.class})
+@ExtendWith({ApplicationExtension.class, MockitoExtension.class})
 class MainViewControllerTest {
 
     @Mock
     private ApplicationEventPublisher applicationEventPublisherMock;
+
+    @Mock
+    private GameService gameServiceMock;
 
     @Mock
     private UserPreferencesService userPreferencesServiceMock;
@@ -31,28 +40,52 @@ class MainViewControllerTest {
 
     @BeforeEach
     void setUp() {
-        fixture = new MainViewController(applicationEventPublisherMock, userPreferencesServiceMock);
+        fixture = new MainViewController(applicationEventPublisherMock, gameServiceMock, userPreferencesServiceMock);
     }
 
-    @Test
-    void whenUserHasPlayedTutorial_thenPublishGoToMainMenuEvent() {
-        var userPreferences = mock(UserPreferences.class);
-        doReturn(true).when(userPreferences).hasPlayedTutorial();
-        doReturn(userPreferences).when(userPreferencesServiceMock).loadUserPreferences();
+    @Nested
+    class HandleStartGame {
 
-        fixture.handleStartGame(mock(ActionEvent.class));
+        @Test
+        void whenUserHasPlayedTutorial_thenPublishGoToMainMenuEvent() {
+            var userPreferences = mock(UserPreferences.class);
+            doReturn(true).when(userPreferences).hasPlayedTutorial();
+            doReturn(userPreferences).when(userPreferencesServiceMock).loadUserPreferences();
 
-        verify(applicationEventPublisherMock).publishEvent(any(GoToMainMenuEvent.class));
+            fixture.handleStartGame();
+
+            verify(applicationEventPublisherMock).publishEvent(any(GoToMainMenuEvent.class));
+        }
+
+        @Test
+        void whenUserHasNotPlayedTutorial_thenPublishStartTutorialEvent() {
+            var userPreferences = mock(UserPreferences.class);
+            when(userPreferences.hasPlayedTutorial()).thenReturn(false);
+            when(userPreferencesServiceMock.loadUserPreferences()).thenReturn(userPreferences);
+
+            fixture.handleStartGame();
+
+            verify(applicationEventPublisherMock).publishEvent(any(StartTutorialEvent.class));
+        }
     }
 
-    @Test
-    void whenUserHasNotPlayedTutorial_thenPublishStartTutorialEvent() {
-        var userPreferences = mock(UserPreferences.class);
-        when(userPreferences.hasPlayedTutorial()).thenReturn(false);
-        when(userPreferencesServiceMock.loadUserPreferences()).thenReturn(userPreferences);
+    @Nested
+    class HandleExitGame {
 
-        fixture.handleStartGame(mock(ActionEvent.class));
+        @Test
+        void closeStage() {
+            var exitButtonMock = mock(Button.class);
+            setField(fixture, "exitButton", exitButtonMock, Button.class);
 
-        verify(applicationEventPublisherMock).publishEvent(any(StartTutorialEvent.class));
+            var sceneNodeMock = mock(Scene.class);
+            doReturn(sceneNodeMock).when(exitButtonMock).getScene();
+
+            var stageMock = mock(Stage.class);
+            doReturn(stageMock).when(sceneNodeMock).getWindow();
+
+            fixture.handleExitGame();
+
+            verify(stageMock).close();
+        }
     }
 }
