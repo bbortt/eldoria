@@ -16,11 +16,15 @@
 
 package io.github.bbortt.eldoria.controller;
 
+import io.github.bbortt.eldoria.service.GameService;
 import io.github.bbortt.eldoria.service.UserPreferencesService;
 import io.github.bbortt.eldoria.state.event.GoToMainMenuEvent;
 import io.github.bbortt.eldoria.state.event.StartTutorialEvent;
-import javafx.event.ActionEvent;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.stage.Stage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
@@ -29,17 +33,32 @@ import org.springframework.stereotype.Component;
 @Component
 public class MainViewController {
 
+    private final BooleanProperty loadGamesAvailable = new SimpleBooleanProperty(this, "loadGamesAvailable", false);
+
     private final ApplicationEventPublisher applicationEventPublisher;
+    private final GameService gameService;
     private final UserPreferencesService userPreferencesService;
 
-    public MainViewController(ApplicationEventPublisher applicationEventPublisher, UserPreferencesService userPreferencesService) {
+    @FXML
+    private Button exitButton;
+
+    public MainViewController(ApplicationEventPublisher applicationEventPublisher, GameService gameService, UserPreferencesService userPreferencesService) {
         this.applicationEventPublisher = applicationEventPublisher;
+        this.gameService = gameService;
         this.userPreferencesService = userPreferencesService;
     }
 
+    public boolean isLoadGamesAvailable() {
+        return gameService.hasSavedAnyGames();
+    }
+
+    public BooleanProperty loadGamesAvailableProperty() {
+        return loadGamesAvailable;
+    }
+
     @FXML
-    void handleStartGame(ActionEvent event) {
-        log.info("Game started, deciding upon starting the tutorial or not");
+    void handleStartGame() {
+        log.info("Game starting, deciding upon starting the tutorial or not");
 
         var userPreferences = userPreferencesService.loadUserPreferences();
         if (userPreferences.hasPlayedTutorial()) {
@@ -49,5 +68,20 @@ public class MainViewController {
             log.debug("Tutorial has not been done yet: Starting it now");
             applicationEventPublisher.publishEvent(new StartTutorialEvent(this));
         }
+    }
+
+    @FXML
+    private void handleLoadGame() {
+        log.info("Switching to saved games list");
+
+        // Add your load game logic here
+    }
+
+    @FXML
+    public void handleExitGame() {
+        log.info("Game exit requested");
+
+        Stage stage = (Stage) exitButton.getScene().getWindow();
+        stage.close();
     }
 }

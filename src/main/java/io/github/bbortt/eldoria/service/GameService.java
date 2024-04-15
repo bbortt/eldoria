@@ -14,12 +14,21 @@
  * limitations under the License.
  */
 
-package io.github.bbortt.eldoria.configuration;
+package io.github.bbortt.eldoria.service;
 
-import org.springframework.context.annotation.Configuration;
-import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+import io.github.bbortt.eldoria.domain.repository.GameRepository;
+import org.springframework.stereotype.Service;
 
-@Configuration
-@EnableJpaAuditing
-public class JpaAuditingConfiguration {
+@Service
+public class GameService {
+
+    private final GameRepository gameRepository;
+
+    public GameService(GameRepository gameRepository) {
+        this.gameRepository = gameRepository;
+    }
+
+    public boolean hasSavedAnyGames() {
+        return gameRepository.count() > 0;
+    }
 }

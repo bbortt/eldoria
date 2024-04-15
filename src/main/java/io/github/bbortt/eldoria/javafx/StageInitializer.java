@@ -16,28 +16,30 @@
 
 package io.github.bbortt.eldoria.javafx;
 
+import io.github.bbortt.eldoria.i18n.SpringResourceBundle;
 import io.github.bbortt.eldoria.service.UserPreferencesService;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationListener;
+import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-
-import static java.util.ResourceBundle.getBundle;
 
 @Component
 public class StageInitializer implements ApplicationListener<StageReadyEvent> {
 
     private final ApplicationContext applicationContext;
+    private final ResourceBundleMessageSource messageSource;
     private final UserPreferencesService userPreferencesService;
 
     private Parent rootNode;
 
-    public StageInitializer(ApplicationContext applicationContext, UserPreferencesService userPreferencesService) {
+    public StageInitializer(ApplicationContext applicationContext, ResourceBundleMessageSource messageSource, UserPreferencesService userPreferencesService) {
         this.applicationContext = applicationContext;
+        this.messageSource = messageSource;
         this.userPreferencesService = userPreferencesService;
     }
 
@@ -45,7 +47,7 @@ public class StageInitializer implements ApplicationListener<StageReadyEvent> {
     public void onApplicationEvent(StageReadyEvent event) {
         var stage = event.getStage();
 
-        var resourceBundle = getBundle("main_view", userPreferencesService.loadUserPreferences().getLocale());
+        var resourceBundle = new SpringResourceBundle(messageSource, userPreferencesService.loadUserPreferences().getLocale());
 
         var fxmlLoader = new FXMLLoader(
                 getClass().getClassLoader().getResource("view/MainView.fxml"),
