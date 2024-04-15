@@ -9,5 +9,5 @@
     <padding>
         <Insets top="20" right="20" bottom="20" left="20"/>
     </padding>
-    <Button text="Start Game" fx:id="startButton" onAction="#handleStartGame"/>
+    <Button text="%view.main.new-game" fx:id="startButton" onAction="#handleStartGame"/>
 </VBox>

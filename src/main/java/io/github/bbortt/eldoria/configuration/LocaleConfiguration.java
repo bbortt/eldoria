@@ -12,7 +12,7 @@ public class LocaleConfiguration {
     @Bean
     public ResourceBundleMessageSource messageSource() {
         ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
-        messageSource.setBasename("i18n/messages");
+        messageSource.setBasename("i18n");
         messageSource.setDefaultEncoding(UTF_8.name());
         return messageSource;
     }

@@ -16,6 +16,7 @@
 
 package io.github.bbortt.eldoria.javafx;
 
+import io.github.bbortt.eldoria.service.UserPreferencesService;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -25,22 +26,30 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
+import static java.util.ResourceBundle.getBundle;
+
 @Component
 public class StageInitializer implements ApplicationListener<StageReadyEvent> {
 
     private final ApplicationContext applicationContext;
+    private final UserPreferencesService userPreferencesService;
 
     private Parent rootNode;
 
-    public StageInitializer(ApplicationContext applicationContext) {
+    public StageInitializer(ApplicationContext applicationContext, UserPreferencesService userPreferencesService) {
         this.applicationContext = applicationContext;
+        this.userPreferencesService = userPreferencesService;
     }
 
     @Override
     public void onApplicationEvent(StageReadyEvent event) {
         var stage = event.getStage();
 
-        var fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("view/MainView.fxml"));
+        var resourceBundle = getBundle("main_view", userPreferencesService.loadUserPreferences().getLocale());
+
+        var fxmlLoader = new FXMLLoader(
+                getClass().getClassLoader().getResource("view/MainView.fxml"),
+                resourceBundle);
         fxmlLoader.setControllerFactory(applicationContext::getBean);
 
         try {
