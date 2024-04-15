@@ -41,9 +41,6 @@ public class UserPreferences {
     private Long version;
 
     @Column
-    private String username;
-
-    @Column
     @Getter(NONE)
     private Boolean playedTutorial = false;
 

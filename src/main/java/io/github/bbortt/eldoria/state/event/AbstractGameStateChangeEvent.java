@@ -16,11 +16,29 @@
 
 package io.github.bbortt.eldoria.state.event;
 
+import io.github.bbortt.eldoria.state.GameState;
 import org.springframework.context.ApplicationEvent;
 
-public class GoToMainMenuEvent extends ApplicationEvent {
+import javax.annotation.Nullable;
 
-    public GoToMainMenuEvent(Object source) {
-        super(source);
+public abstract class AbstractGameStateChangeEvent extends ApplicationEvent {
+
+    private final @Nullable String initialScene;
+
+    public AbstractGameStateChangeEvent(GameState gameState) {
+        this(gameState, null);
+    }
+
+    public AbstractGameStateChangeEvent(GameState gameState, @Nullable String initialScene) {
+        super(gameState);
+        this.initialScene = initialScene;
+    }
+
+    public GameState getGameState() {
+        return (GameState) getSource();
+    }
+
+    public @Nullable String getInitialScene() {
+        return initialScene;
     }
 }

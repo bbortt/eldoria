@@ -42,10 +42,4 @@ public class UserPreferencesService {
 
         return userPreferences.getContent().getFirst();
     }
-
-    public void setUsername(String username) {
-        var userPreferences = loadUserPreferences();
-        userPreferences.setUsername(username);
-        userPreferencesRepository.save(userPreferences);
-    }
 }

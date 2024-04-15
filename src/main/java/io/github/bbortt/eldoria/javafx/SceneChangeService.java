@@ -18,50 +18,69 @@ package io.github.bbortt.eldoria.javafx;
 
 import io.github.bbortt.eldoria.i18n.SpringResourceBundle;
 import io.github.bbortt.eldoria.service.UserPreferencesService;
+import io.github.bbortt.eldoria.state.event.AbstractGameStateChangeEvent;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.Stage;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationListener;
+import org.springframework.context.event.EventListener;
 import org.springframework.context.support.ResourceBundleMessageSource;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 
-@Component
-public class StageInitializer implements ApplicationListener<StageReadyEvent> {
+import static java.util.Objects.nonNull;
+
+@Slf4j
+@Service
+public class SceneChangeService {
 
     private final ApplicationContext applicationContext;
     private final ResourceBundleMessageSource messageSource;
     private final UserPreferencesService userPreferencesService;
 
-    private Parent rootNode;
+    private Stage stage;
 
-    public StageInitializer(ApplicationContext applicationContext, ResourceBundleMessageSource messageSource, UserPreferencesService userPreferencesService) {
+    public SceneChangeService(ApplicationContext applicationContext, ResourceBundleMessageSource messageSource, UserPreferencesService userPreferencesService) {
         this.applicationContext = applicationContext;
         this.messageSource = messageSource;
         this.userPreferencesService = userPreferencesService;
     }
 
-    @Override
-    public void onApplicationEvent(StageReadyEvent event) {
-        var stage = event.getStage();
+    @EventListener(StageReadyEvent.class)
+    public void onStageReady(StageReadyEvent event) {
+        log.info("Stage is ready, loading main scene");
 
+        stage = event.getStage();
+
+        loadScene("MainView");
+
+        stage.setTitle("Eldoria");
+        stage.show();
+    }
+
+    @EventListener(AbstractGameStateChangeEvent.class)
+    public void onGameStateChange(AbstractGameStateChangeEvent gameStateChange) {
+        var nextScene = gameStateChange.getInitialScene();
+        if (nonNull(nextScene)) {
+            log.info("Change to next scene: {}", nextScene);
+            loadScene(nextScene);
+        }
+    }
+
+    private void loadScene(String sceneName) {
         var resourceBundle = new SpringResourceBundle(messageSource, userPreferencesService.loadUserPreferences().getLocale());
 
         var fxmlLoader = new FXMLLoader(
-                getClass().getClassLoader().getResource("view/MainView.fxml"),
+                getClass().getClassLoader().getResource("view/" + sceneName + ".fxml"),
                 resourceBundle);
         fxmlLoader.setControllerFactory(applicationContext::getBean);
 
         try {
-            rootNode = fxmlLoader.load();
+            stage.setScene(new Scene(fxmlLoader.load()));
         } catch (IOException e) {
             throw new IllegalArgumentException(e);
         }
-
-        stage.setScene(new Scene(rootNode));
-        stage.setTitle("Eldoria");
-        stage.show();
     }
 }

@@ -3,7 +3,7 @@ package io.github.bbortt.eldoria.controller;
 import io.github.bbortt.eldoria.domain.UserPreferences;
 import io.github.bbortt.eldoria.service.GameService;
 import io.github.bbortt.eldoria.service.UserPreferencesService;
-import io.github.bbortt.eldoria.state.event.GoToMainMenuEvent;
+import io.github.bbortt.eldoria.state.event.StartNewGameEvent;
 import io.github.bbortt.eldoria.state.event.StartTutorialEvent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -47,18 +47,18 @@ class MainViewControllerTest {
     class HandleStartGame {
 
         @Test
-        void whenUserHasPlayedTutorial_thenPublishGoToMainMenuEvent() {
+        void publishGoToMainMenuEventIfUserHasPlayedTutorial() {
             var userPreferences = mock(UserPreferences.class);
             doReturn(true).when(userPreferences).hasPlayedTutorial();
             doReturn(userPreferences).when(userPreferencesServiceMock).loadUserPreferences();
 
             fixture.handleStartGame();
 
-            verify(applicationEventPublisherMock).publishEvent(any(GoToMainMenuEvent.class));
+            verify(applicationEventPublisherMock).publishEvent(any(StartNewGameEvent.class));
         }
 
         @Test
-        void whenUserHasNotPlayedTutorial_thenPublishStartTutorialEvent() {
+        void publishStartTutorialEventIfUserHasNotPlayedTutorial() {
             var userPreferences = mock(UserPreferences.class);
             when(userPreferences.hasPlayedTutorial()).thenReturn(false);
             when(userPreferencesServiceMock.loadUserPreferences()).thenReturn(userPreferences);

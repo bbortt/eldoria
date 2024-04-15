@@ -18,10 +18,8 @@ package io.github.bbortt.eldoria.controller;
 
 import io.github.bbortt.eldoria.service.GameService;
 import io.github.bbortt.eldoria.service.UserPreferencesService;
-import io.github.bbortt.eldoria.state.event.GoToMainMenuEvent;
+import io.github.bbortt.eldoria.state.event.StartNewGameEvent;
 import io.github.bbortt.eldoria.state.event.StartTutorialEvent;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
@@ -32,8 +30,6 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 public class MainViewController {
-
-    private final BooleanProperty loadGamesAvailable = new SimpleBooleanProperty(this, "loadGamesAvailable", false);
 
     private final ApplicationEventPublisher applicationEventPublisher;
     private final GameService gameService;
@@ -52,10 +48,6 @@ public class MainViewController {
         return gameService.hasSavedAnyGames();
     }
 
-    public BooleanProperty loadGamesAvailableProperty() {
-        return loadGamesAvailable;
-    }
-
     @FXML
     void handleStartGame() {
         log.info("Game starting, deciding upon starting the tutorial or not");
@@ -63,10 +55,10 @@ public class MainViewController {
         var userPreferences = userPreferencesService.loadUserPreferences();
         if (userPreferences.hasPlayedTutorial()) {
             log.debug("Tutorial has already been done: Going to the start screen");
-            applicationEventPublisher.publishEvent(new GoToMainMenuEvent(this));
+            applicationEventPublisher.publishEvent(new StartNewGameEvent());
         } else {
             log.debug("Tutorial has not been done yet: Starting it now");
-            applicationEventPublisher.publishEvent(new StartTutorialEvent(this));
+            applicationEventPublisher.publishEvent(new StartTutorialEvent());
         }
     }
 
@@ -81,7 +73,7 @@ public class MainViewController {
     public void handleExitGame() {
         log.info("Game exit requested");
 
-        Stage stage = (Stage) exitButton.getScene().getWindow();
+        var stage = (Stage) exitButton.getScene().getWindow();
         stage.close();
     }
 }

@@ -3,16 +3,16 @@ package io.github.bbortt.eldoria.state.event;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static io.github.bbortt.eldoria.state.GameState.TUTORIAL;
+import static io.github.bbortt.eldoria.state.GameState.GAME_CONFIGURATION;
 import static org.assertj.core.api.Assertions.assertThat;
 
-class StartTutorialEventTest {
+class StartNewGameEventTest {
 
-    private StartTutorialEvent fixture;
+    private StartNewGameEvent fixture;
 
     @BeforeEach
     void beforeEachSetup() {
-        fixture = new StartTutorialEvent();
+        fixture = new StartNewGameEvent();
     }
 
     @Test
@@ -24,14 +24,14 @@ class StartTutorialEventTest {
     @Test
     void setsGameStateToTutorial() {
         assertThat(fixture)
-                .extracting(StartTutorialEvent::getGameState)
-                .isEqualTo(TUTORIAL);
+                .extracting(StartNewGameEvent::getGameState)
+                .isEqualTo(GAME_CONFIGURATION);
     }
 
     @Test
-    void containsNoInitialScene() {
+    void initialSceneIsMainView() {
         assertThat(fixture)
-                .extracting(StartTutorialEvent::getInitialScene)
-                .isNull();
+                .extracting(StartNewGameEvent::getInitialScene)
+                .isEqualTo("GameConfiguration");
     }
 }

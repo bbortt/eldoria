@@ -16,11 +16,11 @@
 
 package io.github.bbortt.eldoria.state.event;
 
-import static io.github.bbortt.eldoria.state.GameState.TUTORIAL;
+import static io.github.bbortt.eldoria.state.GameState.GAME_CONFIGURATION;
 
-public class StartTutorialEvent extends AbstractGameStateChangeEvent {
+public class StartNewGameEvent extends AbstractGameStateChangeEvent {
 
-    public StartTutorialEvent() {
-        super(TUTORIAL);
+    public StartNewGameEvent() {
+        super(GAME_CONFIGURATION, "GameConfiguration");
     }
 }

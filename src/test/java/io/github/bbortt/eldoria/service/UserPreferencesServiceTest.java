@@ -12,8 +12,8 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
 import static java.util.Collections.singletonList;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
@@ -33,7 +33,7 @@ class UserPreferencesServiceTest {
     }
 
     @Test
-    void whenUserPreferencesExist_thenLoadUserPreferences() {
+    void returnExistingUserPreferences() {
         var existingPreferences = new UserPreferences();
 
         Page<UserPreferences> userPreferencesPage = new PageImpl<>(singletonList(existingPreferences));
@@ -41,15 +41,15 @@ class UserPreferencesServiceTest {
 
         var loadedPreferences = userPreferencesService.loadUserPreferences();
 
-        assertNotNull(loadedPreferences, "Loaded preferences should not be null");
-        assertSame(existingPreferences, loadedPreferences, "Should load the existing user preferences");
+        assertThat(loadedPreferences)
+                .isEqualTo(existingPreferences);
 
         verify(userPreferencesRepositoryMock).findAll(any(Pageable.class));
         verify(userPreferencesRepositoryMock, never()).save(any(UserPreferences.class));
     }
 
     @Test
-    void whenNoUserPreferencesExist_thenCreateAndSaveUserPreferences() {
+    void createNewUserPreferencesIfNonExist() {
         when(userPreferencesRepositoryMock.findAll(any(Pageable.class))).thenReturn(Page.empty());
         when(userPreferencesRepositoryMock.save(any(UserPreferences.class))).thenAnswer(invocation -> invocation.getArgument(0));
 

@@ -16,14 +16,14 @@
 
 package io.github.bbortt.eldoria.state;
 
-import io.github.bbortt.eldoria.state.event.GoToMainMenuEvent;
+import io.github.bbortt.eldoria.state.event.AbstractGameStateChangeEvent;
+import io.github.bbortt.eldoria.state.event.StartNewGameEvent;
 import io.github.bbortt.eldoria.state.event.StartTutorialEvent;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
-import static io.github.bbortt.eldoria.state.GameState.MAIN_MENU;
-import static io.github.bbortt.eldoria.state.GameState.TUTORIAL;
-
+@Slf4j
 @Component
 public class GameStateManager {
 
@@ -33,13 +33,19 @@ public class GameStateManager {
         this.game = game;
     }
 
-    @EventListener(GoToMainMenuEvent.class)
-    public void goToMainMenu() {
-        game.transitionTo(MAIN_MENU);
+    @EventListener(AbstractGameStateChangeEvent.class)
+    public void onGameStateChangeEvent(AbstractGameStateChangeEvent gameStateChange) {
+        // TODO: This should also trigger the scene transition
+        switch (gameStateChange) {
+            case StartNewGameEvent startNewGameEvent -> transitionToGameState(startNewGameEvent);
+            case StartTutorialEvent startTutorialEvent -> transitionToGameState(startTutorialEvent);
+            default -> throw new IllegalStateException("Unexpected value: " + gameStateChange);
+        }
     }
 
-    @EventListener(StartTutorialEvent.class)
-    public void startTutorial() {
-        game.transitionTo(TUTORIAL);
+    private <T extends AbstractGameStateChangeEvent> void transitionToGameState(T gameStateChange) {
+        var gameState = gameStateChange.getGameState();
+        log.info("Transition to game state: {}", gameState);
+        game.transitionTo(gameState);
     }
 }

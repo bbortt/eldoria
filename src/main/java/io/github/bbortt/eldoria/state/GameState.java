@@ -23,8 +23,7 @@ public enum GameState {
 
     TUTORIAL,
     MAIN_MENU,
-    CHARACTER_MENU,
-    INVENTORY,
+    GAME_CONFIGURATION,
     COMBAT,
     GAME_OVER;
 

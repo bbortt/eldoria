@@ -31,7 +31,8 @@ public final class Game {
         this.currentState = MAIN_MENU;
     }
 
-    void transitionTo(GameState gameState) {
+    synchronized void transitionTo(GameState gameState) {
+        // TODO: validation could be added
         this.currentState = gameState;
     }
 }
