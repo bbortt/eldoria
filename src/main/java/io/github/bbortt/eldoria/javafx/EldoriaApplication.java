@@ -35,6 +35,9 @@ public class EldoriaApplication extends Application {
 
     @Override
     public void start(Stage stage) {
+        stage.setHeight(832);
+        stage.setWidth(1216);
+
         applicationContext.publishEvent(new StageReadyEvent(stage));
     }
 

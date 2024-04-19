@@ -7,6 +7,8 @@ import io.github.bbortt.eldoria.state.event.StartNewGameEvent;
 import io.github.bbortt.eldoria.state.event.StartTutorialEvent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -41,6 +43,20 @@ class MainViewControllerTest {
     @BeforeEach
     void setUp() {
         fixture = new MainViewController(applicationEventPublisherMock, gameServiceMock, userPreferencesServiceMock);
+    }
+
+    @Nested
+    class Initialize {
+
+        @Test
+        void configuresBackground() {
+            var mainViewMock = mock(VBox.class);
+            setField(fixture, "mainView", mainViewMock, VBox.class);
+
+            fixture.initialize();
+
+            verify(mainViewMock).setBackground(any(Background.class));
+        }
     }
 
     @Nested
