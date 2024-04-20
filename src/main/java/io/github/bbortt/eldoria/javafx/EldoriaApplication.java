@@ -17,11 +17,15 @@
 package io.github.bbortt.eldoria.javafx;
 
 import io.github.bbortt.eldoria.Eldoria;
+import io.github.palexdev.materialfx.theming.JavaFXThemes;
+import io.github.palexdev.materialfx.theming.MaterialFXStylesheets;
+import io.github.palexdev.materialfx.theming.UserAgentBuilder;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 
+import static io.github.palexdev.materialfx.theming.MaterialFXStylesheets.BUTTON;
 import static javafx.application.Platform.exit;
 
 public class EldoriaApplication extends Application {
@@ -37,6 +41,15 @@ public class EldoriaApplication extends Application {
     public void start(Stage stage) {
         stage.setHeight(832);
         stage.setWidth(1216);
+
+        UserAgentBuilder.builder()
+                .themes(JavaFXThemes.MODENA)
+                .themes(MaterialFXStylesheets.forAssemble(false))
+                .themes(BUTTON)
+                .setDeploy(true) // Whether to deploy each theme's assets on a temporary dir on the disk
+                .setResolveAssets(true) // Whether to try resolving @import statements and resources urls
+                .build()
+                .setGlobal();
 
         applicationContext.publishEvent(new StageReadyEvent(stage));
     }

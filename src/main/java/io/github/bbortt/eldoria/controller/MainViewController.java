@@ -20,8 +20,8 @@ import io.github.bbortt.eldoria.service.GameService;
 import io.github.bbortt.eldoria.service.UserPreferencesService;
 import io.github.bbortt.eldoria.state.event.StartNewGameEvent;
 import io.github.bbortt.eldoria.state.event.StartTutorialEvent;
+import io.github.palexdev.materialfx.controls.MFXButton;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
@@ -48,7 +48,7 @@ public class MainViewController {
     private VBox mainView;
 
     @FXML
-    private Button exitButton;
+    private MFXButton exitButton;
 
     public MainViewController(ApplicationEventPublisher applicationEventPublisher, GameService gameService, UserPreferencesService userPreferencesService) {
         this.applicationEventPublisher = applicationEventPublisher;

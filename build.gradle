@@ -50,6 +50,7 @@ dependencyManagement {
 dependencies {
     annotationProcessor "org.hibernate.orm:hibernate-jpamodelgen:${jpamodelgenVersion}"
 
+    implementation "io.github.palexdev:materialfx:${materialfxVersion}"
     implementation "jakarta.transaction:jakarta.transaction-api:${transactionApiVersion}"
     implementation "org.springframework.boot:spring-boot-starter-data-jpa"
     developmentOnly "org.springframework.boot:spring-boot-devtools"
