@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.github.bbortt.eldoria.controller;
+package io.github.bbortt.eldoria.javafx.view.controller;
 
 import io.github.bbortt.eldoria.service.GameService;
 import io.github.bbortt.eldoria.service.UserPreferencesService;

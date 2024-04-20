@@ -26,6 +26,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 
 import static io.github.palexdev.materialfx.theming.MaterialFXStylesheets.BUTTON;
+import static io.github.palexdev.materialfx.theming.MaterialFXStylesheets.COLORS;
 import static javafx.application.Platform.exit;
 
 public class EldoriaApplication extends Application {
@@ -45,6 +46,7 @@ public class EldoriaApplication extends Application {
         UserAgentBuilder.builder()
                 .themes(JavaFXThemes.MODENA)
                 .themes(MaterialFXStylesheets.forAssemble(false))
+                .themes(COLORS)
                 .themes(BUTTON)
                 .setDeploy(true) // Whether to deploy each theme's assets on a temporary dir on the disk
                 .setResolveAssets(true) // Whether to try resolving @import statements and resources urls

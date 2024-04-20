@@ -1,4 +1,4 @@
-package io.github.bbortt.eldoria.controller;
+package io.github.bbortt.eldoria.javafx.view.controller;
 
 import io.github.bbortt.eldoria.domain.UserPreferences;
 import io.github.bbortt.eldoria.service.GameService;

@@ -21,6 +21,6 @@ import static io.github.bbortt.eldoria.state.GameState.TUTORIAL;
 public class StartTutorialEvent extends AbstractGameStateChangeEvent {
 
     public StartTutorialEvent() {
-        super(TUTORIAL);
+        super(TUTORIAL, "Tutorial");
     }
 }

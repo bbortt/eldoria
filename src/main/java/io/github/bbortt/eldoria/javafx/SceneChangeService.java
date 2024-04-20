@@ -19,9 +19,11 @@ package io.github.bbortt.eldoria.javafx;
 import io.github.bbortt.eldoria.i18n.SpringResourceBundle;
 import io.github.bbortt.eldoria.service.UserPreferencesService;
 import io.github.bbortt.eldoria.state.event.AbstractGameStateChangeEvent;
+import javafx.animation.FadeTransition;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.event.EventListener;
@@ -77,10 +79,31 @@ public class SceneChangeService {
                 resourceBundle);
         fxmlLoader.setControllerFactory(applicationContext::getBean);
 
+        Scene nextScene;
         try {
-            stage.setScene(new Scene(fxmlLoader.load()));
+            nextScene = new Scene(fxmlLoader.load());
         } catch (IOException e) {
             throw new IllegalArgumentException(e);
         }
+
+        if (nonNull( stage.getScene())) {
+            fadeScenes(nextScene);
+        }else{
+            stage.setScene(nextScene);
+        }
+    }
+
+    private void fadeScenes(Scene nextScene) {
+        var fadeOut = new FadeTransition(Duration.millis(500), stage.getScene().getRoot());
+        fadeOut.setFromValue(1.0);
+        fadeOut.setToValue(0.0);
+
+        var fadeIn = new FadeTransition(Duration.millis(500), nextScene.getRoot());
+        fadeIn.setFromValue(0.0);
+        fadeIn.setToValue(1.0);
+
+        fadeOut.setOnFinished(e -> stage.setScene(nextScene));
+
+        fadeOut.play();
     }
 }
