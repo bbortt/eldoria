@@ -29,9 +29,9 @@ class StartTutorialEventTest {
     }
 
     @Test
-    void containsNoInitialScene() {
+    void containsInitialScene() {
         assertThat(fixture)
                 .extracting(StartTutorialEvent::getInitialScene)
-                .isNull();
+                .isEqualTo("Tutorial");
     }
 }

@@ -5,8 +5,8 @@ import io.github.bbortt.eldoria.service.GameService;
 import io.github.bbortt.eldoria.service.UserPreferencesService;
 import io.github.bbortt.eldoria.state.event.StartNewGameEvent;
 import io.github.bbortt.eldoria.state.event.StartTutorialEvent;
+import io.github.palexdev.materialfx.controls.MFXButton;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -90,8 +90,8 @@ class MainViewControllerTest {
 
         @Test
         void closeStage() {
-            var exitButtonMock = mock(Button.class);
-            setField(fixture, "exitButton", exitButtonMock, Button.class);
+            var exitButtonMock = mock(MFXButton.class);
+            setField(fixture, "exitButton", exitButtonMock, MFXButton.class);
 
             var sceneNodeMock = mock(Scene.class);
             doReturn(sceneNodeMock).when(exitButtonMock).getScene();
