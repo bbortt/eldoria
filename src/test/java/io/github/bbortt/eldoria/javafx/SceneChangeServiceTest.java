@@ -28,7 +28,6 @@ class SceneChangeServiceTest {
     @Mock
     private UserPreferencesService userPreferencesServiceMock;
 
-
     private SceneChangeService fixture;
 
     @BeforeEach

@@ -11,6 +11,6 @@ class TutorialConversationTest extends AbstractConversationTest {
     public void conversationEnds() {
         var fixture = new TutorialConversation();
 
-        assertTrue(conversationEnds(fixture.getParts()), "TutorialConversationTest did not end with ConversationEnd");
+        assertTrue(conversationEnds(fixture.get()), "TutorialConversationTest did not end with ConversationEnd");
     }
 }

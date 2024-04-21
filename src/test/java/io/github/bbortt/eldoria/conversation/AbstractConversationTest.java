@@ -10,7 +10,7 @@ public abstract class AbstractConversationTest {
                 for (Option option : decision.getOptions()) {
                     if (option instanceof ContinueButtonOption continueOption) {
                         Conversation nextConversation = continueOption.getNextConversation();
-                        return conversationEnds(nextConversation.getParts());
+                        return conversationEnds(nextConversation.get());
                     }
                 }
             } else if (part instanceof ConversationEnd) {

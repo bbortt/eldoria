@@ -16,6 +16,7 @@
 
 package io.github.bbortt.eldoria.javafx;
 
+import fr.brouillard.oss.cssfx.CSSFX;
 import io.github.bbortt.eldoria.Eldoria;
 import io.github.palexdev.materialfx.theming.JavaFXThemes;
 import io.github.palexdev.materialfx.theming.MaterialFXStylesheets;
@@ -42,6 +43,8 @@ public class EldoriaApplication extends Application {
     public void start(Stage stage) {
         stage.setHeight(832);
         stage.setWidth(1216);
+
+        CSSFX.start();
 
         UserAgentBuilder.builder()
                 .themes(JavaFXThemes.MODENA)

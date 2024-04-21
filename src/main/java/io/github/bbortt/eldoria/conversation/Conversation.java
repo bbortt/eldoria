@@ -20,5 +20,5 @@ import java.util.List;
 
 public interface Conversation {
 
-    List<ConversationPart> getParts();
+    List<ConversationPart> get();
 }

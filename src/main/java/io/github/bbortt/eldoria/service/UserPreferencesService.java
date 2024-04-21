@@ -22,6 +22,7 @@ import io.github.bbortt.eldoria.domain.repository.UserPreferencesRepository;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UserPreferencesService {
@@ -41,5 +42,12 @@ public class UserPreferencesService {
         }
 
         return userPreferences.getContent().getFirst();
+    }
+
+    @Transactional
+    public void setTutorialFinished() {
+        var userPreferences = loadUserPreferences();
+        userPreferences.setPlayedTutorial(true);
+        userPreferencesRepository.save(userPreferences);
     }
 }

@@ -17,17 +17,21 @@
 package io.github.bbortt.eldoria.javafx.view.controller;
 
 import io.github.bbortt.eldoria.conversation.tutorial.TutorialConversation;
+import io.github.bbortt.eldoria.i18n.SpringResourceBundle;
+import io.github.bbortt.eldoria.javafx.ConversationManager;
 import io.github.bbortt.eldoria.service.UserPreferencesService;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
 public class TutorialViewController {
 
+    private final MessageSource messageSource;
     private final UserPreferencesService userPreferencesService;
 
     @FXML
@@ -36,11 +40,17 @@ public class TutorialViewController {
     @FXML
     public VBox buttonContainer;
 
-    public TutorialViewController(UserPreferencesService userPreferencesService) {
+    public TutorialViewController(MessageSource messageSource, UserPreferencesService userPreferencesService) {
+        this.messageSource = messageSource;
         this.userPreferencesService = userPreferencesService;
     }
 
     public void initialize() {
         var conversation = new TutorialConversation();
+
+        new ConversationManager(tutorialText, buttonContainer, new SpringResourceBundle(messageSource, userPreferencesService.loadUserPreferences().getLocale()))
+                .playConversation(conversation);
+
+        userPreferencesService.setTutorialFinished();
     }
 }

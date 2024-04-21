@@ -16,5 +16,11 @@
 
 package io.github.bbortt.eldoria.conversation;
 
+import static java.util.Collections.singletonList;
+
 public final class ConversationEnd implements ConversationPart {
+
+    public static Conversation conversationEnd() {
+        return () -> singletonList(new ConversationEnd());
+    }
 }
