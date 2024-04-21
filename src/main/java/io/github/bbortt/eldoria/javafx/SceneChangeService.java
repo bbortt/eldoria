@@ -32,6 +32,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 
+import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 
 @Slf4j
@@ -56,7 +57,7 @@ public class SceneChangeService {
 
         stage = event.getStage();
 
-        loadScene("MainView");
+        loadScene("Main");
 
         stage.setTitle("Eldoria");
         stage.show();
@@ -64,6 +65,10 @@ public class SceneChangeService {
 
     @EventListener(AbstractGameStateChangeEvent.class)
     public void onGameStateChange(AbstractGameStateChangeEvent gameStateChange) {
+        if (isNull(stage)) {
+            throw new IllegalArgumentException("Stage not initialized; State change came too early!");
+        }
+
         var nextScene = gameStateChange.getInitialScene();
         if (nonNull(nextScene)) {
             log.info("Change to next scene: {}", nextScene);
@@ -75,7 +80,7 @@ public class SceneChangeService {
         var resourceBundle = new SpringResourceBundle(messageSource, userPreferencesService.loadUserPreferences().getLocale());
 
         var fxmlLoader = new FXMLLoader(
-                getClass().getClassLoader().getResource("view/" + sceneName + ".fxml"),
+                getClass().getClassLoader().getResource("view/" + sceneName + "View.fxml"),
                 resourceBundle);
         fxmlLoader.setControllerFactory(applicationContext::getBean);
 
@@ -86,9 +91,9 @@ public class SceneChangeService {
             throw new IllegalArgumentException(e);
         }
 
-        if (nonNull( stage.getScene())) {
+        if (nonNull(stage.getScene())) {
             fadeScenes(nextScene);
-        }else{
+        } else {
             stage.setScene(nextScene);
         }
     }
