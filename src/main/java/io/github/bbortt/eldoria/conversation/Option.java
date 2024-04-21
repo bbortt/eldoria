@@ -1,8 +1,16 @@
 package io.github.bbortt.eldoria.conversation;
 
-public interface Option {
+import lombok.Getter;
 
-    String getKey();
+@Getter
+public sealed class Option permits ContinueButtonOption {
 
-    Conversation getNextConversation();
+    private final String translationKey;
+
+    private final Conversation nextConversation;
+
+    public Option(String translationKey, Conversation nextConversation) {
+        this.translationKey = translationKey;
+        this.nextConversation = nextConversation;
+    }
 }
