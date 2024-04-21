@@ -20,6 +20,10 @@ import static java.util.Collections.singletonList;
 
 public final class ConversationEnd implements ConversationPart {
 
+    private ConversationEnd() {
+        // Static access only
+    }
+
     public static Conversation conversationEnd() {
         return () -> singletonList(new ConversationEnd());
     }

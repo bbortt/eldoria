@@ -32,7 +32,7 @@ class GameServiceTest {
     @Nested
     class HasSavedAnyGames {
 
-        public static Stream<Long> returnsFalseIfCountIsLessThanOrEqualToZero() {
+        static Stream<Long> returnsFalseIfCountIsLessThanOrEqualToZero() {
             return Stream.of(0L, -1L);
         }
 

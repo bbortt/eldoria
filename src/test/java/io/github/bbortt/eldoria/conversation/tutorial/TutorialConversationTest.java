@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class TutorialConversationTest extends AbstractConversationTest {
 
     @Test
-    public void conversationEnds() {
+    void conversationEnds() {
         var fixture = new TutorialConversation();
 
         assertTrue(conversationEnds(fixture.get()), "TutorialConversationTest did not end with ConversationEnd");

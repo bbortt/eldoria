@@ -8,7 +8,7 @@ import static io.github.bbortt.eldoria.state.GameState.MAIN_MENU;
 import static io.github.bbortt.eldoria.state.GameState.TUTORIAL;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class GameTest {
+class GameTest {
 
     private Game fixture;
 

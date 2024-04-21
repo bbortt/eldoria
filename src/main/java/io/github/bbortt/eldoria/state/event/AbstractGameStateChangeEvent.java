@@ -25,11 +25,11 @@ public abstract class AbstractGameStateChangeEvent extends ApplicationEvent {
 
     private final @Nullable String initialScene;
 
-    public AbstractGameStateChangeEvent(GameState gameState) {
+    protected AbstractGameStateChangeEvent(GameState gameState) {
         this(gameState, null);
     }
 
-    public AbstractGameStateChangeEvent(GameState gameState, @Nullable String initialScene) {
+    protected AbstractGameStateChangeEvent(GameState gameState, @Nullable String initialScene) {
         super(gameState);
         this.initialScene = initialScene;
     }

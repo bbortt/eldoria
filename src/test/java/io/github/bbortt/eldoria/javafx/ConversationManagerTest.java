@@ -53,7 +53,7 @@ class ConversationManagerTest {
     private String currentText = "";
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         doAnswer(invocationOnMock -> currentText = invocationOnMock.getArgument(0)).when(labelMock).setText(anyString());
 
         doReturn(buttonContainerChildrenMock).when(buttonContainerMock).getChildren();
@@ -65,7 +65,7 @@ class ConversationManagerTest {
     class PlayConversation {
 
         @Test
-        public void singleTextPart() {
+        void singleTextPart() {
             var translationKey = "tutorial.welcome.introduction";
             var translatedText = "Welcome to the Eldoria tutorial!";
 
@@ -90,7 +90,7 @@ class ConversationManagerTest {
         }
 
         @Test
-        public void decisionWithContinueOption() {
+        void decisionWithContinueOption() {
             var buttonTextKey = "global.button.continue";
             var buttonText = "Continue";
             var nextTextKey = "tutorial.welcome.character-introduction";
@@ -131,7 +131,7 @@ class ConversationManagerTest {
         }
 
         @Test
-        public void conversationEndResolvesFuture() {
+        void conversationEndResolvesFuture() {
             var conversation = conversationEnd();
 
             Future<Void> playedConversation = fixture.playConversation(conversation);
