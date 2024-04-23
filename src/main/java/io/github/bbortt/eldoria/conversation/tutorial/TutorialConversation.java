@@ -16,33 +16,39 @@
 
 package io.github.bbortt.eldoria.conversation.tutorial;
 
-import io.github.bbortt.eldoria.conversation.ContinueButtonOption;
 import io.github.bbortt.eldoria.conversation.Conversation;
 import io.github.bbortt.eldoria.conversation.ConversationPart;
-import io.github.bbortt.eldoria.conversation.Decision;
-import io.github.bbortt.eldoria.conversation.Text;
 
 import java.util.List;
 
+import static io.github.bbortt.eldoria.conversation.CombinedConversations.showTextAndConfirm;
+import static io.github.bbortt.eldoria.conversation.CombinedConversations.showTextWithVariablesAndConfirm;
 import static io.github.bbortt.eldoria.conversation.ConversationEnd.conversationEnd;
+import static io.github.bbortt.eldoria.conversation.Text.showText;
+import static io.github.bbortt.eldoria.conversation.TextInput.awaitTextInput;
 
 public class TutorialConversation implements Conversation {
 
+    private String playerName;
+
     @Override
     public List<ConversationPart> get() {
-        return List.of(
-                new Text("tutorial.welcome.introduction"),
-                new Decision(
-                        List.of(
-                                new ContinueButtonOption(
-                                        conversationEnd()
-//                                        () -> List.of(
-//                                                new Text("tutorial.welcome.character-introduction"),
-//                                                conversationEnd()
-//                                        )
-                                )
-                        )
-                )
-        );
+        return showTextAndConfirm(
+                "tutorial.welcome.introduction",
+                showTextAndConfirm(
+                        "tutorial.welcome.character-introduction",
+                        showTextAndConfirm(
+                                "tutorial.welcome.guild-introduction",
+                                showTextAndConfirm(
+                                        "tutorial.welcome.arena-entrance",
+                                        () -> List.of(
+                                                showText("tutorial.welcome.chose-name"),
+                                                awaitTextInput(
+                                                        (result) -> playerName = result,
+                                                        showTextWithVariablesAndConfirm(
+                                                                "tutorial.welcome.your-journey-begins",
+                                                                new Object[]{playerName},
+                                                                conversationEnd())))))))
+                .get();
     }
 }

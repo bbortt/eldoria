@@ -18,4 +18,5 @@ package io.github.bbortt.eldoria.conversation;
 
 public interface ConversationPart {
 
+    void applyTo(ConversationManager.ConversationPlayer conversationPlayer);
 }

@@ -16,6 +16,7 @@
 
 package io.github.bbortt.eldoria.i18n;
 
+import jakarta.annotation.Nonnull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.MessageSource;
 import org.springframework.context.support.ResourceBundleMessageSource;
@@ -32,10 +33,11 @@ import static java.util.Collections.enumeration;
 @Slf4j
 public class SpringResourceBundle extends ResourceBundle {
 
-    private Set<String> keys = new ConcurrentSkipListSet<>();
+    private final ResourceBundleProvider resourceBundleProvider = new ResourceBundleProvider();
+    private final Set<String> keys = new ConcurrentSkipListSet<>();
 
-    private MessageSource messageSource;
-    private Locale locale;
+    private final MessageSource messageSource;
+    private final Locale locale;
 
     public SpringResourceBundle(MessageSource messageSource, Locale locale) {
         this.messageSource = messageSource;
@@ -43,16 +45,17 @@ public class SpringResourceBundle extends ResourceBundle {
     }
 
     @Override
-    protected String handleGetObject(String key) {
+    protected String handleGetObject(@Nonnull String key) {
         return messageSource.getMessage(key, null, locale);
     }
 
+    @Nonnull
     @Override
     public Enumeration<String> getKeys() {
         if (keys.isEmpty() && messageSource instanceof ResourceBundleMessageSource resourceBundleMessageSource) {
             resourceBundleMessageSource.getBasenameSet().forEach(baseName -> {
                 try {
-                    ResourceBundle resourceBundle = ResourceBundle.getBundle(baseName, locale);
+                    ResourceBundle resourceBundle = resourceBundleProvider.getBundle(baseName, locale);
                     keys.addAll(resourceBundle.keySet());
                 } catch (MissingResourceException e) {
                     log.error("No resource bundle found for basename {} and locale {}!", baseName, locale, e);
@@ -62,5 +65,12 @@ public class SpringResourceBundle extends ResourceBundle {
         }
 
         return enumeration(keys);
+    }
+
+    static class ResourceBundleProvider{
+
+        public ResourceBundle getBundle(String baseName, Locale locale) {
+            return ResourceBundle.getBundle(baseName, locale);
+        }
     }
 }

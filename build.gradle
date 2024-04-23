@@ -52,6 +52,7 @@ dependencies {
 
     implementation "fr.brouillard.oss:cssfx:${cssfxVersion}"
     implementation "io.github.palexdev:materialfx:${materialfxVersion}"
+    implementation "jakarta.annotation:jakarta.annotation-api:${annotationApiVersion}"
     implementation "jakarta.transaction:jakarta.transaction-api:${transactionApiVersion}"
     implementation "org.springframework.boot:spring-boot-starter-data-jpa"
     developmentOnly "org.springframework.boot:spring-boot-devtools"

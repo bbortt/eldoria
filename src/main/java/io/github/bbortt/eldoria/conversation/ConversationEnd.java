@@ -27,4 +27,9 @@ public final class ConversationEnd implements ConversationPart {
     public static Conversation conversationEnd() {
         return () -> singletonList(new ConversationEnd());
     }
+
+    @Override
+    public void applyTo(ConversationManager.ConversationPlayer conversationPlayer) {
+        throw new IllegalArgumentException("This method shall not be invoked!");
+    }
 }

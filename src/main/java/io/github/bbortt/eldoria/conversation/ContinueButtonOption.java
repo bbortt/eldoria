@@ -16,9 +16,15 @@
 
 package io.github.bbortt.eldoria.conversation;
 
+import java.util.List;
+
 public final class ContinueButtonOption extends Option {
 
-    public ContinueButtonOption(Conversation nextConversation) {
+    private ContinueButtonOption(Conversation nextConversation) {
         super("global.button.continue", nextConversation);
+    }
+
+    public static Decision confirmAndContinueWith(Conversation nextConversation) {
+        return new Decision(List.of(new ContinueButtonOption(nextConversation)));
     }
 }

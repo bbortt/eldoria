@@ -16,16 +16,24 @@
 
 package io.github.bbortt.eldoria.conversation;
 
-import lombok.Getter;
+import io.github.palexdev.materialfx.controls.MFXButton;
+import jakarta.annotation.Nonnull;
 
 import java.util.List;
 
-@Getter
-public final class Decision implements ConversationPart {
+public record Decision(@Nonnull List<Option> options) implements ConversationPart {
 
-    private final List<Option> options;
+    @Override
+    public void applyTo(ConversationManager.ConversationPlayer conversationPlayer) {
+        for (var option : options) {
+            var button = new MFXButton(conversationPlayer.resolveTranslation(option.getTranslationKey()));
+            button.setOnAction(event -> {
+                if (option instanceof ContinueButtonOption continueOption) {
+                    conversationPlayer.continueWith(continueOption.getNextConversation());
+                }
+            });
 
-    public Decision(List<Option> options) {
-        this.options = options;
+            conversationPlayer.getButtonContainer().getChildren().add(button);
+        }
     }
 }

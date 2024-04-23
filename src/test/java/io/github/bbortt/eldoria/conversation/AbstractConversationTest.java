@@ -1,22 +1,25 @@
 package io.github.bbortt.eldoria.conversation;
 
-import java.util.List;
-
 public abstract class AbstractConversationTest {
 
-    protected boolean conversationEnds(List<ConversationPart> parts) {
-        for (ConversationPart part : parts) {
+    protected boolean conversationEnds(Conversation conversation) {
+        for (ConversationPart part : conversation.get()) {
             if (part instanceof Decision decision) {
-                for (Option option : decision.getOptions()) {
+                for (Option option : decision.options()) {
                     if (option instanceof ContinueButtonOption continueOption) {
                         Conversation nextConversation = continueOption.getNextConversation();
-                        return conversationEnds(nextConversation.get());
+                        return conversationEnds(nextConversation);
                     }
                 }
+            } else if (part instanceof TextInput textInput) {
+                return conversationEnds(textInput.getNextConversation());
             } else if (part instanceof ConversationEnd) {
                 return true;
             }
+
+            System.out.println(part);
         }
+
         return false;
     }
 }

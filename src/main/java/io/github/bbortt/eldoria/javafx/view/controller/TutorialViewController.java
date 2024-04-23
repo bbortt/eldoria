@@ -18,7 +18,7 @@ package io.github.bbortt.eldoria.javafx.view.controller;
 
 import io.github.bbortt.eldoria.conversation.tutorial.TutorialConversation;
 import io.github.bbortt.eldoria.i18n.SpringResourceBundle;
-import io.github.bbortt.eldoria.javafx.ConversationManager;
+import io.github.bbortt.eldoria.conversation.ConversationManager;
 import io.github.bbortt.eldoria.service.UserPreferencesService;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -49,7 +49,7 @@ public class TutorialViewController {
         var conversation = new TutorialConversation();
 
         new ConversationManager(tutorialText, buttonContainer, new SpringResourceBundle(messageSource, userPreferencesService.loadUserPreferences().getLocale()))
-                .playConversation(conversation);
+                .playConversationAndWait(conversation);
 
         userPreferencesService.setTutorialFinished();
     }

@@ -17,35 +17,52 @@
 package io.github.bbortt.eldoria.conversation;
 
 import jakarta.annotation.Nullable;
-import lombok.Getter;
 
-import java.io.InputStream;
-import java.util.Optional;
-import java.util.function.Supplier;
-
-import static java.util.Objects.nonNull;
+import static java.lang.System.lineSeparator;
+import static java.text.MessageFormat.format;
+import static java.util.Objects.isNull;
+import static org.springframework.util.StringUtils.hasLength;
 
 public final class Text implements ConversationPart {
 
-    @Getter
     private final String translationKey;
 
-    private @Nullable Supplier<InputStream> backgroundImage;
+    private @Nullable Object[] arguments;
 
-    public Text(String translationKey) {
+    // private @Nullable Supplier<InputStream> backgroundImage;
+
+    private Text(String translationKey) {
         this.translationKey = translationKey;
     }
 
-    public Text(String translationKey, Supplier<InputStream> backgroundImage) {
+    public Text(String translationKey, Object[] arguments) {
         this.translationKey = translationKey;
-        this.backgroundImage = backgroundImage;
+        this.arguments = arguments;
     }
 
-    public Optional<InputStream> getBackgroundImage() {
-        if (nonNull(backgroundImage)) {
-            return Optional.of(backgroundImage.get());
+    public static ConversationPart showText(String translationKey) {
+        return new Text(translationKey);
+    }
+
+    public static ConversationPart showTextWithVariables(String translationKey, Object... arguments) {
+        return new Text(translationKey, arguments);
+    }
+
+    @Override
+    public void applyTo(ConversationManager.ConversationPlayer conversationPlayer) {
+        var conversationText = conversationPlayer.getConversationText();
+
+        var currentText = conversationText.getText();
+        if (hasLength(conversationText.getText())) {
+            currentText += lineSeparator();
+        } else {
+            currentText = "";
         }
 
-        return Optional.empty();
+        if (isNull(arguments)) {
+            conversationText.setText(currentText + conversationPlayer.resolveTranslation(translationKey));
+        } else {
+            conversationText.setText(currentText + format(conversationPlayer.resolveTranslation(translationKey), arguments));
+        }
     }
 }

@@ -18,16 +18,28 @@ package io.github.bbortt.eldoria.conversation;
 
 import lombok.Getter;
 
+import java.util.function.Consumer;
+
 import static lombok.AccessLevel.PACKAGE;
 
-@Getter(PACKAGE)
-public sealed class Option permits ContinueButtonOption {
+public final class TextInput implements ConversationPart {
 
-    private final String translationKey;
+    private final Consumer<String> resultEmitter;
+
+    @Getter(PACKAGE)
     private final Conversation nextConversation;
 
-    public Option(String translationKey, Conversation nextConversation) {
-        this.translationKey = translationKey;
+    private TextInput(Consumer<String> resultEmitter, Conversation nextConversation) {
+        this.resultEmitter = resultEmitter;
         this.nextConversation = nextConversation;
+    }
+
+    public static ConversationPart awaitTextInput(Consumer<String> resultEmitter, Conversation nextConversation) {
+        return new TextInput(resultEmitter, nextConversation);
+    }
+
+    @Override
+    public void applyTo(ConversationManager.ConversationPlayer conversationPlayer) {
+        conversationPlayer.continueWith(nextConversation);
     }
 }
