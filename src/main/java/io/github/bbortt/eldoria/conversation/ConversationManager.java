@@ -21,10 +21,8 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
 
-import static java.lang.Thread.currentThread;
+import static javafx.application.Platform.runLater;
 
 public class ConversationManager {
 
@@ -38,19 +36,7 @@ public class ConversationManager {
         this.springResourceBundle = springResourceBundle;
     }
 
-    public void playConversationAndWait(Conversation conversation) {
-        try {
-            playConversation(conversation).get();
-        } catch (ExecutionException | InterruptedException e) {
-            if (e instanceof InterruptedException) {
-                currentThread().interrupt();
-            }
-
-            throw new IllegalArgumentException("Exception occurred while waiting for conversation to finish", e);
-        }
-    }
-
-    public Future<Void> playConversation(Conversation conversation) {
+    public CompletableFuture<Void> playConversation(Conversation conversation) {
         var conversationPlayer = new ConversationPlayer();
         conversationPlayer.continueWith(conversation);
         return conversationPlayer.conversationCompleted;
@@ -76,7 +62,7 @@ public class ConversationManager {
             conversationText.setText("");
             buttonContainer.getChildren().clear();
 
-            new Thread(() -> applyEachConversationPart(conversation)).start();
+            runLater(() -> applyEachConversationPart(conversation));
         }
 
         private void applyEachConversationPart(Conversation conversation) {

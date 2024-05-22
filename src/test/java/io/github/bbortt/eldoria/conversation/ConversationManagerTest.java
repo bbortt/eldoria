@@ -15,7 +15,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.testfx.framework.junit5.ApplicationExtension;
 
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeoutException;
@@ -24,8 +23,6 @@ import static io.github.bbortt.eldoria.conversation.ConversationEnd.conversation
 import static java.util.Collections.singletonList;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.mockito.ArgumentCaptor.captor;
 import static org.mockito.Mockito.clearInvocations;
 import static org.mockito.Mockito.doReturn;
@@ -52,43 +49,6 @@ class ConversationManagerTest {
     @BeforeEach
     void setUp() {
         fixture = new ConversationManager(labelMock, buttonContainerMock, springResourceBundle);
-    }
-
-    @Nested
-    class PlayConversationAndWait {
-
-        @Test
-        void blocksUntilFutureWouldBeResolved() {
-            Conversation conversation = mock(Conversation.class);
-            CompletableFuture<Void> mockedFuture = new CompletableFuture<>();
-
-            var rootCauseMessage = "Test exception";
-            mockedFuture.completeExceptionally(new ExecutionException(new Exception(rootCauseMessage)));
-
-            var modifiedConversationManager = new ConversationManager(labelMock, buttonContainerMock, springResourceBundle) {
-                @Override
-                public CompletableFuture<Void> playConversation(Conversation conversation) {
-                    return mockedFuture;
-                }
-            };
-
-            assertThatThrownBy(() -> modifiedConversationManager.playConversationAndWait(conversation))
-                    .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessageStartingWith("Exception occurred while waiting for conversation to finish")
-                    .rootCause()
-                    .hasMessage(rootCauseMessage);
-        }
-
-        @Test
-        void conversationEndResolvesFuture() {
-            doReturn(buttonContainerChildrenMock).when(buttonContainerMock).getChildren();
-
-            var conversation = conversationEnd();
-            assertDoesNotThrow(() -> fixture.playConversationAndWait(conversation));
-
-            verify(labelMock).setText("");
-            verify(buttonContainerChildrenMock).clear();
-        }
     }
 
     @Nested
