@@ -41,7 +41,7 @@ class TextTest {
     @Test
     void fromStaticAccessorWithVariables() {
         var translationKey = "not the string your looking for";
-        Supplier<Object[]> arguments = () -> new Object[]{"one", "two", "or three"};
+        Supplier<Object[]> arguments = () -> new String[]{"one", "two", "or three"};
 
         assertThat(showTextWithVariables(translationKey, arguments))
                 .isInstanceOf(ConversationPart.class)

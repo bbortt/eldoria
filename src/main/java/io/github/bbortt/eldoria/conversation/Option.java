@@ -18,16 +18,31 @@ package io.github.bbortt.eldoria.conversation;
 
 import lombok.Getter;
 
+import static java.util.Objects.nonNull;
 import static lombok.AccessLevel.PACKAGE;
 
 @Getter(PACKAGE)
-public sealed class Option permits ContinueButtonOption {
+public sealed class Option permits ContinueButtonOption, OptionWithCallback {
 
     private final String translationKey;
-    private final Conversation nextConversation;
 
-    public Option(String translationKey, Conversation nextConversation) {
+    @Getter
+    private Conversation nextConversation;
+
+    protected Option(String translationKey) {
         this.translationKey = translationKey;
+    }
+
+    protected Option(String translationKey, Conversation nextConversation) {
+        this.translationKey = translationKey;
+        this.nextConversation = nextConversation;
+    }
+
+    public void setNextConversation(Conversation nextConversation) {
+        if (nonNull(this.nextConversation)) {
+            throw new IllegalArgumentException("Conversation already initialized!");
+        }
+
         this.nextConversation = nextConversation;
     }
 }

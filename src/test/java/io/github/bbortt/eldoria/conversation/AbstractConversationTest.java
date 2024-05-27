@@ -6,10 +6,8 @@ public abstract class AbstractConversationTest {
         for (ConversationPart part : conversation.get()) {
             if (part instanceof Decision decision) {
                 for (Option option : decision.options()) {
-                    if (option instanceof ContinueButtonOption continueOption) {
-                        var nextConversation = continueOption.getNextConversation();
+                    var nextConversation = option.getNextConversation();
                         return verifyConversationEnds(nextConversation);
-                    }
                 }
             } else if (part instanceof TextInput textInput) {
                 return verifyConversationEnds(textInput.getNextConversation());

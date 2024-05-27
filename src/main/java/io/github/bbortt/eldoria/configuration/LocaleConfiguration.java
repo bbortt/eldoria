@@ -29,10 +29,10 @@ public class LocaleConfiguration {
     public ResourceBundleMessageSource messageSource() {
         ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
         messageSource.setBasenames(
+                "i18n/character",
                 "i18n/global",
                 "i18n/main",
-                "i18n/tutorial"
-                );
+                "i18n/tutorial");
         messageSource.setDefaultEncoding(UTF_8.name());
         return messageSource;
     }
