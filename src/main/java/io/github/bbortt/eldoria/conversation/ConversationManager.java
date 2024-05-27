@@ -27,12 +27,12 @@ import static javafx.application.Platform.runLater;
 public class ConversationManager {
 
     private final Label conversationText;
-    private final VBox buttonContainer;
+    private final VBox actionContainer;
     private final SpringResourceBundle springResourceBundle;
 
-    public ConversationManager(Label conversationText, VBox buttonContainer, SpringResourceBundle springResourceBundle) {
+    public ConversationManager(Label conversationText, VBox actionContainer, SpringResourceBundle springResourceBundle) {
         this.conversationText = conversationText;
-        this.buttonContainer = buttonContainer;
+        this.actionContainer = actionContainer;
         this.springResourceBundle = springResourceBundle;
     }
 
@@ -54,13 +54,13 @@ public class ConversationManager {
             return conversationText;
         }
 
-        VBox getButtonContainer() {
-            return buttonContainer;
+        VBox getActionContainer() {
+            return actionContainer;
         }
 
         void continueWith(Conversation conversation) {
             conversationText.setText("");
-            buttonContainer.getChildren().clear();
+            actionContainer.getChildren().clear();
 
             runLater(() -> applyEachConversationPart(conversation));
         }

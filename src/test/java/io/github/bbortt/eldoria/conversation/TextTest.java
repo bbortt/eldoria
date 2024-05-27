@@ -11,6 +11,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.testfx.framework.junit5.ApplicationExtension;
 
+import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 import static io.github.bbortt.eldoria.conversation.Text.showText;
@@ -40,7 +41,7 @@ class TextTest {
     @Test
     void fromStaticAccessorWithVariables() {
         var translationKey = "not the string your looking for";
-        var arguments = new Object[]{"one", "two", "or three"};
+        Supplier<Object[]> arguments = () -> new Object[]{"one", "two", "or three"};
 
         assertThat(showTextWithVariables(translationKey, arguments))
                 .isInstanceOf(ConversationPart.class)
@@ -115,7 +116,7 @@ class TextTest {
 
             doReturn(translatedText).when(conversationPlayerMock).resolveTranslation(translationKey);
 
-            showTextWithVariables(translationKey, "you").applyTo(conversationPlayerMock);
+            showTextWithVariables(translationKey, () -> new String[]{"you"}).applyTo(conversationPlayerMock);
 
             verify(labelMock).setText("you can totally do this");
 
@@ -132,7 +133,7 @@ class TextTest {
 
             doReturn(translatedText).when(conversationPlayerMock).resolveTranslation(translationKey);
 
-            showTextWithVariables(translationKey, "not do").applyTo(conversationPlayerMock);
+            showTextWithVariables(translationKey, () -> new String[]{"not do"}).applyTo(conversationPlayerMock);
 
             verify(labelMock).setText(currentText + lineSeparator() + "totally not do this");
 

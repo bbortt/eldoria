@@ -31,10 +31,10 @@ class DecisionTest {
     class ApplyTo {
 
         @Mock
-        private VBox buttonContainerMock;
+        private VBox actionContainerMock;
 
         @Mock
-        private ObservableList<Node> buttonContainerChildrenMock;
+        private ObservableList<Node> actionContainerChildrenMock;
 
         @Mock
         private ConversationManager.ConversationPlayer conversationPlayerMock;
@@ -74,16 +74,16 @@ class DecisionTest {
             var buttonText = "Continue";
             doReturn(buttonText).when(conversationPlayerMock).resolveTranslation(buttonTextKey);
 
-            doReturn(buttonContainerMock).when(conversationPlayerMock).getButtonContainer();
-            doReturn(buttonContainerChildrenMock).when(buttonContainerMock).getChildren();
+            doReturn(actionContainerMock).when(conversationPlayerMock).getActionContainer();
+            doReturn(actionContainerChildrenMock).when(actionContainerMock).getChildren();
 
             new Decision(singletonList(optionMock)).applyTo(conversationPlayerMock);
 
-            verify(buttonContainerMock).getChildren();
-            verifyNoMoreInteractions(buttonContainerMock);
+            verify(actionContainerMock).getChildren();
+            verifyNoMoreInteractions(actionContainerMock);
 
             ArgumentCaptor<MFXButton> buttonCaptor = captor();
-            verify(buttonContainerChildrenMock).add(buttonCaptor.capture());
+            verify(actionContainerChildrenMock).add(buttonCaptor.capture());
 
             var mfxButton = buttonCaptor.getValue();
             assertThat(mfxButton)

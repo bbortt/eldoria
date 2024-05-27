@@ -17,6 +17,7 @@
 package io.github.bbortt.eldoria.conversation;
 
 import java.util.List;
+import java.util.function.Supplier;
 
 import static io.github.bbortt.eldoria.conversation.ContinueButtonOption.confirmAndContinueWith;
 import static io.github.bbortt.eldoria.conversation.Text.showText;
@@ -34,9 +35,9 @@ public final class CombinedConversations {
                 confirmAndContinueWith(nextConversation));
     }
 
-    public static Conversation showTextWithVariablesAndConfirm(String translationKey, Object[] arguments, Conversation nextConversation) {
+    public static Conversation showTextWithVariablesAndConfirm(String translationKey, Supplier<Object[]> argumentSupplier, Conversation nextConversation) {
         return () -> List.of(
-                showTextWithVariables(translationKey, arguments),
+                showTextWithVariables(translationKey, argumentSupplier),
                 confirmAndContinueWith(nextConversation));
     }
 }

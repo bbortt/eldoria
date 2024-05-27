@@ -19,6 +19,7 @@ package io.github.bbortt.eldoria.javafx.view.controller;
 import io.github.bbortt.eldoria.conversation.ConversationManager;
 import io.github.bbortt.eldoria.conversation.tutorial.TutorialConversation;
 import io.github.bbortt.eldoria.i18n.SpringResourceBundle;
+import io.github.bbortt.eldoria.service.GameService;
 import io.github.bbortt.eldoria.service.UserPreferencesService;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -32,24 +33,31 @@ import org.springframework.stereotype.Component;
 public class TutorialViewController {
 
     private final MessageSource messageSource;
+    private final GameService gameService;
     private final UserPreferencesService userPreferencesService;
+
+    private final TutorialConversation conversation = new TutorialConversation();
 
     @FXML
     public Label tutorialText;
 
     @FXML
-    public VBox buttonContainer;
+    public VBox actionContainer;
 
-    public TutorialViewController(MessageSource messageSource, UserPreferencesService userPreferencesService) {
+    public TutorialViewController(MessageSource messageSource, GameService gameService, UserPreferencesService userPreferencesService) {
         this.messageSource = messageSource;
+        this.gameService = gameService;
         this.userPreferencesService = userPreferencesService;
     }
 
     public void initialize() {
-        var conversation = new TutorialConversation();
-
-        new ConversationManager(tutorialText, buttonContainer, new SpringResourceBundle(messageSource, userPreferencesService.loadUserPreferences().getLocale()))
+        new ConversationManager(tutorialText, actionContainer, new SpringResourceBundle(messageSource, userPreferencesService.loadUserPreferences().getLocale()))
                 .playConversation(conversation)
-                .thenAccept((ignore) -> userPreferencesService.setTutorialFinished());
+                .thenAccept(this::finishTutorialAndStartGame);
+    }
+
+    private void finishTutorialAndStartGame(Void ignore) {
+        userPreferencesService.setTutorialFinished();
+        gameService.startNewGame(conversation.getPlayerName());
     }
 }

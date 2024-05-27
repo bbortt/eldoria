@@ -18,6 +18,7 @@ package io.github.bbortt.eldoria.conversation.tutorial;
 
 import io.github.bbortt.eldoria.conversation.Conversation;
 import io.github.bbortt.eldoria.conversation.ConversationPart;
+import lombok.Getter;
 
 import java.util.List;
 
@@ -29,6 +30,7 @@ import static io.github.bbortt.eldoria.conversation.TextInput.awaitTextInput;
 
 public class TutorialConversation implements Conversation {
 
+    @Getter
     private String playerName;
 
     @Override
@@ -47,7 +49,7 @@ public class TutorialConversation implements Conversation {
                                                         (result) -> playerName = result,
                                                         showTextWithVariablesAndConfirm(
                                                                 "tutorial.welcome.your-journey-begins",
-                                                                new Object[]{playerName},
+                                                                () -> new Object[]{playerName},
                                                                 conversationEnd())))))))
                 .get();
     }

@@ -33,7 +33,7 @@ public record Decision(@Nonnull List<Option> options) implements ConversationPar
                 }
             });
 
-            conversationPlayer.getButtonContainer().getChildren().add(button);
+            conversationPlayer.getActionContainer().getChildren().add(button);
         }
     }
 }

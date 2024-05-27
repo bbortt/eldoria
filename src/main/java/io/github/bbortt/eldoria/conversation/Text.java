@@ -18,6 +18,8 @@ package io.github.bbortt.eldoria.conversation;
 
 import jakarta.annotation.Nullable;
 
+import java.util.function.Supplier;
+
 import static java.lang.System.lineSeparator;
 import static java.text.MessageFormat.format;
 import static java.util.Objects.isNull;
@@ -27,7 +29,7 @@ public final class Text implements ConversationPart {
 
     private final String translationKey;
 
-    private @Nullable Object[] arguments;
+    private @Nullable Supplier<Object[]> argumentSupplier;
 
     // private @Nullable Supplier<InputStream> backgroundImage;
 
@@ -35,17 +37,17 @@ public final class Text implements ConversationPart {
         this.translationKey = translationKey;
     }
 
-    public Text(String translationKey, Object[] arguments) {
+    public Text(String translationKey, Supplier<Object[]> argumentSupplier) {
         this.translationKey = translationKey;
-        this.arguments = arguments;
+        this.argumentSupplier = argumentSupplier;
     }
 
     public static ConversationPart showText(String translationKey) {
         return new Text(translationKey);
     }
 
-    public static ConversationPart showTextWithVariables(String translationKey, Object... arguments) {
-        return new Text(translationKey, arguments);
+    public static ConversationPart showTextWithVariables(String translationKey, Supplier<Object[]> argumentSupplier) {
+        return new Text(translationKey, argumentSupplier);
     }
 
     @Override
@@ -59,10 +61,10 @@ public final class Text implements ConversationPart {
             currentText = "";
         }
 
-        if (isNull(arguments)) {
+        if (isNull(argumentSupplier)) {
             conversationText.setText(currentText + conversationPlayer.resolveTranslation(translationKey));
         } else {
-            conversationText.setText(currentText + format(conversationPlayer.resolveTranslation(translationKey), arguments));
+            conversationText.setText(currentText + format(conversationPlayer.resolveTranslation(translationKey), argumentSupplier.get()));
         }
     }
 }

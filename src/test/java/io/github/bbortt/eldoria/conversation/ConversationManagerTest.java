@@ -36,10 +36,10 @@ class ConversationManagerTest {
     private Label labelMock;
 
     @Mock
-    private VBox buttonContainerMock;
+    private VBox actionContainerMock;
 
     @Mock
-    private ObservableList<Node> buttonContainerChildrenMock;
+    private ObservableList<Node> actionContainerChildrenMock;
 
     @Mock
     private SpringResourceBundle springResourceBundle;
@@ -48,7 +48,7 @@ class ConversationManagerTest {
 
     @BeforeEach
     void setUp() {
-        fixture = new ConversationManager(labelMock, buttonContainerMock, springResourceBundle);
+        fixture = new ConversationManager(labelMock, actionContainerMock, springResourceBundle);
     }
 
     @Nested
@@ -56,7 +56,7 @@ class ConversationManagerTest {
 
         @BeforeEach
         void beforeEachSetup() {
-            doReturn(buttonContainerChildrenMock).when(buttonContainerMock).getChildren();
+            doReturn(actionContainerChildrenMock).when(actionContainerMock).getChildren();
         }
 
         @Test
@@ -69,7 +69,7 @@ class ConversationManagerTest {
                     .isNotDone();
 
             verify(labelMock).setText("");
-            verify(buttonContainerChildrenMock).clear();
+            verify(actionContainerChildrenMock).clear();
 
             ArgumentCaptor<ConversationManager.ConversationPlayer> conversationPlayerCaptor = captor();
             verify(conversationPartMock).applyTo(conversationPlayerCaptor.capture());
@@ -78,7 +78,7 @@ class ConversationManagerTest {
             assertThat(conversationPlayer)
                     .satisfies(
                             p -> assertThat(p).extracting(ConversationManager.ConversationPlayer::getConversationText).isEqualTo(labelMock),
-                            p -> assertThat(p).extracting(ConversationManager.ConversationPlayer::getButtonContainer).isEqualTo(buttonContainerMock)
+                            p -> assertThat(p).extracting(ConversationManager.ConversationPlayer::getActionContainer).isEqualTo(actionContainerMock)
                     );
 
             var translationKey = "quote";
@@ -88,7 +88,7 @@ class ConversationManagerTest {
             assertThat(conversationPlayer.resolveTranslation(translationKey))
                     .isEqualTo(translatedValue);
 
-            clearInvocations(labelMock, buttonContainerChildrenMock);
+            clearInvocations(labelMock, actionContainerChildrenMock);
 
             conversationPlayer.continueWith(conversationEnd());
 
@@ -103,7 +103,7 @@ class ConversationManagerTest {
 
         private void verifyConversationCompletes(Future<Void> conversationCompleted) throws InterruptedException, ExecutionException, TimeoutException {
             verify(labelMock).setText("");
-            verify(buttonContainerChildrenMock).clear();
+            verify(actionContainerChildrenMock).clear();
 
             conversationCompleted.get(1, SECONDS);
 

@@ -16,6 +16,8 @@
 
 package io.github.bbortt.eldoria.conversation;
 
+import io.github.palexdev.materialfx.controls.MFXButton;
+import io.github.palexdev.materialfx.controls.MFXTextField;
 import lombok.Getter;
 
 import java.util.function.Consumer;
@@ -40,6 +42,13 @@ public final class TextInput implements ConversationPart {
 
     @Override
     public void applyTo(ConversationManager.ConversationPlayer conversationPlayer) {
-        conversationPlayer.continueWith(nextConversation);
+        var textInput = new MFXTextField("", conversationPlayer.resolveTranslation("global.character.username"));
+        var confirmButton = new MFXButton(conversationPlayer.resolveTranslation("global.button.confirm"));
+        confirmButton.setOnAction(event -> {
+            resultEmitter.accept(textInput.getText());
+            conversationPlayer.continueWith(nextConversation);
+        });
+
+        conversationPlayer.getActionContainer().getChildren().addAll(textInput, confirmButton);
     }
 }

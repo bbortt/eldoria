@@ -12,6 +12,6 @@
     </padding>
     <Label fx:id="tutorialText" wrapText="true" textAlignment="CENTER" prefWidth="600"/>
     <Separator prefWidth="100"/>
-    <VBox fx:id="buttonContainer" spacing="10.0" alignment="CENTER">
+    <VBox fx:id="actionContainer" spacing="10.0" alignment="CENTER">
     </VBox>
 </VBox>

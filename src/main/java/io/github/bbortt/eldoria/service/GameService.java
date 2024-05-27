@@ -16,6 +16,7 @@
 
 package io.github.bbortt.eldoria.service;
 
+import io.github.bbortt.eldoria.domain.Game;
 import io.github.bbortt.eldoria.domain.repository.GameRepository;
 import org.springframework.stereotype.Service;
 
@@ -30,5 +31,11 @@ public class GameService {
 
     public boolean hasSavedAnyGames() {
         return gameRepository.count() > 0;
+    }
+
+    public void startNewGame(String playerName) {
+        var game = new Game();
+
+        gameRepository.save(game);
     }
 }
