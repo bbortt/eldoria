@@ -50,12 +50,12 @@ class MainViewControllerTest {
 
         @Test
         void configuresBackground() {
-            var mainViewMock = mock(VBox.class);
-            setField(fixture, "mainView", mainViewMock, VBox.class);
+            var viewBoxMock = mock(VBox.class);
+            setField(fixture, "viewBox", viewBoxMock, VBox.class);
 
             fixture.initialize();
 
-            verify(mainViewMock).setBackground(any(Background.class));
+            verify(viewBoxMock).setBackground(any(Background.class));
         }
     }
 

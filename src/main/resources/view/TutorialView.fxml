@@ -6,11 +6,12 @@
 <?import javafx.scene.layout.VBox?>
 
 <VBox alignment="CENTER" spacing="10.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8"
-      fx:controller="io.github.bbortt.eldoria.javafx.view.controller.TutorialViewController">
+      fx:id="viewBox" fx:controller="io.github.bbortt.eldoria.javafx.view.controller.TutorialViewController">
     <padding>
         <Insets top="20" right="20" bottom="20" left="20"/>
     </padding>
-    <Label fx:id="tutorialText" wrapText="true" textAlignment="CENTER" prefWidth="600"/>
+    <Label fx:id="tutorialText" wrapText="true" textAlignment="CENTER" prefWidth="600"
+           style="-fx-background-color: white;"/>
     <Separator prefWidth="100"/>
     <VBox fx:id="actionContainer" spacing="10.0" alignment="CENTER">
     </VBox>

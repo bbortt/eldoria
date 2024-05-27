@@ -22,19 +22,13 @@ import io.github.bbortt.eldoria.state.event.StartNewGameEvent;
 import io.github.bbortt.eldoria.state.event.StartTutorialEvent;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import javafx.fxml.FXML;
-import javafx.scene.image.Image;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.BackgroundPosition;
-import javafx.scene.layout.BackgroundRepeat;
-import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 
-import static java.util.Objects.requireNonNull;
+import static io.github.bbortt.eldoria.javafx.view.controller.ViewUtils.setBackground;
 
 @Slf4j
 @Component
@@ -45,7 +39,7 @@ public class MainViewController {
     private final UserPreferencesService userPreferencesService;
 
     @FXML
-    private VBox mainView;
+    private VBox viewBox;
 
     @FXML
     private MFXButton exitButton;
@@ -61,9 +55,7 @@ public class MainViewController {
     }
 
     public void initialize() {
-        var backgroundImage = new Image(requireNonNull(getClass().getClassLoader().getResourceAsStream("images/background.png")));
-        var background = new BackgroundImage(backgroundImage, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, false, true));
-        mainView.setBackground(new Background(background));
+        setBackground("images/background.png", viewBox);
     }
 
     @FXML

@@ -60,16 +60,19 @@ class TextInputTest {
         @Mock
         private ConversationManager.ConversationPlayer conversationPlayerMock;
 
+        @BeforeEach
+        void beforeEachSetup() {
+            doReturn(actionContainerMock).when(conversationPlayerMock).getActionContainer();
+            doReturn(actionContainerChildrenMock).when(actionContainerMock).getChildren();
+        }
+
         @Test
-        void awaitsTextInput() {
+        void setupControls() {
             var usernameText = "Username";
             doReturn(usernameText).when(conversationPlayerMock).resolveTranslation("global.character.username");
 
             var confirmText = "Confirm";
             doReturn(confirmText).when(conversationPlayerMock).resolveTranslation("global.button.confirm");
-
-            doReturn(actionContainerMock).when(conversationPlayerMock).getActionContainer();
-            doReturn(actionContainerChildrenMock).when(actionContainerMock).getChildren();
 
             // Part 1: Setup
             fixture.applyTo(conversationPlayerMock);
@@ -91,6 +94,17 @@ class TextInputTest {
 
             verifyNoInteractions(resultEmitter);
             verify(conversationPlayerMock, never()).continueWith(nextConversation);
+        }
+
+        @Test
+        void awaitsTextInput() {
+            // Part 1: Setup
+            fixture.applyTo(conversationPlayerMock);
+
+            ArgumentCaptor<MFXTextField> inputCaptor = captor();
+            ArgumentCaptor<MFXButton> buttonCaptor = captor();
+
+            verify(actionContainerChildrenMock).addAll(inputCaptor.capture(), buttonCaptor.capture());
 
             // Part 2: Simulate input
             var inputText = "Dancing people are never wrong!";
@@ -102,6 +116,27 @@ class TextInputTest {
 
             verify(resultEmitter).accept(inputText);
             verify(conversationPlayerMock).continueWith(nextConversation);
+        }
+
+        @Test
+        void refusesEmptyInput() {
+            // Part 1: Setup
+            fixture.applyTo(conversationPlayerMock);
+
+            ArgumentCaptor<MFXTextField> inputCaptor = captor();
+            ArgumentCaptor<MFXButton> buttonCaptor = captor();
+
+            verify(actionContainerChildrenMock).addAll(inputCaptor.capture(), buttonCaptor.capture());
+
+            // Part 2: Simulate input
+            inputCaptor.getValue().setText("");
+
+            // Part 3: Verify confirmation button click
+            var actionEventMock = mock(ActionEvent.class);
+            buttonCaptor.getValue().getOnAction().handle(actionEventMock);
+
+            verifyNoInteractions(resultEmitter);
+            verify(conversationPlayerMock, never()).continueWith(nextConversation);
         }
     }
 }

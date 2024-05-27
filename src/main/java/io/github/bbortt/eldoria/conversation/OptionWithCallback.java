@@ -18,6 +18,7 @@ package io.github.bbortt.eldoria.conversation;
 
 public final class OptionWithCallback extends Option {
 
+    // TODO: Make use of this!
     private final Callback callback;
 
     public OptionWithCallback(String translationKey, Callback callback) {

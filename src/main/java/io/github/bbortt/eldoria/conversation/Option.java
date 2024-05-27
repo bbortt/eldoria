@@ -33,7 +33,7 @@ public sealed class Option permits ContinueButtonOption, OptionWithCallback {
         this.translationKey = translationKey;
     }
 
-    protected Option(String translationKey, Conversation nextConversation) {
+    public Option(String translationKey, Conversation nextConversation) {
         this.translationKey = translationKey;
         this.nextConversation = nextConversation;
     }

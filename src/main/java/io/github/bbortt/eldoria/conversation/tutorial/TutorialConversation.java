@@ -21,6 +21,7 @@ import io.github.bbortt.eldoria.conversation.ConversationPart;
 import io.github.bbortt.eldoria.conversation.Decision;
 import io.github.bbortt.eldoria.conversation.Option;
 import io.github.bbortt.eldoria.conversation.OptionWithCallback;
+import jakarta.annotation.Nullable;
 import lombok.Getter;
 
 import java.util.ArrayList;
@@ -72,31 +73,33 @@ public class TutorialConversation implements Conversation {
                                                                 showTextAndConfirm("tutorial.arena.introduction",
                                                                         partyConversation))))))));
 
-        var lastDecision = extractLastPartyConversationOption();
-        lastDecision.setNextConversation(
-                conversationEnd());
+        // Because the party setup is dynamic, we must "stop" the conversation here (code-wise) and continue below
+        var lastDecisions = extractLastPartyConversationOptions();
+        lastDecisions.forEach(decision -> decision.setNextConversation(
+                conversationEnd()));
 
         return tutorialConversation.get();
     }
 
     private Conversation createConversationWithNextConversation(List<Integer> indices, int currentIndex) {
         if (currentIndex == indices.size() - 1) {
-            return newArenaEncounterConversation(indices, currentIndex, new OptionWithCallback("tutorial.arena.accept-company", () -> partyDecision.add(indices.get(currentIndex))));
+            return newArenaEncounterConversation(indices, currentIndex, null);
         }
 
         var nextConversation = createConversationWithNextConversation(indices, currentIndex + 1);
-
-        return newArenaEncounterConversation(indices, currentIndex, new OptionWithCallback("tutorial.arena.accept-company", nextConversation, () -> partyDecision.add(indices.get(currentIndex))));
+        return newArenaEncounterConversation(indices, currentIndex, nextConversation);
     }
 
-    private Conversation newArenaEncounterConversation(List<Integer> indices, int currentIndex, OptionWithCallback partyDecision) {
+    private Conversation newArenaEncounterConversation(List<Integer> indices, int currentIndex, @Nullable Conversation nextConversation) {
         return () -> List.of(
                 showText(format("tutorial.arena.encounter-%s", indices.get(currentIndex))),
                 new Decision(
-                        List.of(partyDecision)));
+                        List.of(
+                                new OptionWithCallback("tutorial.arena.accept-company", nextConversation, () -> partyDecision.add(indices.get(currentIndex))),
+                                new Option("tutorial.arena.refuse-company", nextConversation))));
     }
 
-    private Option extractLastPartyConversationOption() {
+    private List<Option> extractLastPartyConversationOptions() {
         Conversation lastConversation = partyConversation;
         while (lastConversation.get().getLast() instanceof Decision decision
                 && nonNull(decision.options().getLast().getNextConversation())) {
@@ -107,6 +110,6 @@ public class TutorialConversation implements Conversation {
             throw new IllegalArgumentException("Error while building tutorial conversation!");
         }
 
-        return decision.options().getLast();
+        return decision.options();
     }
 }

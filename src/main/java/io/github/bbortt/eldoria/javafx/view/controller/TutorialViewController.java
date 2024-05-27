@@ -28,6 +28,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
 
+import static io.github.bbortt.eldoria.javafx.view.controller.ViewUtils.setBackground;
+
 @Slf4j
 @Component
 public class TutorialViewController {
@@ -37,6 +39,9 @@ public class TutorialViewController {
     private final UserPreferencesService userPreferencesService;
 
     private final TutorialConversation conversation = new TutorialConversation();
+
+    @FXML
+    private VBox viewBox;
 
     @FXML
     public Label tutorialText;
@@ -51,6 +56,8 @@ public class TutorialViewController {
     }
 
     public void initialize() {
+        setBackground("images/tutorial-introduction.png", viewBox);
+
         new ConversationManager(tutorialText, actionContainer, new SpringResourceBundle(messageSource, userPreferencesService.loadUserPreferences().getLocale()))
                 .playConversation(conversation)
                 .thenAccept(this::finishTutorialAndStartGame);

@@ -41,14 +41,14 @@ class TextTest {
     @Test
     void fromStaticAccessorWithVariables() {
         var translationKey = "not the string your looking for";
-        Supplier<Object[]> arguments = () -> new String[]{"one", "two", "or three"};
+        Supplier<Object[]> argumentSupplier = () -> new String[]{"one", "two", "or three"};
 
-        assertThat(showTextWithVariables(translationKey, arguments))
+        assertThat(showTextWithVariables(translationKey, argumentSupplier))
                 .isInstanceOf(ConversationPart.class)
                 .isInstanceOf(Text.class)
                 .hasNoNullFieldsOrProperties()
                 .hasFieldOrPropertyWithValue(TRANSLATION_KEY, translationKey)
-                .hasFieldOrPropertyWithValue("arguments", arguments);
+                .hasFieldOrPropertyWithValue("argumentSupplier", argumentSupplier);
     }
 
     @Nested
