@@ -23,7 +23,6 @@ import static io.github.bbortt.eldoria.conversation.Text.showText;
 import static io.github.bbortt.eldoria.conversation.TextInput.awaitTextInput;
 import static java.lang.String.format;
 import static java.util.Collections.shuffle;
-import static java.util.Objects.nonNull;
 
 import io.github.bbortt.eldoria.conversation.Conversation;
 import io.github.bbortt.eldoria.conversation.ConversationPart;
@@ -37,7 +36,9 @@ import lombok.Getter;
 
 public class TutorialConversation implements Conversation {
 
-    private final Conversation partyConversation;
+    private final List<Integer> partyIndices = new ArrayList<>(List.of(0, 1, 2, 3, 4));
+
+    private final Conversation tutorialConversation;
 
     @Getter
     private final List<Integer> partyDecision = new ArrayList<>();
@@ -46,15 +47,9 @@ public class TutorialConversation implements Conversation {
     private String playerName;
 
     public TutorialConversation() {
-        List<Integer> indices = new ArrayList<>(List.of(0, 1, 2, 3, 4));
-        shuffle(indices);
+        shuffle(partyIndices);
 
-        partyConversation = createConversationWithNextConversation(indices, 0);
-    }
-
-    @Override
-    public List<ConversationPart> get() {
-        var tutorialConversation = showTextAndConfirm(
+        tutorialConversation = showTextAndConfirm(
             "tutorial.welcome.introduction",
             showTextAndConfirm(
                 "tutorial.welcome.character-introduction",
@@ -70,7 +65,10 @@ public class TutorialConversation implements Conversation {
                                     showTextWithVariablesAndConfirm(
                                         "tutorial.welcome.your-journey-begins",
                                         () -> new String[] { playerName },
-                                        showTextAndConfirm("tutorial.arena.introduction", partyConversation)
+                                        showTextAndConfirm(
+                                            "tutorial.arena.introduction",
+                                            createPartyConversationContinuingWithNextConversation(partyIndices, 0, conversationEnd())
+                                        )
                                     )
                                 )
                             )
@@ -78,21 +76,24 @@ public class TutorialConversation implements Conversation {
                 )
             )
         );
+    }
 
-        // Because the party setup is dynamic, we must "stop" the conversation here (code-wise) and continue below
-        var lastDecisions = extractLastPartyConversationOptions();
-        lastDecisions.forEach(decision -> decision.setNextConversation(conversationEnd()));
-
+    @Override
+    public List<ConversationPart> get() {
         return tutorialConversation.get();
     }
 
-    private Conversation createConversationWithNextConversation(List<Integer> indices, int currentIndex) {
+    private Conversation createPartyConversationContinuingWithNextConversation(
+        List<Integer> indices,
+        int currentIndex,
+        Conversation nextConversation
+    ) {
         if (currentIndex == indices.size() - 1) {
-            return newArenaEncounterConversation(indices, currentIndex, null);
+            return newArenaEncounterConversation(indices, currentIndex, nextConversation);
         }
 
-        var nextConversation = createConversationWithNextConversation(indices, currentIndex + 1);
-        return newArenaEncounterConversation(indices, currentIndex, nextConversation);
+        var partyConversation = createPartyConversationContinuingWithNextConversation(indices, currentIndex + 1, nextConversation);
+        return newArenaEncounterConversation(indices, currentIndex, partyConversation);
     }
 
     private Conversation newArenaEncounterConversation(List<Integer> indices, int currentIndex, @Nullable Conversation nextConversation) {
@@ -110,20 +111,5 @@ public class TutorialConversation implements Conversation {
                     )
                 )
             );
-    }
-
-    private List<Option> extractLastPartyConversationOptions() {
-        Conversation lastConversation = partyConversation;
-        while (
-            lastConversation.get().getLast() instanceof Decision decision && nonNull(decision.options().getLast().getNextConversation())
-        ) {
-            lastConversation = decision.options().getLast().getNextConversation();
-        }
-
-        if (!(lastConversation.get().getLast() instanceof Decision decision)) {
-            throw new IllegalArgumentException("Error while building tutorial conversation!");
-        }
-
-        return decision.options();
     }
 }
