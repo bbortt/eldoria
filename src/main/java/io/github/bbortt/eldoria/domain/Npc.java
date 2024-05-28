@@ -19,12 +19,13 @@ package io.github.bbortt.eldoria.domain;
 import static io.github.bbortt.eldoria.game.Dice.rollD20;
 import static java.util.Arrays.stream;
 import static lombok.AccessLevel.PACKAGE;
+import static lombok.AccessLevel.PRIVATE;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter(PACKAGE)
-@AllArgsConstructor
+@AllArgsConstructor(access = PRIVATE)
 public enum Npc {
     // Frontline (Tank/Warrior)
     THANE(0, 180, 16, 16, 12, 14, 10, 10),
