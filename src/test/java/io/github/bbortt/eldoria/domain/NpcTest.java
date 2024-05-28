@@ -35,6 +35,18 @@ class NpcTest {
     @MethodSource
     @ParameterizedTest
     void createCharacter(Npc npc, String name) {
-        assertThat(npc.createCharacter()).extracting(Character::getName).isEqualTo(name);
+        // Combination of parameterized and repeated test is not possible - we're faking it!
+        for (int i = 0; i < 100; i++) {
+            var character = npc.createCharacter();
+
+            assertThat(character.getName()).isEqualTo(name);
+            assertThat(character.getMaxHP()).isGreaterThan(npc.getBaseMaxHP()).isLessThanOrEqualTo(npc.getBaseMaxHP() + 20);
+            assertThat(character.getAC()).isEqualTo(npc.getBaseAC());
+            assertThat(character.getStrength()).isEqualTo(npc.getBaseStrength());
+            assertThat(character.getDexterity()).isEqualTo(npc.getBaseDexterity());
+            assertThat(character.getConstitution()).isEqualTo(npc.getBaseConstitution());
+            assertThat(character.getIntelligence()).isEqualTo(npc.getBaseIntelligence());
+            assertThat(character.getWisdom()).isEqualTo(npc.getBaseWisdom());
+        }
     }
 }

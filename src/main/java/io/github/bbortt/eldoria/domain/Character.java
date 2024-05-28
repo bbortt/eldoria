@@ -35,14 +35,31 @@ public class Character {
     @Id
     private String name;
 
+    // Maximum hit points, determines how much health the character can have.
     private int maxHP;
+
+    // Current hit points, indicates the character's remaining health.
     private int currentHP;
+
+    // Armor Class, influences the difficulty for enemies to hit the character in combat.
     private int AC;
+
+    // Affects physical damage dealt in melee combat and carrying capacity.
     private int strength;
+
+    // Influences accuracy with ranged weapons, reflexes (initiative), and defense (AC).
     private int dexterity;
+
+    // Determines base hit points, stamina, and resistance to harmful effects.
     private int constitution;
+
+    // Affects spellcasting ability, problem-solving skills, and some social interactions.
     private int intelligence;
+
+    // Influences perception, awareness, willpower (resisting spells), and some social interactions.
     private int wisdom;
+
+    // Affects social interactions, influence on others, and inspiring allies.
     private int charisma;
     //    public void attack(Character target) {
     //        int attackRoll = rollD20() + getModifier(this.strength); // Roll d20 and add strength modifier

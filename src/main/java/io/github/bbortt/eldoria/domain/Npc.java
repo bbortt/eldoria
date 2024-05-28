@@ -16,30 +16,51 @@
 
 package io.github.bbortt.eldoria.domain;
 
+import static io.github.bbortt.eldoria.game.Dice.rollD20;
 import static java.util.Arrays.stream;
 import static lombok.AccessLevel.PACKAGE;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+@Getter(PACKAGE)
+@AllArgsConstructor
 public enum Npc {
-    THANE(0),
-    NYSSA(1),
-    ELYNDOR(2),
-    BROM(3),
-    SELENE(4);
+    // Frontline (Tank/Warrior)
+    THANE(0, 180, 16, 16, 12, 14, 10, 10),
+    // Rogue, probably
+    NYSSA(1, 120, 14, 10, 16, 12, 14, 14),
+    // Mage
+    ELYNDOR(2, 100, 12, 8, 12, 10, 16, 14),
+    // Frontline (Tank/Warrior)
+    BROM(3, 200, 14, 18, 8, 16, 8, 12),
+    // Cleric / Supporter
+    SELENE(4, 140, 14, 10, 12, 14, 14, 16);
 
-    @Getter(PACKAGE)
     private final int index;
 
-    Npc(int index) {
-        this.index = index;
-    }
+    private final int baseMaxHP;
+    private final int baseAC;
+    private final int baseStrength;
+    private final int baseDexterity;
+    private final int baseConstitution;
+    private final int baseIntelligence;
+    private final int baseWisdom;
 
     public static Npc fromIndex(int index) {
         return stream(values()).filter(npc -> npc.index == index).findFirst().orElseThrow();
     }
 
     public Character createCharacter() {
-        return Character.builder().name(toString().charAt(0) + toString().substring(1).toLowerCase()).build();
+        return Character.builder()
+            .name(toString().charAt(0) + toString().substring(1).toLowerCase())
+            .maxHP(baseMaxHP + rollD20())
+            .AC(baseAC)
+            .strength(baseStrength)
+            .dexterity(baseDexterity)
+            .constitution(baseConstitution)
+            .intelligence(baseIntelligence)
+            .wisdom(baseWisdom)
+            .build();
     }
 }
