@@ -16,11 +16,11 @@
 
 package io.github.bbortt.eldoria.configuration;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
-
-import static java.nio.charset.StandardCharsets.UTF_8;
 
 @Configuration
 public class LocaleConfiguration {
@@ -28,11 +28,7 @@ public class LocaleConfiguration {
     @Bean
     public ResourceBundleMessageSource messageSource() {
         ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
-        messageSource.setBasenames(
-                "i18n/character",
-                "i18n/global",
-                "i18n/main",
-                "i18n/tutorial");
+        messageSource.setBasenames("i18n/character", "i18n/global", "i18n/main", "i18n/tutorial");
         messageSource.setDefaultEncoding(UTF_8.name());
         return messageSource;
     }

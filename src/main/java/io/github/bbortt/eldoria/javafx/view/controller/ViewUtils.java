@@ -16,6 +16,8 @@
 
 package io.github.bbortt.eldoria.javafx.view.controller;
 
+import static java.util.Objects.requireNonNull;
+
 import javafx.scene.image.Image;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
@@ -23,8 +25,6 @@ import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.VBox;
-
-import static java.util.Objects.requireNonNull;
 
 class ViewUtils {
 
@@ -34,7 +34,13 @@ class ViewUtils {
 
     static void setBackground(String imageName, VBox container) {
         var backgroundImage = new Image(requireNonNull(ViewUtils.class.getClassLoader().getResourceAsStream(imageName)));
-        var background = new BackgroundImage(backgroundImage, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, false, true));
+        var background = new BackgroundImage(
+            backgroundImage,
+            BackgroundRepeat.NO_REPEAT,
+            BackgroundRepeat.NO_REPEAT,
+            BackgroundPosition.CENTER,
+            new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, false, true)
+        );
         container.setBackground(new Background(background));
     }
 }

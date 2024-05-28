@@ -19,5 +19,4 @@ package io.github.bbortt.eldoria.domain.repository;
 import io.github.bbortt.eldoria.domain.Game;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface GameRepository extends JpaRepository<Game, Long> {
-}
+public interface GameRepository extends JpaRepository<Game, Long> {}

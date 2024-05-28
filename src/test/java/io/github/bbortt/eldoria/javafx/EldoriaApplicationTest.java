@@ -1,5 +1,11 @@
 package io.github.bbortt.eldoria.javafx;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentCaptor.captor;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.springframework.test.util.ReflectionTestUtils.setField;
+
 import javafx.stage.Stage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -11,13 +17,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.testfx.framework.junit5.ApplicationExtension;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentCaptor.captor;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.springframework.test.util.ReflectionTestUtils.setField;
-
-@ExtendWith({ApplicationExtension.class, MockitoExtension.class})
+@ExtendWith({ ApplicationExtension.class, MockitoExtension.class })
 class EldoriaApplicationTest {
 
     @Mock
@@ -46,11 +46,7 @@ class EldoriaApplicationTest {
             ArgumentCaptor<StageReadyEvent> argument = captor();
             verify(applicationContextMock).publishEvent(argument.capture());
 
-            assertThat(argument.getAllValues())
-                    .hasSize(1)
-                    .first()
-                    .extracting(StageReadyEvent::getStage)
-                    .isEqualTo(stageMock);
+            assertThat(argument.getAllValues()).hasSize(1).first().extracting(StageReadyEvent::getStage).isEqualTo(stageMock);
         }
     }
 }

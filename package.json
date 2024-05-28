@@ -2,22 +2,22 @@
   "name": "eldoria",
   "version": "0.0.0",
   "private": true,
-  "scripts": {
-    "prepare": "husky",
-    "prettier": "prettier \"{,src/**/}*.{fxml,java,json,md,xml,yaml,yml}\"",
-    "prettier:check": "npm run prettier -- --check",
-    "prettier:format": "npm run prettier -- --write"
+  "homepage": "https://github.com/bbortt/eldoria#readme",
+  "bugs": {
+    "url": "https://github.com/bbortt/eldoria/issues"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/bbortt/eldoria.git"
   },
-  "author": "Timon Borter <timon.borter@gmx.ch>",
   "license": "Apache-2.0",
-  "bugs": {
-    "url": "https://github.com/bbortt/eldoria/issues"
+  "author": "Timon Borter <timon.borter@gmx.ch>",
+  "scripts": {
+    "prepare": "husky",
+    "prettier": "prettier \"{,src/**/}*.{java,json,md,xml,yaml,yml}\"",
+    "prettier:check": "npm run prettier -- --check",
+    "prettier:format": "npm run prettier -- --write"
   },
-  "homepage": "https://github.com/bbortt/eldoria#readme",
   "devDependencies": {
     "husky": "^9.0.11",
     "lint-staged": "^15.2.5",

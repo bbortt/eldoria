@@ -16,13 +16,12 @@
 
 package io.github.bbortt.eldoria.conversation;
 
+import static javafx.application.Platform.runLater;
+
 import io.github.bbortt.eldoria.i18n.SpringResourceBundle;
+import java.util.concurrent.CompletableFuture;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
-
-import java.util.concurrent.CompletableFuture;
-
-import static javafx.application.Platform.runLater;
 
 public class ConversationManager {
 

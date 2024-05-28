@@ -1,24 +1,22 @@
 package io.github.bbortt.eldoria.card;
 
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.RepeatedTest;
-import org.junit.jupiter.api.Test;
-
-import java.util.EnumMap;
-import java.util.Map;
-
 import static io.github.bbortt.eldoria.card.Rarity.COMMON;
 import static io.github.bbortt.eldoria.card.Rarity.EPIC;
 import static io.github.bbortt.eldoria.card.Rarity.LEGENDARY;
 import static io.github.bbortt.eldoria.card.Rarity.NORMAL;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.EnumMap;
+import java.util.Map;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.RepeatedTest;
+import org.junit.jupiter.api.Test;
+
 class RarityTest {
 
     @Test
     void containsFourLevels() {
-        assertThat(Rarity.values())
-                .containsExactly(COMMON, NORMAL, EPIC, LEGENDARY);
+        assertThat(Rarity.values()).containsExactly(COMMON, NORMAL, EPIC, LEGENDARY);
     }
 
     @Nested
@@ -45,19 +43,17 @@ class RarityTest {
 
             // Check distribution
             assertThat(rarityCounts.get(COMMON))
-                    .as("COMMON frequency")
-                    .isLessThan(rarityCounts.get(NORMAL))
-                    .isGreaterThan(rarityCounts.get(EPIC))
-                    .isGreaterThan(rarityCounts.get(LEGENDARY));
+                .as("COMMON frequency")
+                .isLessThan(rarityCounts.get(NORMAL))
+                .isGreaterThan(rarityCounts.get(EPIC))
+                .isGreaterThan(rarityCounts.get(LEGENDARY));
 
             assertThat(rarityCounts.get(NORMAL))
-                    .as("NORMAL frequency")
-                    .isGreaterThan(rarityCounts.get(EPIC))
-                    .isGreaterThan(rarityCounts.get(LEGENDARY));
+                .as("NORMAL frequency")
+                .isGreaterThan(rarityCounts.get(EPIC))
+                .isGreaterThan(rarityCounts.get(LEGENDARY));
 
-            assertThat(rarityCounts.get(EPIC))
-                    .as("EPIC frequency")
-                    .isGreaterThan(rarityCounts.get(LEGENDARY));
+            assertThat(rarityCounts.get(EPIC)).as("EPIC frequency").isGreaterThan(rarityCounts.get(LEGENDARY));
         }
     }
 }

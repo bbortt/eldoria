@@ -1,21 +1,5 @@
 package io.github.bbortt.eldoria.i18n;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.context.MessageSource;
-import org.springframework.context.support.ResourceBundleMessageSource;
-
-import java.util.Enumeration;
-import java.util.Locale;
-import java.util.MissingResourceException;
-import java.util.ResourceBundle;
-import java.util.Set;
-import java.util.concurrent.ConcurrentSkipListSet;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
@@ -25,7 +9,22 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.springframework.test.util.ReflectionTestUtils.setField;
 
-@ExtendWith({MockitoExtension.class})
+import java.util.Enumeration;
+import java.util.Locale;
+import java.util.MissingResourceException;
+import java.util.ResourceBundle;
+import java.util.Set;
+import java.util.concurrent.ConcurrentSkipListSet;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.context.MessageSource;
+import org.springframework.context.support.ResourceBundleMessageSource;
+
+@ExtendWith({ MockitoExtension.class })
 class SpringResourceBundleTest {
 
     private static final Locale TEST_LOCALE = Locale.ENGLISH;
@@ -54,8 +53,7 @@ class SpringResourceBundleTest {
 
             doReturn(expectedMessage).when(messageSourceMock).getMessage(key, null, TEST_LOCALE);
 
-            assertThat(fixture.handleGetObject(key))
-                    .isEqualTo(expectedMessage);
+            assertThat(fixture.handleGetObject(key)).isEqualTo(expectedMessage);
         }
     }
 
@@ -64,8 +62,7 @@ class SpringResourceBundleTest {
 
         @Test
         void doNotAddKeysIfMessageSourceIsNoBundle() {
-            assertThat(getKeys())
-                    .isEmpty();
+            assertThat(getKeys()).isEmpty();
 
             verifyNoMoreInteractions(messageSourceMock, resourceBundleProviderMock);
         }
@@ -83,8 +80,7 @@ class SpringResourceBundleTest {
             Set<String> translationKeySet = Set.of("key1", "key2");
             doReturn(translationKeySet).when(resourceBundleMock).keySet();
 
-            assertThat(getKeys())
-                    .isEqualTo(translationKeySet);
+            assertThat(getKeys()).isEqualTo(translationKeySet);
         }
 
         @Test
@@ -94,10 +90,11 @@ class SpringResourceBundleTest {
 
             doReturn(Set.of("nonexistent")).when(resourceBundleMessageSourceMock).getBasenameSet();
 
-            doThrow(new MissingResourceException("Not found", "ResourceBundle", "nonexistent")).when(resourceBundleProviderMock).getBundle(anyString(), eq(TEST_LOCALE));
+            doThrow(new MissingResourceException("Not found", "ResourceBundle", "nonexistent"))
+                .when(resourceBundleProviderMock)
+                .getBundle(anyString(), eq(TEST_LOCALE));
 
-            assertThat(getKeys())
-                    .isEmpty();
+            assertThat(getKeys()).isEmpty();
         }
 
         private Set<String> getKeys() {

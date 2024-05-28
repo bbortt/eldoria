@@ -1,5 +1,13 @@
 package io.github.bbortt.eldoria.service;
 
+import static java.util.Collections.singletonList;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import io.github.bbortt.eldoria.domain.UserPreferences;
 import io.github.bbortt.eldoria.domain.repository.UserPreferencesRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,15 +19,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
-import static java.util.Collections.singletonList;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-@ExtendWith({MockitoExtension.class})
+@ExtendWith({ MockitoExtension.class })
 class UserPreferencesServiceTest {
 
     @Mock
@@ -41,8 +41,7 @@ class UserPreferencesServiceTest {
 
         var loadedPreferences = userPreferencesService.loadUserPreferences();
 
-        assertThat(loadedPreferences)
-                .isEqualTo(existingPreferences);
+        assertThat(loadedPreferences).isEqualTo(existingPreferences);
 
         verify(userPreferencesRepositoryMock).findAll(any(Pageable.class));
         verify(userPreferencesRepositoryMock, never()).save(any(UserPreferences.class));

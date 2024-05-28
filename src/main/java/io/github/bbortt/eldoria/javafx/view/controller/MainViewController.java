@@ -16,6 +16,8 @@
 
 package io.github.bbortt.eldoria.javafx.view.controller;
 
+import static io.github.bbortt.eldoria.javafx.view.controller.ViewUtils.setBackground;
+
 import io.github.bbortt.eldoria.service.GameService;
 import io.github.bbortt.eldoria.service.UserPreferencesService;
 import io.github.bbortt.eldoria.state.event.StartNewGameEvent;
@@ -27,8 +29,6 @@ import javafx.stage.Stage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
-
-import static io.github.bbortt.eldoria.javafx.view.controller.ViewUtils.setBackground;
 
 @Slf4j
 @Component
@@ -44,7 +44,11 @@ public class MainViewController {
     @FXML
     private MFXButton exitButton;
 
-    public MainViewController(ApplicationEventPublisher applicationEventPublisher, GameService gameService, UserPreferencesService userPreferencesService) {
+    public MainViewController(
+        ApplicationEventPublisher applicationEventPublisher,
+        GameService gameService,
+        UserPreferencesService userPreferencesService
+    ) {
         this.applicationEventPublisher = applicationEventPublisher;
         this.gameService = gameService;
         this.userPreferencesService = userPreferencesService;
@@ -75,7 +79,6 @@ public class MainViewController {
     @FXML
     private void handleLoadGame() {
         log.info("Switching to saved games list");
-
         // Add your load game logic here
     }
 

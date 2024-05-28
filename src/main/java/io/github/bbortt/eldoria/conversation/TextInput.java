@@ -16,15 +16,14 @@
 
 package io.github.bbortt.eldoria.conversation;
 
-import io.github.palexdev.materialfx.controls.MFXButton;
-import io.github.palexdev.materialfx.controls.MFXTextField;
-import lombok.Getter;
-
-import java.util.function.Consumer;
-
 import static javafx.scene.input.KeyCode.ENTER;
 import static lombok.AccessLevel.PACKAGE;
 import static org.springframework.util.StringUtils.hasLength;
+
+import io.github.palexdev.materialfx.controls.MFXButton;
+import io.github.palexdev.materialfx.controls.MFXTextField;
+import java.util.function.Consumer;
+import lombok.Getter;
 
 public final class TextInput implements ConversationPart {
 
@@ -45,11 +44,13 @@ public final class TextInput implements ConversationPart {
     @Override
     public void applyTo(ConversationManager.ConversationPlayer conversationPlayer) {
         var textInput = new MFXTextField("", conversationPlayer.resolveTranslation("global.character.username"));
-        textInput.onKeyPressedProperty().set(keyEvent -> {
-            if (ENTER.equals(keyEvent.getCode())) {
-                continueConversationWithInput(conversationPlayer, textInput);
-            }
-        });
+        textInput
+            .onKeyPressedProperty()
+            .set(keyEvent -> {
+                if (ENTER.equals(keyEvent.getCode())) {
+                    continueConversationWithInput(conversationPlayer, textInput);
+                }
+            });
 
         var confirmButton = new MFXButton(conversationPlayer.resolveTranslation("global.button.confirm"));
         confirmButton.setOnAction(event -> continueConversationWithInput(conversationPlayer, textInput));

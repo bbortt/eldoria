@@ -16,10 +16,10 @@
 
 package io.github.bbortt.eldoria.state;
 
+import static io.github.bbortt.eldoria.state.GameState.MAIN_MENU;
+
 import lombok.Getter;
 import org.springframework.stereotype.Component;
-
-import static io.github.bbortt.eldoria.state.GameState.MAIN_MENU;
 
 @Getter
 @Component

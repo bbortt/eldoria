@@ -16,23 +16,22 @@
 
 package io.github.bbortt.eldoria.domain;
 
+import static jakarta.persistence.GenerationType.SEQUENCE;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import java.time.Instant;
 import lombok.Data;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.time.Instant;
-
-import static jakarta.persistence.GenerationType.SEQUENCE;
-
 @Data
 @Table
 @Entity
-@EntityListeners({AuditingEntityListener.class})
+@EntityListeners({ AuditingEntityListener.class })
 public class Game {
 
     @Id

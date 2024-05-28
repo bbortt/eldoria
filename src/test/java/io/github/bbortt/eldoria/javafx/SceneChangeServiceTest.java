@@ -1,5 +1,9 @@
 package io.github.bbortt.eldoria.javafx;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verifyNoInteractions;
+
 import io.github.bbortt.eldoria.service.UserPreferencesService;
 import io.github.bbortt.eldoria.state.event.AbstractGameStateChangeEvent;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,11 +16,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.testfx.framework.junit5.ApplicationExtension;
 
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verifyNoInteractions;
-
-@ExtendWith({ApplicationExtension.class, MockitoExtension.class})
+@ExtendWith({ ApplicationExtension.class, MockitoExtension.class })
 class SceneChangeServiceTest {
 
     @Mock
@@ -32,10 +32,7 @@ class SceneChangeServiceTest {
 
     @BeforeEach
     void beforeEachSetup() {
-        fixture = new SceneChangeService(
-                applicationContextMock,
-                messageSourceMock,
-                userPreferencesServiceMock);
+        fixture = new SceneChangeService(applicationContextMock, messageSourceMock, userPreferencesServiceMock);
     }
 
     @Nested
@@ -46,8 +43,8 @@ class SceneChangeServiceTest {
             var event = mock(AbstractGameStateChangeEvent.class);
 
             assertThatThrownBy(() -> fixture.onGameStateChange(event))
-                    .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("Stage not initialized; State change came too early!");
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("Stage not initialized; State change came too early!");
 
             verifyNoInteractions(event);
         }

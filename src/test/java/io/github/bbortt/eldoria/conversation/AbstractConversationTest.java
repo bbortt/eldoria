@@ -7,14 +7,13 @@ public abstract class AbstractConversationTest {
             if (part instanceof Decision decision) {
                 for (Option option : decision.options()) {
                     var nextConversation = option.getNextConversation();
-                        return verifyConversationEnds(nextConversation);
+                    return verifyConversationEnds(nextConversation);
                 }
             } else if (part instanceof TextInput textInput) {
                 return verifyConversationEnds(textInput.getNextConversation());
             } else if (part instanceof ConversationEnd) {
                 return true;
             }
-
             // Part being applied
         }
 

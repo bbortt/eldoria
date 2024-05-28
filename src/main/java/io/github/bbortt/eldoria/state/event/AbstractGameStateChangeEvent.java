@@ -17,9 +17,8 @@
 package io.github.bbortt.eldoria.state.event;
 
 import io.github.bbortt.eldoria.state.GameState;
-import org.springframework.context.ApplicationEvent;
-
 import javax.annotation.Nullable;
+import org.springframework.context.ApplicationEvent;
 
 public abstract class AbstractGameStateChangeEvent extends ApplicationEvent {
 

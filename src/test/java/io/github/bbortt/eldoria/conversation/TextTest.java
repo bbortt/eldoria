@@ -1,5 +1,15 @@
 package io.github.bbortt.eldoria.conversation;
 
+import static io.github.bbortt.eldoria.conversation.Text.showText;
+import static io.github.bbortt.eldoria.conversation.Text.showTextWithVariables;
+import static java.lang.System.lineSeparator;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+
+import java.util.function.Supplier;
+import java.util.stream.Stream;
 import javafx.scene.control.Label;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -11,18 +21,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.testfx.framework.junit5.ApplicationExtension;
 
-import java.util.function.Supplier;
-import java.util.stream.Stream;
-
-import static io.github.bbortt.eldoria.conversation.Text.showText;
-import static io.github.bbortt.eldoria.conversation.Text.showTextWithVariables;
-import static java.lang.System.lineSeparator;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-
-@ExtendWith({ApplicationExtension.class, MockitoExtension.class})
+@ExtendWith({ ApplicationExtension.class, MockitoExtension.class })
 class TextTest {
 
     public static final String TRANSLATION_KEY = "translationKey";
@@ -32,23 +31,23 @@ class TextTest {
         var translationKey = "not the string your looking for";
 
         assertThat(showText(translationKey))
-                .isInstanceOf(ConversationPart.class)
-                .isInstanceOf(Text.class)
-                .hasAllNullFieldsOrPropertiesExcept(TRANSLATION_KEY)
-                .hasFieldOrPropertyWithValue(TRANSLATION_KEY, translationKey);
+            .isInstanceOf(ConversationPart.class)
+            .isInstanceOf(Text.class)
+            .hasAllNullFieldsOrPropertiesExcept(TRANSLATION_KEY)
+            .hasFieldOrPropertyWithValue(TRANSLATION_KEY, translationKey);
     }
 
     @Test
     void fromStaticAccessorWithVariables() {
         var translationKey = "not the string your looking for";
-        Supplier<Object[]> argumentSupplier = () -> new String[]{"one", "two", "or three"};
+        Supplier<Object[]> argumentSupplier = () -> new String[] { "one", "two", "or three" };
 
         assertThat(showTextWithVariables(translationKey, argumentSupplier))
-                .isInstanceOf(ConversationPart.class)
-                .isInstanceOf(Text.class)
-                .hasNoNullFieldsOrProperties()
-                .hasFieldOrPropertyWithValue(TRANSLATION_KEY, translationKey)
-                .hasFieldOrPropertyWithValue("argumentSupplier", argumentSupplier);
+            .isInstanceOf(ConversationPart.class)
+            .isInstanceOf(Text.class)
+            .hasNoNullFieldsOrProperties()
+            .hasFieldOrPropertyWithValue(TRANSLATION_KEY, translationKey)
+            .hasFieldOrPropertyWithValue("argumentSupplier", argumentSupplier);
     }
 
     @Nested
@@ -66,10 +65,7 @@ class TextTest {
         }
 
         public static Stream<String> emptyTextSource() {
-            return Stream.of(
-                    null,
-                    ""
-            );
+            return Stream.of(null, "");
         }
 
         @ParameterizedTest
@@ -116,7 +112,7 @@ class TextTest {
 
             doReturn(translatedText).when(conversationPlayerMock).resolveTranslation(translationKey);
 
-            showTextWithVariables(translationKey, () -> new String[]{"you"}).applyTo(conversationPlayerMock);
+            showTextWithVariables(translationKey, () -> new String[] { "you" }).applyTo(conversationPlayerMock);
 
             verify(labelMock).setText("you can totally do this");
 
@@ -133,7 +129,7 @@ class TextTest {
 
             doReturn(translatedText).when(conversationPlayerMock).resolveTranslation(translationKey);
 
-            showTextWithVariables(translationKey, () -> new String[]{"not do"}).applyTo(conversationPlayerMock);
+            showTextWithVariables(translationKey, () -> new String[] { "not do" }).applyTo(conversationPlayerMock);
 
             verify(labelMock).setText(currentText + lineSeparator() + "totally not do this");
 

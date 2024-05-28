@@ -16,17 +16,6 @@
 
 package io.github.bbortt.eldoria.conversation.tutorial;
 
-import io.github.bbortt.eldoria.conversation.Conversation;
-import io.github.bbortt.eldoria.conversation.ConversationPart;
-import io.github.bbortt.eldoria.conversation.Decision;
-import io.github.bbortt.eldoria.conversation.Option;
-import io.github.bbortt.eldoria.conversation.OptionWithCallback;
-import jakarta.annotation.Nullable;
-import lombok.Getter;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import static io.github.bbortt.eldoria.conversation.CombinedConversations.showTextAndConfirm;
 import static io.github.bbortt.eldoria.conversation.CombinedConversations.showTextWithVariablesAndConfirm;
 import static io.github.bbortt.eldoria.conversation.ConversationEnd.conversationEnd;
@@ -35,6 +24,16 @@ import static io.github.bbortt.eldoria.conversation.TextInput.awaitTextInput;
 import static java.lang.String.format;
 import static java.util.Collections.shuffle;
 import static java.util.Objects.nonNull;
+
+import io.github.bbortt.eldoria.conversation.Conversation;
+import io.github.bbortt.eldoria.conversation.ConversationPart;
+import io.github.bbortt.eldoria.conversation.Decision;
+import io.github.bbortt.eldoria.conversation.Option;
+import io.github.bbortt.eldoria.conversation.OptionWithCallback;
+import jakarta.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
+import lombok.Getter;
 
 public class TutorialConversation implements Conversation {
 
@@ -56,27 +55,33 @@ public class TutorialConversation implements Conversation {
     @Override
     public List<ConversationPart> get() {
         var tutorialConversation = showTextAndConfirm(
-                "tutorial.welcome.introduction",
+            "tutorial.welcome.introduction",
+            showTextAndConfirm(
+                "tutorial.welcome.character-introduction",
                 showTextAndConfirm(
-                        "tutorial.welcome.character-introduction",
-                        showTextAndConfirm(
-                                "tutorial.welcome.guild-introduction",
-                                showTextAndConfirm(
-                                        "tutorial.welcome.arena-entrance",
-                                        () -> List.of(
-                                                showText("tutorial.welcome.chose-name"),
-                                                awaitTextInput(
-                                                        (result) -> playerName = result,
-                                                        showTextWithVariablesAndConfirm(
-                                                                "tutorial.welcome.your-journey-begins",
-                                                                () -> new String[]{playerName},
-                                                                showTextAndConfirm("tutorial.arena.introduction",
-                                                                        partyConversation))))))));
+                    "tutorial.welcome.guild-introduction",
+                    showTextAndConfirm(
+                        "tutorial.welcome.arena-entrance",
+                        () ->
+                            List.of(
+                                showText("tutorial.welcome.chose-name"),
+                                awaitTextInput(
+                                    result -> playerName = result,
+                                    showTextWithVariablesAndConfirm(
+                                        "tutorial.welcome.your-journey-begins",
+                                        () -> new String[] { playerName },
+                                        showTextAndConfirm("tutorial.arena.introduction", partyConversation)
+                                    )
+                                )
+                            )
+                    )
+                )
+            )
+        );
 
         // Because the party setup is dynamic, we must "stop" the conversation here (code-wise) and continue below
         var lastDecisions = extractLastPartyConversationOptions();
-        lastDecisions.forEach(decision -> decision.setNextConversation(
-                conversationEnd()));
+        lastDecisions.forEach(decision -> decision.setNextConversation(conversationEnd()));
 
         return tutorialConversation.get();
     }
@@ -91,18 +96,27 @@ public class TutorialConversation implements Conversation {
     }
 
     private Conversation newArenaEncounterConversation(List<Integer> indices, int currentIndex, @Nullable Conversation nextConversation) {
-        return () -> List.of(
+        return () ->
+            List.of(
                 showText(format("tutorial.arena.encounter-%s", indices.get(currentIndex))),
                 new Decision(
-                        List.of(
-                                new OptionWithCallback("tutorial.arena.accept-company", nextConversation, () -> partyDecision.add(indices.get(currentIndex))),
-                                new Option("tutorial.arena.refuse-company", nextConversation))));
+                    List.of(
+                        new OptionWithCallback(
+                            "tutorial.arena.accept-company",
+                            nextConversation,
+                            () -> partyDecision.add(indices.get(currentIndex))
+                        ),
+                        new Option("tutorial.arena.refuse-company", nextConversation)
+                    )
+                )
+            );
     }
 
     private List<Option> extractLastPartyConversationOptions() {
         Conversation lastConversation = partyConversation;
-        while (lastConversation.get().getLast() instanceof Decision decision
-                && nonNull(decision.options().getLast().getNextConversation())) {
+        while (
+            lastConversation.get().getLast() instanceof Decision decision && nonNull(decision.options().getLast().getNextConversation())
+        ) {
             lastConversation = decision.options().getLast().getNextConversation();
         }
 

@@ -16,14 +16,13 @@
 
 package io.github.bbortt.eldoria.conversation;
 
-import jakarta.annotation.Nullable;
-
-import java.util.function.Supplier;
-
 import static java.lang.System.lineSeparator;
 import static java.text.MessageFormat.format;
 import static java.util.Objects.isNull;
 import static org.springframework.util.StringUtils.hasLength;
+
+import jakarta.annotation.Nullable;
+import java.util.function.Supplier;
 
 public final class Text implements ConversationPart {
 

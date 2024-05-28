@@ -1,5 +1,16 @@
 package io.github.bbortt.eldoria.conversation;
 
+import static java.util.Collections.emptyList;
+import static java.util.Collections.singletonList;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentCaptor.captor;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.reset;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+
 import io.github.palexdev.materialfx.controls.MFXButton;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -13,18 +24,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.testfx.framework.junit5.ApplicationExtension;
 
-import static java.util.Collections.emptyList;
-import static java.util.Collections.singletonList;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentCaptor.captor;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.reset;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoInteractions;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-
-@ExtendWith({ApplicationExtension.class, MockitoExtension.class})
+@ExtendWith({ ApplicationExtension.class, MockitoExtension.class })
 class DecisionTest {
 
     @Nested
@@ -86,9 +86,7 @@ class DecisionTest {
             verify(actionContainerChildrenMock).add(buttonCaptor.capture());
 
             var mfxButton = buttonCaptor.getValue();
-            assertThat(mfxButton)
-                    .extracting(MFXButton::getText)
-                    .isEqualTo(buttonText);
+            assertThat(mfxButton).extracting(MFXButton::getText).isEqualTo(buttonText);
 
             reset(conversationPlayerMock);
 

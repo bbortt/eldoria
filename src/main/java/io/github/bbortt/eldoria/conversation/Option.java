@@ -16,10 +16,10 @@
 
 package io.github.bbortt.eldoria.conversation;
 
-import lombok.Getter;
-
 import static java.util.Objects.nonNull;
 import static lombok.AccessLevel.PACKAGE;
+
+import lombok.Getter;
 
 @Getter(PACKAGE)
 public sealed class Option permits ContinueButtonOption, OptionWithCallback {

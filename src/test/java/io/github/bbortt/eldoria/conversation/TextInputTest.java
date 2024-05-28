@@ -1,7 +1,17 @@
 package io.github.bbortt.eldoria.conversation;
 
+import static io.github.bbortt.eldoria.conversation.TextInput.awaitTextInput;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentCaptor.captor;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
+
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXTextField;
+import java.util.function.Consumer;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
@@ -15,18 +25,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.testfx.framework.junit5.ApplicationExtension;
 
-import java.util.function.Consumer;
-
-import static io.github.bbortt.eldoria.conversation.TextInput.awaitTextInput;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentCaptor.captor;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoInteractions;
-
-@ExtendWith({ApplicationExtension.class, MockitoExtension.class})
+@ExtendWith({ ApplicationExtension.class, MockitoExtension.class })
 class TextInputTest {
 
     @Mock
@@ -44,8 +43,7 @@ class TextInputTest {
 
     @Test
     void isTextInput() {
-        assertThat(fixture)
-                .isInstanceOf(TextInput.class);
+        assertThat(fixture).isInstanceOf(TextInput.class);
     }
 
     @Nested
@@ -82,15 +80,9 @@ class TextInputTest {
 
             verify(actionContainerChildrenMock).addAll(inputCaptor.capture(), buttonCaptor.capture());
 
-            assertThat(inputCaptor.getValue())
-                    .isNotNull()
-                    .extracting(MFXTextField::getPromptText)
-                    .isEqualTo(usernameText);
+            assertThat(inputCaptor.getValue()).isNotNull().extracting(MFXTextField::getPromptText).isEqualTo(usernameText);
 
-            assertThat(buttonCaptor.getValue())
-                    .isNotNull()
-                    .extracting(MFXButton::getText)
-                    .isEqualTo(confirmText);
+            assertThat(buttonCaptor.getValue()).isNotNull().extracting(MFXButton::getText).isEqualTo(confirmText);
 
             verifyNoInteractions(resultEmitter);
             verify(conversationPlayerMock, never()).continueWith(nextConversation);

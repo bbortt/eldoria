@@ -20,7 +20,6 @@ import lombok.Getter;
 
 @Getter
 public enum GameState {
-
     TUTORIAL,
     MAIN_MENU,
     GAME_CONFIGURATION,

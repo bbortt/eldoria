@@ -1,8 +1,7 @@
 package io.github.bbortt.eldoria.game;
 
-import lombok.Data;
-
 import java.util.concurrent.ThreadLocalRandom;
+import lombok.Data;
 
 @Data
 public class Character {

@@ -1,6 +1,19 @@
 package io.github.bbortt.eldoria.conversation;
 
+import static io.github.bbortt.eldoria.conversation.ConversationEnd.conversationEnd;
+import static java.util.Collections.singletonList;
+import static java.util.concurrent.TimeUnit.SECONDS;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentCaptor.captor;
+import static org.mockito.Mockito.clearInvocations;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+
 import io.github.bbortt.eldoria.i18n.SpringResourceBundle;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeoutException;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -15,21 +28,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.testfx.framework.junit5.ApplicationExtension;
 
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeoutException;
-
-import static io.github.bbortt.eldoria.conversation.ConversationEnd.conversationEnd;
-import static java.util.Collections.singletonList;
-import static java.util.concurrent.TimeUnit.SECONDS;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentCaptor.captor;
-import static org.mockito.Mockito.clearInvocations;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-
-@ExtendWith({ApplicationExtension.class, MockitoExtension.class})
+@ExtendWith({ ApplicationExtension.class, MockitoExtension.class })
 class ConversationManagerTest {
 
     @Mock
@@ -65,8 +64,7 @@ class ConversationManagerTest {
 
             Future<Void> playedConversation = fixture.playConversation(() -> singletonList(conversationPartMock));
 
-            assertThat(playedConversation)
-                    .isNotDone();
+            assertThat(playedConversation).isNotDone();
 
             verify(labelMock).setText("");
             verify(actionContainerChildrenMock).clear();
@@ -75,18 +73,16 @@ class ConversationManagerTest {
             verify(conversationPartMock).applyTo(conversationPlayerCaptor.capture());
 
             ConversationManager.ConversationPlayer conversationPlayer = conversationPlayerCaptor.getValue();
-            assertThat(conversationPlayer)
-                    .satisfies(
-                            p -> assertThat(p).extracting(ConversationManager.ConversationPlayer::getConversationText).isEqualTo(labelMock),
-                            p -> assertThat(p).extracting(ConversationManager.ConversationPlayer::getActionContainer).isEqualTo(actionContainerMock)
-                    );
+            assertThat(conversationPlayer).satisfies(
+                p -> assertThat(p).extracting(ConversationManager.ConversationPlayer::getConversationText).isEqualTo(labelMock),
+                p -> assertThat(p).extracting(ConversationManager.ConversationPlayer::getActionContainer).isEqualTo(actionContainerMock)
+            );
 
             var translationKey = "quote";
             var translatedValue = "I can and I will.";
             doReturn(translatedValue).when(springResourceBundle).getString(translationKey);
 
-            assertThat(conversationPlayer.resolveTranslation(translationKey))
-                    .isEqualTo(translatedValue);
+            assertThat(conversationPlayer.resolveTranslation(translationKey)).isEqualTo(translatedValue);
 
             clearInvocations(labelMock, actionContainerChildrenMock);
 
@@ -101,14 +97,14 @@ class ConversationManagerTest {
             verifyConversationCompletes(fixture.playConversation(conversationEnd()));
         }
 
-        private void verifyConversationCompletes(Future<Void> conversationCompleted) throws InterruptedException, ExecutionException, TimeoutException {
+        private void verifyConversationCompletes(Future<Void> conversationCompleted)
+            throws InterruptedException, ExecutionException, TimeoutException {
             verify(labelMock).setText("");
             verify(actionContainerChildrenMock).clear();
 
             conversationCompleted.get(1, SECONDS);
 
-            assertThat(conversationCompleted)
-                    .isDone();
+            assertThat(conversationCompleted).isDone();
         }
     }
 }

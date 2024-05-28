@@ -16,19 +16,18 @@
 
 package io.github.bbortt.eldoria.i18n;
 
-import jakarta.annotation.Nonnull;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.MessageSource;
-import org.springframework.context.support.ResourceBundleMessageSource;
+import static java.util.Collections.enumeration;
 
+import jakarta.annotation.Nonnull;
 import java.util.Enumeration;
 import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.concurrent.ConcurrentSkipListSet;
-
-import static java.util.Collections.enumeration;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.MessageSource;
+import org.springframework.context.support.ResourceBundleMessageSource;
 
 @Slf4j
 public class SpringResourceBundle extends ResourceBundle {
@@ -53,21 +52,22 @@ public class SpringResourceBundle extends ResourceBundle {
     @Override
     public Enumeration<String> getKeys() {
         if (keys.isEmpty() && messageSource instanceof ResourceBundleMessageSource resourceBundleMessageSource) {
-            resourceBundleMessageSource.getBasenameSet().forEach(baseName -> {
-                try {
-                    ResourceBundle resourceBundle = resourceBundleProvider.getBundle(baseName, locale);
-                    keys.addAll(resourceBundle.keySet());
-                } catch (MissingResourceException e) {
-                    log.error("No resource bundle found for basename {} and locale {}!", baseName, locale, e);
-                }
-            });
-
+            resourceBundleMessageSource
+                .getBasenameSet()
+                .forEach(baseName -> {
+                    try {
+                        ResourceBundle resourceBundle = resourceBundleProvider.getBundle(baseName, locale);
+                        keys.addAll(resourceBundle.keySet());
+                    } catch (MissingResourceException e) {
+                        log.error("No resource bundle found for basename {} and locale {}!", baseName, locale, e);
+                    }
+                });
         }
 
         return enumeration(keys);
     }
 
-    static class ResourceBundleProvider{
+    static class ResourceBundleProvider {
 
         public ResourceBundle getBundle(String baseName, Locale locale) {
             return ResourceBundle.getBundle(baseName, locale);

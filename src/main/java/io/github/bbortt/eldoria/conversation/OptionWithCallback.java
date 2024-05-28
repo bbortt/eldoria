@@ -23,18 +23,15 @@ public final class OptionWithCallback extends Option {
 
     public OptionWithCallback(String translationKey, Callback callback) {
         super(translationKey);
-
         this.callback = callback;
     }
 
     public OptionWithCallback(String translationKey, Conversation nextConversation, Callback callback) {
         super(translationKey, nextConversation);
-
         this.callback = callback;
     }
 
     public interface Callback {
-
         void call();
     }
 }

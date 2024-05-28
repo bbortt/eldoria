@@ -18,11 +18,9 @@ package io.github.bbortt.eldoria.conversation;
 
 import io.github.palexdev.materialfx.controls.MFXButton;
 import jakarta.annotation.Nonnull;
-
 import java.util.List;
 
 public record Decision(@Nonnull List<Option> options) implements ConversationPart {
-
     @Override
     public void applyTo(ConversationManager.ConversationPlayer conversationPlayer) {
         for (var option : options) {

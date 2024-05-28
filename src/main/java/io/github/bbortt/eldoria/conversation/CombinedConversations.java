@@ -16,12 +16,12 @@
 
 package io.github.bbortt.eldoria.conversation;
 
-import java.util.List;
-import java.util.function.Supplier;
-
 import static io.github.bbortt.eldoria.conversation.ContinueButtonOption.confirmAndContinueWith;
 import static io.github.bbortt.eldoria.conversation.Text.showText;
 import static io.github.bbortt.eldoria.conversation.Text.showTextWithVariables;
+
+import java.util.List;
+import java.util.function.Supplier;
 
 public final class CombinedConversations {
 
@@ -30,14 +30,14 @@ public final class CombinedConversations {
     }
 
     public static Conversation showTextAndConfirm(String translationKey, Conversation nextConversation) {
-        return () -> List.of(
-                showText(translationKey),
-                confirmAndContinueWith(nextConversation));
+        return () -> List.of(showText(translationKey), confirmAndContinueWith(nextConversation));
     }
 
-    public static Conversation showTextWithVariablesAndConfirm(String translationKey, Supplier<Object[]> argumentSupplier, Conversation nextConversation) {
-        return () -> List.of(
-                showTextWithVariables(translationKey, argumentSupplier),
-                confirmAndContinueWith(nextConversation));
+    public static Conversation showTextWithVariablesAndConfirm(
+        String translationKey,
+        Supplier<Object[]> argumentSupplier,
+        Conversation nextConversation
+    ) {
+        return () -> List.of(showTextWithVariables(translationKey, argumentSupplier), confirmAndContinueWith(nextConversation));
     }
 }

@@ -20,7 +20,6 @@ import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 public enum Rarity {
-
     COMMON,
     NORMAL,
     EPIC,
@@ -28,10 +27,10 @@ public enum Rarity {
 
     private static final Random random = ThreadLocalRandom.current();
     private static final double[] cumulativeProbabilities = {
-            0.30, // COMMON: 30%
-            0.90, // NORMAL: 60%
-            0.99, // EPIC: 9%
-            1.0 // LEGENDARY: 1%
+        0.30, // COMMON: 30%
+        0.90, // NORMAL: 60%
+        0.99, // EPIC: 9%
+        1.0, // LEGENDARY: 1%
     };
 
     public static Rarity getRandomRarity() {

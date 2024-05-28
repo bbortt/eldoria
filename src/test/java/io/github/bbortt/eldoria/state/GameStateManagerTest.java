@@ -1,5 +1,10 @@
 package io.github.bbortt.eldoria.state;
 
+import static io.github.bbortt.eldoria.state.GameState.GAME_CONFIGURATION;
+import static io.github.bbortt.eldoria.state.GameState.TUTORIAL;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.verify;
+
 import io.github.bbortt.eldoria.state.event.StartNewGameEvent;
 import io.github.bbortt.eldoria.state.event.StartTutorialEvent;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,12 +15,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.stereotype.Component;
 
-import static io.github.bbortt.eldoria.state.GameState.GAME_CONFIGURATION;
-import static io.github.bbortt.eldoria.state.GameState.TUTORIAL;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.verify;
-
-@ExtendWith({MockitoExtension.class})
+@ExtendWith({ MockitoExtension.class })
 class GameStateManagerTest {
 
     @Mock
@@ -30,8 +30,7 @@ class GameStateManagerTest {
 
     @Test
     void isSpringComponent() {
-        assertThat(GameStateManager.class)
-                .hasAnnotation(Component.class);
+        assertThat(GameStateManager.class).hasAnnotation(Component.class);
     }
 
     @Nested

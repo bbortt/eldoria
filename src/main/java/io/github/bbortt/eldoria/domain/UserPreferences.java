@@ -16,20 +16,19 @@
 
 package io.github.bbortt.eldoria.domain;
 
+import static jakarta.persistence.GenerationType.SEQUENCE;
+import static java.util.Locale.forLanguageTag;
+import static lombok.AccessLevel.NONE;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import java.util.Locale;
+import javax.annotation.Nonnull;
 import lombok.Data;
 import lombok.Getter;
-
-import javax.annotation.Nonnull;
-import java.util.Locale;
-
-import static jakarta.persistence.GenerationType.SEQUENCE;
-import static java.util.Locale.forLanguageTag;
-import static lombok.AccessLevel.NONE;
 
 @Data
 @Table

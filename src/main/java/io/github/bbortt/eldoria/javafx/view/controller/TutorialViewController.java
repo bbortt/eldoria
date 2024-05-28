@@ -16,6 +16,8 @@
 
 package io.github.bbortt.eldoria.javafx.view.controller;
 
+import static io.github.bbortt.eldoria.javafx.view.controller.ViewUtils.setBackground;
+
 import io.github.bbortt.eldoria.conversation.ConversationManager;
 import io.github.bbortt.eldoria.conversation.tutorial.TutorialConversation;
 import io.github.bbortt.eldoria.i18n.SpringResourceBundle;
@@ -27,8 +29,6 @@ import javafx.scene.layout.VBox;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
-
-import static io.github.bbortt.eldoria.javafx.view.controller.ViewUtils.setBackground;
 
 @Slf4j
 @Component
@@ -58,9 +58,13 @@ public class TutorialViewController {
     public void initialize() {
         setBackground("images/tutorial-introduction.png", viewBox);
 
-        new ConversationManager(tutorialText, actionContainer, new SpringResourceBundle(messageSource, userPreferencesService.loadUserPreferences().getLocale()))
-                .playConversation(conversation)
-                .thenAccept(this::finishTutorialAndStartGame);
+        new ConversationManager(
+            tutorialText,
+            actionContainer,
+            new SpringResourceBundle(messageSource, userPreferencesService.loadUserPreferences().getLocale())
+        )
+            .playConversation(conversation)
+            .thenAccept(this::finishTutorialAndStartGame);
     }
 
     private void finishTutorialAndStartGame(Void ignore) {

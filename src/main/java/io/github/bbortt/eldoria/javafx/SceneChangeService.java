@@ -16,9 +16,13 @@
 
 package io.github.bbortt.eldoria.javafx;
 
+import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
+
 import io.github.bbortt.eldoria.i18n.SpringResourceBundle;
 import io.github.bbortt.eldoria.service.UserPreferencesService;
 import io.github.bbortt.eldoria.state.event.AbstractGameStateChangeEvent;
+import java.io.IOException;
 import javafx.animation.FadeTransition;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -30,11 +34,6 @@ import org.springframework.context.event.EventListener;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
-
-import static java.util.Objects.isNull;
-import static java.util.Objects.nonNull;
-
 @Slf4j
 @Service
 public class SceneChangeService {
@@ -45,7 +44,11 @@ public class SceneChangeService {
 
     private Stage stage;
 
-    public SceneChangeService(ApplicationContext applicationContext, ResourceBundleMessageSource messageSource, UserPreferencesService userPreferencesService) {
+    public SceneChangeService(
+        ApplicationContext applicationContext,
+        ResourceBundleMessageSource messageSource,
+        UserPreferencesService userPreferencesService
+    ) {
         this.applicationContext = applicationContext;
         this.messageSource = messageSource;
         this.userPreferencesService = userPreferencesService;
@@ -79,9 +82,7 @@ public class SceneChangeService {
     private void loadScene(String sceneName) {
         var resourceBundle = new SpringResourceBundle(messageSource, userPreferencesService.loadUserPreferences().getLocale());
 
-        var fxmlLoader = new FXMLLoader(
-                getClass().getClassLoader().getResource("view/" + sceneName + "View.fxml"),
-                resourceBundle);
+        var fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("view/" + sceneName + "View.fxml"), resourceBundle);
         fxmlLoader.setControllerFactory(applicationContext::getBean);
 
         Scene nextScene;

@@ -1,9 +1,9 @@
 package io.github.bbortt.eldoria.conversation.tutorial;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import io.github.bbortt.eldoria.conversation.AbstractConversationTest;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class TutorialConversationTest extends AbstractConversationTest {
 

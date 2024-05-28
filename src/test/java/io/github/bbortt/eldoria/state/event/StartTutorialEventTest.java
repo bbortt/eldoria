@@ -1,10 +1,10 @@
 package io.github.bbortt.eldoria.state.event;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
 import static io.github.bbortt.eldoria.state.GameState.TUTORIAL;
 import static org.assertj.core.api.Assertions.assertThat;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 class StartTutorialEventTest {
 
@@ -17,21 +17,16 @@ class StartTutorialEventTest {
 
     @Test
     void isAbstractGameStateChangeEvent() {
-        assertThat(fixture)
-                .isInstanceOf(AbstractGameStateChangeEvent.class);
+        assertThat(fixture).isInstanceOf(AbstractGameStateChangeEvent.class);
     }
 
     @Test
     void setsGameStateToTutorial() {
-        assertThat(fixture)
-                .extracting(StartTutorialEvent::getGameState)
-                .isEqualTo(TUTORIAL);
+        assertThat(fixture).extracting(StartTutorialEvent::getGameState).isEqualTo(TUTORIAL);
     }
 
     @Test
     void containsInitialScene() {
-        assertThat(fixture)
-                .extracting(StartTutorialEvent::getInitialScene)
-                .isEqualTo("Tutorial");
+        assertThat(fixture).extracting(StartTutorialEvent::getInitialScene).isEqualTo("Tutorial");
     }
 }
