@@ -21,6 +21,6 @@ overrides:
       trailingComma: none
 
 plugins:
-    - prettier-plugin-java
-    - prettier-plugin-packagejson
-    - prettier-plugin-xml
+    - '@prettier/plugin-xml'
+    - 'prettier-plugin-java'
+    - 'prettier-plugin-packagejson'
