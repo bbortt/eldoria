@@ -1,0 +1,37 @@
+name: Pull-Request Checks
+
+on:
+  pull_request:
+    branches:
+      - main
+
+concurrency:
+  group: mr-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  gradle:
+    name: 'Gradle Wrapper Validation'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: gradle/wrapper-validation-action@v2
+  lint:
+    name: 'Eldoria: Lint'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.2.0
+      - uses: actions/cache@v3
+        with:
+          path: .npm
+          key: ${{ runner.os }}-npm
+          restore-keys: ${{ runner.os }}-npm
+      - run: npm ci --cache .npm
+      - name: Validate code format
+        run: npm run prettier:check
+      - name: Validate commit messages
+        if: github.event_name == 'pull_request'
+        run: npx --no-install commitlint --from ${{ github.event.pull_request.base.sha }} --to ${{ github.event.pull_request.head.sha }} --verbose
