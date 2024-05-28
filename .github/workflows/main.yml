@@ -19,6 +19,29 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: gradle/wrapper-validation-action@v2
+  lint:
+    name: 'Eldoria: Lint'
+    runs-on: ubuntu-latest
+    if: |
+      github.event_name == 'push' && !startsWith(github.ref, 'refs/tags/')
+      && !contains(github.event.head_commit.message, '[ci skip]')
+      && !contains(github.event.head_commit.message, '[skip ci]')
+      && !contains(github.event.pull_request.title, '[skip ci]')
+      && !contains(github.event.pull_request.title, '[ci skip]')
+    env:
+      NODE_VERSION: 22.2.0
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{NODE_VERSION}}
+      - uses: actions/cache@v3
+        with:
+          path: .npm
+          key: ${{ runner.os }}-npm
+          restore-keys: ${{ runner.os }}-npm
+      - run: npm ci --cache .npm
+      - run: npm run prettier:check
   app:
     name: 'Eldoria: Build and Test'
     runs-on: ubuntu-latest
