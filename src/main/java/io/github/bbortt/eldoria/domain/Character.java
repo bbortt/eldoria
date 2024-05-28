@@ -16,6 +16,8 @@
 
 package io.github.bbortt.eldoria.domain;
 
+import static lombok.AccessLevel.PRIVATE;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -29,7 +31,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Builder
 @NoArgsConstructor
-@AllArgsConstructor
+@AllArgsConstructor(access = PRIVATE)
 public class Character {
 
     @Id

@@ -28,7 +28,6 @@ import jakarta.persistence.Table;
 import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -39,9 +38,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Data
 @Table
 @Entity
-@Builder
 @NoArgsConstructor
-@AllArgsConstructor
 @EntityListeners({ AuditingEntityListener.class })
 public class Game {
 
@@ -62,4 +59,12 @@ public class Game {
 
     @OneToMany
     private Set<Character> npcs = new HashSet<>();
+
+    @Builder
+    public Game(Long id, String title, Set<Character> npcs, Character character) {
+        this.id = id;
+        this.title = title;
+        this.npcs = npcs;
+        this.character = character;
+    }
 }
