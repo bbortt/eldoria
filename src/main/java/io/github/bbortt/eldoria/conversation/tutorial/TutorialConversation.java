@@ -67,7 +67,7 @@ public class TutorialConversation implements Conversation {
                                         () -> new String[] { playerName },
                                         showTextAndConfirm(
                                             "tutorial.arena.introduction",
-                                            createPartyConversationContinuingWithNextConversation(partyIndices, 0, conversationEnd())
+                                            createPartyConversationContinuingWithNextConversation(0, conversationEnd())
                                         )
                                     )
                                 )
@@ -83,29 +83,25 @@ public class TutorialConversation implements Conversation {
         return tutorialConversation.get();
     }
 
-    private Conversation createPartyConversationContinuingWithNextConversation(
-        List<Integer> indices,
-        int currentIndex,
-        Conversation nextConversation
-    ) {
-        if (currentIndex == indices.size() - 1) {
-            return newArenaEncounterConversation(indices, currentIndex, nextConversation);
+    private Conversation createPartyConversationContinuingWithNextConversation(int currentIndex, Conversation nextConversation) {
+        if (currentIndex == partyIndices.size() - 1) {
+            return newArenaEncounterConversation(currentIndex, nextConversation);
         }
 
-        var partyConversation = createPartyConversationContinuingWithNextConversation(indices, currentIndex + 1, nextConversation);
-        return newArenaEncounterConversation(indices, currentIndex, partyConversation);
+        var partyConversation = createPartyConversationContinuingWithNextConversation(currentIndex + 1, nextConversation);
+        return newArenaEncounterConversation(currentIndex, partyConversation);
     }
 
-    private Conversation newArenaEncounterConversation(List<Integer> indices, int currentIndex, @Nullable Conversation nextConversation) {
+    private Conversation newArenaEncounterConversation(int currentIndex, @Nullable Conversation nextConversation) {
         return () ->
             List.of(
-                showText(format("tutorial.arena.encounter-%s", indices.get(currentIndex))),
+                showText(format("tutorial.arena.encounter-%s", partyIndices.get(currentIndex))),
                 new Decision(
                     List.of(
                         new OptionWithCallback(
                             "tutorial.arena.accept-company",
                             nextConversation,
-                            () -> partyDecision.add(indices.get(currentIndex))
+                            () -> partyDecision.add(partyIndices.get(currentIndex))
                         ),
                         new Option("tutorial.arena.refuse-company", nextConversation)
                     )

@@ -14,19 +14,13 @@
  * limitations under the License.
  */
 
-package io.github.bbortt.eldoria.state;
+package io.github.bbortt.eldoria.game.event;
 
-import lombok.Getter;
+import static io.github.bbortt.eldoria.game.GameState.TUTORIAL;
 
-@Getter
-public enum GameState {
-    TUTORIAL,
-    MAIN_MENU,
-    GAME_CONFIGURATION,
-    COMBAT,
-    GAME_OVER;
+public class StartTutorialEvent extends AbstractGameStateChangeEvent {
 
-    public static boolean isInGame(GameState gameState) {
-        return gameState == COMBAT;
+    public StartTutorialEvent() {
+        super(TUTORIAL, "Tutorial");
     }
 }

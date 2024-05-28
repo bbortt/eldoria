@@ -18,10 +18,10 @@ package io.github.bbortt.eldoria.javafx.view.controller;
 
 import static io.github.bbortt.eldoria.javafx.view.controller.ViewUtils.setBackground;
 
+import io.github.bbortt.eldoria.game.event.StartNewGameEvent;
+import io.github.bbortt.eldoria.game.event.StartTutorialEvent;
 import io.github.bbortt.eldoria.service.GameService;
 import io.github.bbortt.eldoria.service.UserPreferencesService;
-import io.github.bbortt.eldoria.state.event.StartNewGameEvent;
-import io.github.bbortt.eldoria.state.event.StartTutorialEvent;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import javafx.fxml.FXML;
 import javafx.scene.layout.VBox;

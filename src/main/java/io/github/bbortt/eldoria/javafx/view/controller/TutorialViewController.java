@@ -20,9 +20,11 @@ import static io.github.bbortt.eldoria.javafx.view.controller.ViewUtils.setBackg
 
 import io.github.bbortt.eldoria.conversation.ConversationManager;
 import io.github.bbortt.eldoria.conversation.tutorial.TutorialConversation;
+import io.github.bbortt.eldoria.domain.Npc;
 import io.github.bbortt.eldoria.i18n.SpringResourceBundle;
 import io.github.bbortt.eldoria.service.GameService;
 import io.github.bbortt.eldoria.service.UserPreferencesService;
+import java.util.List;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
@@ -69,6 +71,10 @@ public class TutorialViewController {
 
     private void finishTutorialAndStartGame(Void ignore) {
         userPreferencesService.setTutorialFinished();
-        gameService.startNewGame(conversation.getPlayerName());
+        gameService.startNewGame(conversation.getPlayerName(), getPartyDecision());
+    }
+
+    private List<Npc> getPartyDecision() {
+        return conversation.getPartyDecision().stream().map(Npc::fromIndex).toList();
     }
 }

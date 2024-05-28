@@ -26,7 +26,7 @@ import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.VBox;
 
-class ViewUtils {
+final class ViewUtils {
 
     private ViewUtils() {
         throw new InstantiationError("Cannot instantiate utility class!");

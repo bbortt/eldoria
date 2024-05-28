@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package io.github.bbortt.eldoria.state.event;
+package io.github.bbortt.eldoria.game.event;
 
-import static io.github.bbortt.eldoria.state.GameState.TUTORIAL;
+import static io.github.bbortt.eldoria.game.GameState.GAME_CONFIGURATION;
 
-public class StartTutorialEvent extends AbstractGameStateChangeEvent {
+public class StartNewGameEvent extends AbstractGameStateChangeEvent {
 
-    public StartTutorialEvent() {
-        super(TUTORIAL, "Tutorial");
+    public StartNewGameEvent() {
+        super(GAME_CONFIGURATION, "GameConfiguration");
     }
 }

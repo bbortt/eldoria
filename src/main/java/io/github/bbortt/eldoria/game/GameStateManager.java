@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package io.github.bbortt.eldoria.state;
+package io.github.bbortt.eldoria.game;
 
-import io.github.bbortt.eldoria.state.event.AbstractGameStateChangeEvent;
-import io.github.bbortt.eldoria.state.event.StartNewGameEvent;
-import io.github.bbortt.eldoria.state.event.StartTutorialEvent;
+import io.github.bbortt.eldoria.game.event.AbstractGameStateChangeEvent;
+import io.github.bbortt.eldoria.game.event.StartNewGameEvent;
+import io.github.bbortt.eldoria.game.event.StartTutorialEvent;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;

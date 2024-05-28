@@ -4,8 +4,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verifyNoInteractions;
 
+import io.github.bbortt.eldoria.game.event.AbstractGameStateChangeEvent;
 import io.github.bbortt.eldoria.service.UserPreferencesService;
-import io.github.bbortt.eldoria.state.event.AbstractGameStateChangeEvent;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

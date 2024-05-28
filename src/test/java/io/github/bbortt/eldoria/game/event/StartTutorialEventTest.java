@@ -1,6 +1,6 @@
-package io.github.bbortt.eldoria.state.event;
+package io.github.bbortt.eldoria.game.event;
 
-import static io.github.bbortt.eldoria.state.GameState.TUTORIAL;
+import static io.github.bbortt.eldoria.game.GameState.TUTORIAL;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.BeforeEach;

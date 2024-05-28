@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package io.github.bbortt.eldoria.state.event;
+package io.github.bbortt.eldoria.game.event;
 
-import io.github.bbortt.eldoria.state.GameState;
+import io.github.bbortt.eldoria.game.GameState;
 import javax.annotation.Nullable;
 import org.springframework.context.ApplicationEvent;
 

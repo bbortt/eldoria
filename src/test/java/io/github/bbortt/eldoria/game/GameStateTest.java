@@ -1,4 +1,4 @@
-package io.github.bbortt.eldoria.state;
+package io.github.bbortt.eldoria.game;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;

@@ -19,9 +19,9 @@ package io.github.bbortt.eldoria.javafx;
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 
+import io.github.bbortt.eldoria.game.event.AbstractGameStateChangeEvent;
 import io.github.bbortt.eldoria.i18n.SpringResourceBundle;
 import io.github.bbortt.eldoria.service.UserPreferencesService;
-import io.github.bbortt.eldoria.state.event.AbstractGameStateChangeEvent;
 import java.io.IOException;
 import javafx.animation.FadeTransition;
 import javafx.fxml.FXMLLoader;

@@ -14,13 +14,21 @@
  * limitations under the License.
  */
 
-package io.github.bbortt.eldoria.state.event;
+package io.github.bbortt.eldoria.game;
 
-import static io.github.bbortt.eldoria.state.GameState.GAME_CONFIGURATION;
+import java.util.concurrent.ThreadLocalRandom;
 
-public class StartNewGameEvent extends AbstractGameStateChangeEvent {
+public final class Dice {
 
-    public StartNewGameEvent() {
-        super(GAME_CONFIGURATION, "GameConfiguration");
+    private Dice() {
+        throw new InstantiationError("Cannot instantiate utility class!");
+    }
+
+    public static int rollD6() {
+        return (int) (ThreadLocalRandom.current().nextDouble() * 6) + 1;
+    }
+
+    public static int rollD20() {
+        return (int) (ThreadLocalRandom.current().nextDouble() * 20) + 1;
     }
 }

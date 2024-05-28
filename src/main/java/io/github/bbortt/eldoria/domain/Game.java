@@ -22,15 +22,26 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Data
 @Table
 @Entity
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @EntityListeners({ AuditingEntityListener.class })
 public class Game {
 
@@ -40,6 +51,15 @@ public class Game {
 
     private String title;
 
+    @CreatedDate
+    private Instant createdDate = Instant.now();
+
     @LastModifiedDate
     private Instant lastModifiedDate = Instant.now();
+
+    @OneToOne
+    private Character character;
+
+    @OneToMany
+    private Set<Character> npcs = new HashSet<>();
 }

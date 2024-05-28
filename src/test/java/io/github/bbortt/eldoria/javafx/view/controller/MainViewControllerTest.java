@@ -8,10 +8,10 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.util.ReflectionTestUtils.setField;
 
 import io.github.bbortt.eldoria.domain.UserPreferences;
+import io.github.bbortt.eldoria.game.event.StartNewGameEvent;
+import io.github.bbortt.eldoria.game.event.StartTutorialEvent;
 import io.github.bbortt.eldoria.service.GameService;
 import io.github.bbortt.eldoria.service.UserPreferencesService;
-import io.github.bbortt.eldoria.state.event.StartNewGameEvent;
-import io.github.bbortt.eldoria.state.event.StartTutorialEvent;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import javafx.scene.Scene;
 import javafx.scene.layout.Background;

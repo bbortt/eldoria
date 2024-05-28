@@ -16,8 +16,13 @@
 
 package io.github.bbortt.eldoria.service;
 
+import static java.util.stream.Collectors.toSet;
+
+import io.github.bbortt.eldoria.domain.Character;
 import io.github.bbortt.eldoria.domain.Game;
+import io.github.bbortt.eldoria.domain.Npc;
 import io.github.bbortt.eldoria.domain.repository.GameRepository;
+import java.util.List;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -33,8 +38,11 @@ public class GameService {
         return gameRepository.count() > 0;
     }
 
-    public void startNewGame(String playerName) {
-        var game = new Game();
+    public void startNewGame(String playerName, List<Npc> alies) {
+        var game = Game.builder()
+            .character(Character.builder().name(playerName).build())
+            .npcs(alies.stream().map(Npc::createCharacter).collect(toSet()))
+            .build();
 
         gameRepository.save(game);
     }

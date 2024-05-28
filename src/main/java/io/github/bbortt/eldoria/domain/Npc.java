@@ -14,25 +14,32 @@
  * limitations under the License.
  */
 
-package io.github.bbortt.eldoria.state;
+package io.github.bbortt.eldoria.domain;
 
-import static io.github.bbortt.eldoria.state.GameState.MAIN_MENU;
+import static java.util.Arrays.stream;
+import static lombok.AccessLevel.PACKAGE;
 
 import lombok.Getter;
-import org.springframework.stereotype.Component;
 
-@Getter
-@Component
-public final class Game {
+public enum Npc {
+    THANE(0),
+    NYSSA(1),
+    ELYNDOR(2),
+    BROM(3),
+    SELENE(4);
 
-    private GameState currentState;
+    @Getter(PACKAGE)
+    private final int index;
 
-    public Game() {
-        this.currentState = MAIN_MENU;
+    Npc(int index) {
+        this.index = index;
     }
 
-    synchronized void transitionTo(GameState gameState) {
-        // TODO: validation could be added
-        this.currentState = gameState;
+    public static Npc fromIndex(int index) {
+        return stream(values()).filter(npc -> npc.index == index).findFirst().orElseThrow();
+    }
+
+    public Character createCharacter() {
+        return Character.builder().name(toString().charAt(0) + toString().substring(1).toLowerCase()).build();
     }
 }
