@@ -28,13 +28,11 @@ jobs:
       && !contains(github.event.head_commit.message, '[skip ci]')
       && !contains(github.event.pull_request.title, '[skip ci]')
       && !contains(github.event.pull_request.title, '[ci skip]')
-    env:
-      NODE_VERSION: 22.2.0
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: ${{NODE_VERSION}}
+          node-version: 22.2.0
       - uses: actions/cache@v3
         with:
           path: .npm
