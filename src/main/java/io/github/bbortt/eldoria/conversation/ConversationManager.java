@@ -20,18 +20,15 @@ import static javafx.application.Platform.runLater;
 
 import io.github.bbortt.eldoria.i18n.SpringResourceBundle;
 import java.util.concurrent.CompletableFuture;
-import javafx.scene.control.Label;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.GridPane;
 
 public class ConversationManager {
 
-    private final Label conversationText;
-    private final VBox actionContainer;
+    private final GridPane conversationGrid;
     private final SpringResourceBundle springResourceBundle;
 
-    public ConversationManager(Label conversationText, VBox actionContainer, SpringResourceBundle springResourceBundle) {
-        this.conversationText = conversationText;
-        this.actionContainer = actionContainer;
+    public ConversationManager(GridPane conversationGrid, SpringResourceBundle springResourceBundle) {
+        this.conversationGrid = conversationGrid;
         this.springResourceBundle = springResourceBundle;
     }
 
@@ -49,17 +46,12 @@ public class ConversationManager {
             conversationCompleted = new CompletableFuture<>();
         }
 
-        Label getConversationText() {
-            return conversationText;
-        }
-
-        VBox getActionContainer() {
-            return actionContainer;
+        GridPane getConversationGrid() {
+            return conversationGrid;
         }
 
         void continueWith(Conversation conversation) {
-            conversationText.setText("");
-            actionContainer.getChildren().clear();
+            getConversationGrid().getChildren().clear();
 
             runLater(() -> applyEachConversationPart(conversation));
         }

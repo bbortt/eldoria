@@ -16,8 +16,7 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeoutException;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
-import javafx.scene.control.Label;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.GridPane;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -32,13 +31,10 @@ import org.testfx.framework.junit5.ApplicationExtension;
 class ConversationManagerTest {
 
     @Mock
-    private Label labelMock;
+    private GridPane conversationGridMock;
 
     @Mock
-    private VBox actionContainerMock;
-
-    @Mock
-    private ObservableList<Node> actionContainerChildrenMock;
+    private ObservableList<Node> conversationGridChildrenMock;
 
     @Mock
     private SpringResourceBundle springResourceBundle;
@@ -47,7 +43,7 @@ class ConversationManagerTest {
 
     @BeforeEach
     void setUp() {
-        fixture = new ConversationManager(labelMock, actionContainerMock, springResourceBundle);
+        fixture = new ConversationManager(conversationGridMock, springResourceBundle);
     }
 
     @Nested
@@ -55,7 +51,7 @@ class ConversationManagerTest {
 
         @BeforeEach
         void beforeEachSetup() {
-            doReturn(actionContainerChildrenMock).when(actionContainerMock).getChildren();
+            doReturn(conversationGridChildrenMock).when(conversationGridMock).getChildren();
         }
 
         @Test
@@ -66,17 +62,15 @@ class ConversationManagerTest {
 
             assertThat(playedConversation).isNotDone();
 
-            verify(labelMock).setText("");
-            verify(actionContainerChildrenMock).clear();
+            verify(conversationGridChildrenMock).clear();
 
             ArgumentCaptor<ConversationManager.ConversationPlayer> conversationPlayerCaptor = captor();
             verify(conversationPartMock).applyTo(conversationPlayerCaptor.capture());
 
             ConversationManager.ConversationPlayer conversationPlayer = conversationPlayerCaptor.getValue();
-            assertThat(conversationPlayer).satisfies(
-                p -> assertThat(p).extracting(ConversationManager.ConversationPlayer::getConversationText).isEqualTo(labelMock),
-                p -> assertThat(p).extracting(ConversationManager.ConversationPlayer::getActionContainer).isEqualTo(actionContainerMock)
-            );
+            assertThat(conversationPlayer)
+                .extracting(ConversationManager.ConversationPlayer::getConversationGrid)
+                .isEqualTo(conversationGridMock);
 
             var translationKey = "quote";
             var translatedValue = "I can and I will.";
@@ -84,7 +78,7 @@ class ConversationManagerTest {
 
             assertThat(conversationPlayer.resolveTranslation(translationKey)).isEqualTo(translatedValue);
 
-            clearInvocations(labelMock, actionContainerChildrenMock);
+            clearInvocations(conversationGridChildrenMock);
 
             conversationPlayer.continueWith(conversationEnd());
 
@@ -99,8 +93,7 @@ class ConversationManagerTest {
 
         private void verifyConversationCompletes(Future<Void> conversationCompleted)
             throws InterruptedException, ExecutionException, TimeoutException {
-            verify(labelMock).setText("");
-            verify(actionContainerChildrenMock).clear();
+            verify(conversationGridChildrenMock).clear();
 
             conversationCompleted.get(1, SECONDS);
 

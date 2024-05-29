@@ -19,10 +19,17 @@ package io.github.bbortt.eldoria.conversation;
 import static java.lang.System.lineSeparator;
 import static java.text.MessageFormat.format;
 import static java.util.Objects.isNull;
+import static javafx.geometry.Pos.CENTER;
+import static javafx.scene.layout.GridPane.getColumnIndex;
+import static javafx.scene.layout.GridPane.getRowIndex;
 import static org.springframework.util.StringUtils.hasLength;
 
 import jakarta.annotation.Nullable;
 import java.util.function.Supplier;
+import javafx.scene.Node;
+import javafx.scene.control.Label;
+import javafx.scene.layout.GridPane;
+import javafx.scene.text.TextAlignment;
 
 public final class Text implements ConversationPart {
 
@@ -51,19 +58,34 @@ public final class Text implements ConversationPart {
 
     @Override
     public void applyTo(ConversationManager.ConversationPlayer conversationPlayer) {
-        var conversationText = conversationPlayer.getConversationText();
-
-        var currentText = conversationText.getText();
-        if (hasLength(conversationText.getText())) {
+        var currentText = getTextFromGrid(conversationPlayer.getConversationGrid());
+        if (hasLength(currentText)) {
             currentText += lineSeparator();
         } else {
             currentText = "";
         }
 
         if (isNull(argumentSupplier)) {
-            conversationText.setText(currentText + conversationPlayer.resolveTranslation(translationKey));
+            currentText += conversationPlayer.resolveTranslation(translationKey);
         } else {
-            conversationText.setText(currentText + format(conversationPlayer.resolveTranslation(translationKey), argumentSupplier.get()));
+            currentText += format(conversationPlayer.resolveTranslation(translationKey), argumentSupplier.get());
         }
+
+        var textLabel = new Label(currentText);
+        textLabel.setAlignment(CENTER);
+        textLabel.setTextAlignment(TextAlignment.CENTER);
+        textLabel.setWrapText(true);
+
+        conversationPlayer.getConversationGrid().add(textLabel, 0, 0);
+    }
+
+    private @Nullable String getTextFromGrid(GridPane gridPane) {
+        for (Node child : gridPane.getChildren()) {
+            if (getColumnIndex(child) == 0 && getRowIndex(child) == 0 && child instanceof Label label) {
+                return label.getText();
+            }
+        }
+
+        return null;
     }
 }

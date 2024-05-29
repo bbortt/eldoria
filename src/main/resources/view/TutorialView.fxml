@@ -1,17 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Separator?>
-<?import javafx.scene.layout.VBox?>
-<VBox alignment="CENTER" spacing="10.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8"
-      fx:id="viewBox" fx:controller="io.github.bbortt.eldoria.javafx.view.controller.TutorialViewController">
-    <padding>
-        <Insets top="20" right="20" bottom="20" left="20"/>
-    </padding>
-    <Label fx:id="tutorialText" wrapText="true" textAlignment="CENTER" prefWidth="600"
-           style="-fx-background-color: white;"/>
-    <Separator prefWidth="100"/>
-    <VBox fx:id="actionContainer" spacing="10.0" alignment="CENTER">
-    </VBox>
-</VBox>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+
+<BorderPane fx:id="viewBox" fx:controller="io.github.bbortt.eldoria.javafx.view.controller.TutorialViewController"
+            prefHeight="832.0" prefWidth="1216.0"
+            stylesheets="@../css/global.css"
+            xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+    <bottom>
+        <GridPane fx:id="conversationGrid" BorderPane.alignment="CENTER"
+                  style="-fx-background-color: linear-gradient(to bottom, transparent 0%, -primary-background 10%);">
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" percentWidth="80.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" percentWidth="20.0"/>
+            </columnConstraints>
+            <children>
+            </children>
+        </GridPane>
+    </bottom>
+</BorderPane>

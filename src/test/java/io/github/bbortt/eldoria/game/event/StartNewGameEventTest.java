@@ -21,12 +21,12 @@ class StartNewGameEventTest {
     }
 
     @Test
-    void setsGameStateToTutorial() {
+    void setsGameStateToGameConfiguration() {
         assertThat(fixture).extracting(StartNewGameEvent::getGameState).isEqualTo(GAME_CONFIGURATION);
     }
 
     @Test
-    void initialSceneIsMainView() {
+    void initialSceneIsGameConfiguration() {
         assertThat(fixture).extracting(StartNewGameEvent::getInitialScene).isEqualTo("GameConfiguration");
     }
 }

@@ -1,0 +1,11 @@
+.btn-outline {
+  -fx-background-color: -primary-background;
+  -fx-border-color: -outline;
+  -fx-border-radius: 3;
+}
+
+.btn-outline:hover,
+.btn-outline:focused {
+  -fx-background-color: -secondary-background;
+  -fx-text-fill: -secondary-text;
+}
