@@ -87,7 +87,7 @@ processResources {
 
 
 javafx {
-    version = "21"
+    version = "21.0.3"
     modules = [ "javafx.controls", "javafx.fxml" ]
 }
 
