@@ -22,15 +22,19 @@ import io.github.bbortt.eldoria.domain.Character;
 import io.github.bbortt.eldoria.domain.Game;
 import io.github.bbortt.eldoria.domain.Npc;
 import io.github.bbortt.eldoria.domain.repository.GameRepository;
+import io.github.bbortt.eldoria.game.event.StartGameEvent;
 import java.util.List;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 @Service
 public class GameService {
 
+    private final ApplicationEventPublisher applicationEventPublisher;
     private final GameRepository gameRepository;
 
-    public GameService(GameRepository gameRepository) {
+    public GameService(ApplicationEventPublisher applicationEventPublisher, GameRepository gameRepository) {
+        this.applicationEventPublisher = applicationEventPublisher;
         this.gameRepository = gameRepository;
     }
 
@@ -45,5 +49,7 @@ public class GameService {
             .build();
 
         gameRepository.save(game);
+
+        applicationEventPublisher.publishEvent(new StartGameEvent(game));
     }
 }

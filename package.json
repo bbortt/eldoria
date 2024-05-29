@@ -14,7 +14,7 @@
   "author": "Timon Borter <timon.borter@gmx.ch>",
   "scripts": {
     "prepare": "husky",
-    "prettier": "prettier \"{,src/**/}*.{java,json,md,xml,yaml,yml}\"",
+    "prettier": "prettier \"{,src/**/}*.{css,java,json,md,xml,yaml,yml}\"",
     "prettier:check": "npm run prettier -- --check",
     "prettier:format": "npm run prettier -- --write"
   },

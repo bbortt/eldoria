@@ -16,11 +16,18 @@
 
 package io.github.bbortt.eldoria.game.event;
 
-import static io.github.bbortt.eldoria.game.GameState.GAME_CONFIGURATION;
+import static io.github.bbortt.eldoria.game.GameState.COMBAT;
 
-public final class StartNewGameEvent extends AbstractGameStateChangeEvent {
+import io.github.bbortt.eldoria.domain.Game;
+import lombok.Getter;
 
-    public StartNewGameEvent() {
-        super(GAME_CONFIGURATION, "GameConfiguration");
+@Getter
+public final class StartGameEvent extends AbstractGameStateChangeEvent {
+
+    private final Game game;
+
+    public StartGameEvent(Game game) {
+        super(COMBAT, "Arena");
+        this.game = game;
     }
 }

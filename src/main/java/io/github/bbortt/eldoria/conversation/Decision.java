@@ -16,22 +16,31 @@
 
 package io.github.bbortt.eldoria.conversation;
 
+import static io.github.bbortt.eldoria.javafx.LayoutUtils.buttonGroup;
+import static io.github.bbortt.eldoria.javafx.StyleClasses.BUTTON_OUTLINE;
+
 import io.github.palexdev.materialfx.controls.MFXButton;
 import jakarta.annotation.Nonnull;
+import java.util.ArrayList;
 import java.util.List;
 
 public record Decision(@Nonnull List<Option> options) implements ConversationPart {
     @Override
     public void applyTo(ConversationManager.ConversationPlayer conversationPlayer) {
+        List<MFXButton> buttons = new ArrayList<>();
+
         for (var option : options) {
             var button = new MFXButton(conversationPlayer.resolveTranslation(option.getTranslationKey()));
+            button.getStyleClass().addAll(BUTTON_OUTLINE.getStyleClasses());
             button.setOnAction(event -> {
                 if (option instanceof ContinueButtonOption continueOption) {
                     conversationPlayer.continueWith(continueOption.getNextConversation());
                 }
             });
 
-            conversationPlayer.getActionContainer().getChildren().add(button);
+            buttons.add(button);
         }
+
+        conversationPlayer.getConversationGrid().add(buttonGroup(buttons.toArray(MFXButton[]::new)), 1, 0);
     }
 }

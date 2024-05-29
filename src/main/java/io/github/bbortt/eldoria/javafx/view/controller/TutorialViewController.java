@@ -16,7 +16,7 @@
 
 package io.github.bbortt.eldoria.javafx.view.controller;
 
-import static io.github.bbortt.eldoria.javafx.view.controller.ViewUtils.setBackground;
+import static io.github.bbortt.eldoria.javafx.LayoutUtils.applyBackground;
 
 import io.github.bbortt.eldoria.conversation.ConversationManager;
 import io.github.bbortt.eldoria.conversation.tutorial.TutorialConversation;
@@ -26,8 +26,8 @@ import io.github.bbortt.eldoria.service.GameService;
 import io.github.bbortt.eldoria.service.UserPreferencesService;
 import java.util.List;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
@@ -43,13 +43,10 @@ public class TutorialViewController {
     private final TutorialConversation conversation = new TutorialConversation();
 
     @FXML
-    private VBox viewBox;
+    private BorderPane viewBox;
 
     @FXML
-    public Label tutorialText;
-
-    @FXML
-    public VBox actionContainer;
+    public GridPane conversationGrid;
 
     public TutorialViewController(MessageSource messageSource, GameService gameService, UserPreferencesService userPreferencesService) {
         this.messageSource = messageSource;
@@ -58,11 +55,12 @@ public class TutorialViewController {
     }
 
     public void initialize() {
-        setBackground("images/tutorial-introduction.png", viewBox);
+        applyBackground("images/tutorial-introduction.png", viewBox);
+
+        log.info("Tutorial starting");
 
         new ConversationManager(
-            tutorialText,
-            actionContainer,
+            conversationGrid,
             new SpringResourceBundle(messageSource, userPreferencesService.loadUserPreferences().getLocale())
         )
             .playConversation(conversation)
@@ -70,6 +68,8 @@ public class TutorialViewController {
     }
 
     private void finishTutorialAndStartGame(Void ignore) {
+        log.info("Tutorial finished");
+
         userPreferencesService.setTutorialFinished();
         gameService.startNewGame(conversation.getPlayerName(), getPartyDecision());
     }

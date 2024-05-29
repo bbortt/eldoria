@@ -16,6 +16,9 @@
 
 package io.github.bbortt.eldoria.conversation;
 
+import static io.github.bbortt.eldoria.javafx.LayoutUtils.buttonGroup;
+import static io.github.bbortt.eldoria.javafx.StyleClasses.BUTTON_OUTLINE;
+import static io.github.palexdev.materialfx.enums.FloatMode.DISABLED;
 import static javafx.scene.input.KeyCode.ENTER;
 import static lombok.AccessLevel.PACKAGE;
 import static org.springframework.util.StringUtils.hasLength;
@@ -27,23 +30,36 @@ import lombok.Getter;
 
 public final class TextInput implements ConversationPart {
 
+    private final String labelTranslationKey;
     private final Consumer<String> resultEmitter;
 
     @Getter(PACKAGE)
     private final Conversation nextConversation;
 
-    private TextInput(Consumer<String> resultEmitter, Conversation nextConversation) {
+    private TextInput(String labelTranslationKey, Consumer<String> resultEmitter, Conversation nextConversation) {
+        this.labelTranslationKey = labelTranslationKey;
         this.resultEmitter = resultEmitter;
         this.nextConversation = nextConversation;
     }
 
-    public static ConversationPart awaitTextInput(Consumer<String> resultEmitter, Conversation nextConversation) {
-        return new TextInput(resultEmitter, nextConversation);
+    public static ConversationPart awaitTextInput(
+        String labelTranslationKey,
+        Consumer<String> resultEmitter,
+        Conversation nextConversation
+    ) {
+        return new TextInput(labelTranslationKey, resultEmitter, nextConversation);
     }
 
     @Override
     public void applyTo(ConversationManager.ConversationPlayer conversationPlayer) {
-        var textInput = new MFXTextField("", conversationPlayer.resolveTranslation("global.character.username"));
+        var conversationGrid = conversationPlayer.getConversationGrid();
+        if (conversationGrid.getChildren().isEmpty() || conversationGrid.getRowCount() >= 2) {
+            throw new IllegalArgumentException("Grid is not properly configured for text input!");
+        }
+
+        var textInput = new MFXTextField("", conversationPlayer.resolveTranslation(labelTranslationKey));
+        textInput.setFloatMode(DISABLED);
+        textInput.setPrefWidth(1216.0);
         textInput
             .onKeyPressedProperty()
             .set(keyEvent -> {
@@ -53,9 +69,10 @@ public final class TextInput implements ConversationPart {
             });
 
         var confirmButton = new MFXButton(conversationPlayer.resolveTranslation("global.button.confirm"));
+        confirmButton.getStyleClass().addAll(BUTTON_OUTLINE.getStyleClasses());
         confirmButton.setOnAction(event -> continueConversationWithInput(conversationPlayer, textInput));
 
-        conversationPlayer.getActionContainer().getChildren().addAll(textInput, confirmButton);
+        conversationGrid.addRow(1, textInput, buttonGroup(confirmButton));
     }
 
     private void continueConversationWithInput(ConversationManager.ConversationPlayer conversationPlayer, MFXTextField textInput) {

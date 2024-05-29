@@ -16,9 +16,8 @@
 
 package io.github.bbortt.eldoria.javafx;
 
-import static io.github.palexdev.materialfx.theming.MaterialFXStylesheets.BUTTON;
-import static io.github.palexdev.materialfx.theming.MaterialFXStylesheets.COLORS;
 import static javafx.application.Platform.exit;
+import static javafx.stage.StageStyle.TRANSPARENT;
 
 import fr.brouillard.oss.cssfx.CSSFX;
 import io.github.bbortt.eldoria.Eldoria;
@@ -41,16 +40,18 @@ public class EldoriaApplication extends Application {
 
     @Override
     public void start(Stage stage) {
+        stage.initStyle(TRANSPARENT);
         stage.setHeight(832);
         stage.setWidth(1216);
+        stage.setTitle("Eldoria");
 
         CSSFX.start();
 
         UserAgentBuilder.builder()
             .themes(JavaFXThemes.MODENA)
             .themes(MaterialFXStylesheets.forAssemble(false))
-            .themes(COLORS)
-            .themes(BUTTON)
+            //            .themes(COLORS)
+            //            .themes(BUTTON)
             .setDeploy(true) // Whether to deploy each theme's assets on a temporary dir on the disk
             .setResolveAssets(true) // Whether to try resolving @import statements and resources urls
             .build()

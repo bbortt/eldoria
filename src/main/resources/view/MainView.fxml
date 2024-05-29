@@ -1,26 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import io.github.palexdev.materialfx.controls.MFXButton?>
-<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
-<VBox alignment="CENTER" spacing="10.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8"
-      fx:id="viewBox" fx:controller="io.github.bbortt.eldoria.javafx.view.controller.MainViewController">
-    <padding>
-        <Insets top="20" right="20" bottom="20" left="20"/>
-    </padding>
-    <MFXButton
-            text="%view.main.new-game"
-            buttonType="RAISED"
-            onAction="#handleStartGame"/>
-    <MFXButton
-            text="%view.main.load-game"
-            buttonType="RAISED"
-            visible="${controller.loadGamesAvailable}"
-            managed="${controller.loadGamesAvailable}"
-            onAction="#handleLoadGame"/>
-    <MFXButton
-            fx:id="exitButton"
-            text="%view.main.exit"
-            buttonType="RAISED"
-            onAction="#handleExitGame"/>
-</VBox>
+
+<BorderPane fx:id="viewBox" fx:controller="io.github.bbortt.eldoria.javafx.view.controller.MainViewController"
+            prefHeight="832.0" prefWidth="1216.0"
+            stylesheets="@../css/global.css"
+            xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+    <center>
+        <VBox alignment="CENTER" BorderPane.alignment="CENTER" spacing="10.0">
+            <MFXButton
+                    text="%view.main.new-game"
+                    buttonType="RAISED"
+                    styleClass="btn-outline"
+                    onAction="#handleStartGame"/>
+            <MFXButton
+                    text="%view.main.load-game"
+                    buttonType="RAISED"
+                    visible="${controller.loadGamesAvailable}"
+                    managed="${controller.loadGamesAvailable}"
+                    styleClass="btn-outline"
+                    onAction="#handleLoadGame"/>
+            <MFXButton
+                    fx:id="exitButton"
+                    text="%view.main.exit"
+                    buttonType="RAISED"
+                    styleClass="btn-outline"
+                    onAction="#handleExitGame"/>
+        </VBox>
+    </center>
+</BorderPane>

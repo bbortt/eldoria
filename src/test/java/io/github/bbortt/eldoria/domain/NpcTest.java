@@ -39,14 +39,9 @@ class NpcTest {
         for (int i = 0; i < 100; i++) {
             var character = npc.createCharacter();
 
+            assertThat(character).hasNoNullFieldsOrProperties();
             assertThat(character.getName()).isEqualTo(name);
             assertThat(character.getMaxHP()).isGreaterThan(npc.getBaseMaxHP()).isLessThanOrEqualTo(npc.getBaseMaxHP() + 20);
-            assertThat(character.getAC()).isEqualTo(npc.getBaseAC());
-            assertThat(character.getStrength()).isEqualTo(npc.getBaseStrength());
-            assertThat(character.getDexterity()).isEqualTo(npc.getBaseDexterity());
-            assertThat(character.getConstitution()).isEqualTo(npc.getBaseConstitution());
-            assertThat(character.getIntelligence()).isEqualTo(npc.getBaseIntelligence());
-            assertThat(character.getWisdom()).isEqualTo(npc.getBaseWisdom());
         }
     }
 }

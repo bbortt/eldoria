@@ -61,6 +61,7 @@ public class TutorialConversation implements Conversation {
                             List.of(
                                 showText("tutorial.welcome.chose-name"),
                                 awaitTextInput(
+                                    "global.character.username",
                                     result -> playerName = result,
                                     showTextWithVariablesAndConfirm(
                                         "tutorial.welcome.your-journey-begins",

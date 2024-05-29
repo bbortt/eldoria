@@ -4,19 +4,24 @@ import static io.github.bbortt.eldoria.conversation.Text.showText;
 import static io.github.bbortt.eldoria.conversation.Text.showTextWithVariables;
 import static java.lang.System.lineSeparator;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentCaptor.captor;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.clearInvocations;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 import javafx.scene.control.Label;
+import javafx.scene.layout.GridPane;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.testfx.framework.junit5.ApplicationExtension;
@@ -54,25 +59,22 @@ class TextTest {
     class ApplyTo {
 
         @Mock
-        private Label labelMock;
-
-        @Mock
         private ConversationManager.ConversationPlayer conversationPlayerMock;
+
+        private GridPane conversationGridSpy;
 
         @BeforeEach
         void beforeEachSetup() {
-            doReturn(labelMock).when(conversationPlayerMock).getConversationText();
+            conversationGridSpy = spy(new GridPane());
+            doReturn(conversationGridSpy).when(conversationPlayerMock).getConversationGrid();
         }
 
         public static Stream<String> emptyTextSource() {
             return Stream.of(null, "");
         }
 
-        @ParameterizedTest
-        @MethodSource("emptyTextSource")
-        void simpleTextWithoutCurrentText(String currentText) {
-            doReturn(currentText).when(labelMock).getText();
-
+        @Test
+        void simpleTextWithoutCurrentText() {
             var translationKey = "quote";
             var translatedText = "you can totally do this";
 
@@ -80,15 +82,12 @@ class TextTest {
 
             showText(translationKey).applyTo(conversationPlayerMock);
 
-            verify(labelMock).setText(translatedText);
-
-            verifyGetConversationText();
+            verifyTextLabelHasBeenAdded("you can totally do this");
         }
 
         @Test
         void simpleTextWithCurrentText() {
-            var currentText = "you can";
-            doReturn(currentText).when(labelMock).getText();
+            var textLabel = createExistingLabelWithText("you can");
 
             var translationKey = "quote";
             var translatedText = "totally do this";
@@ -97,15 +96,13 @@ class TextTest {
 
             showText(translationKey).applyTo(conversationPlayerMock);
 
-            verify(labelMock).setText(currentText + lineSeparator() + translatedText);
-
-            verifyGetConversationText();
+            verifyTextLabelHasBeenAdded(textLabel.getText() + lineSeparator() + translatedText);
         }
 
         @ParameterizedTest
         @MethodSource("emptyTextSource")
         void textWithArgumentsWithoutCurrentText(String currentText) {
-            doReturn(currentText).when(labelMock).getText();
+            createExistingLabelWithText(currentText);
 
             var translationKey = "quote";
             var translatedText = "{0} can totally do this";
@@ -114,15 +111,12 @@ class TextTest {
 
             showTextWithVariables(translationKey, () -> new String[] { "you" }).applyTo(conversationPlayerMock);
 
-            verify(labelMock).setText("you can totally do this");
-
-            verifyGetConversationText();
+            verifyTextLabelHasBeenAdded("you can totally do this");
         }
 
         @Test
         void textWithArgumentsWithCurrentText() {
-            var currentText = "you can";
-            doReturn(currentText).when(labelMock).getText();
+            var textLabel = createExistingLabelWithText("you can");
 
             var translationKey = "quote";
             var translatedText = "totally {0} this";
@@ -131,14 +125,21 @@ class TextTest {
 
             showTextWithVariables(translationKey, () -> new String[] { "not do" }).applyTo(conversationPlayerMock);
 
-            verify(labelMock).setText(currentText + lineSeparator() + "totally not do this");
-
-            verifyGetConversationText();
+            verifyTextLabelHasBeenAdded(textLabel.getText() + lineSeparator() + "totally not do this");
         }
 
-        private void verifyGetConversationText() {
-            verify(conversationPlayerMock).getConversationText();
-            verifyNoMoreInteractions(conversationPlayerMock);
+        private Label createExistingLabelWithText(String text) {
+            var textLabel = new Label(text);
+            conversationGridSpy.add(textLabel, 0, 0);
+            clearInvocations(conversationGridSpy);
+            return textLabel;
+        }
+
+        private void verifyTextLabelHasBeenAdded(String textLabel) {
+            ArgumentCaptor<Label> labelArgumentCaptor = captor();
+            verify(conversationGridSpy).add(labelArgumentCaptor.capture(), eq(0), eq(0));
+
+            assertThat(labelArgumentCaptor.getValue()).extracting(Label::getText).isEqualTo(textLabel);
         }
     }
 }

@@ -28,40 +28,26 @@ import lombok.Getter;
 @AllArgsConstructor(access = PRIVATE)
 public enum Npc {
     // Frontline (Tank/Warrior)
-    THANE(0, 180, 16, 16, 12, 14, 10, 10),
+    THANE(0, 180, Character.builder().AC(16).strength(16).dexterity(12).constitution(14).intelligence(10).wisdom(10)),
     // Rogue, probably
-    NYSSA(1, 120, 14, 10, 16, 12, 14, 14),
+    NYSSA(1, 120, Character.builder().AC(14).strength(10).dexterity(16).constitution(12).intelligence(14).wisdom(14)),
     // Mage
-    ELYNDOR(2, 100, 12, 8, 12, 10, 16, 14),
+    ELYNDOR(2, 100, Character.builder().AC(12).strength(8).dexterity(12).constitution(10).intelligence(16).wisdom(14)),
     // Frontline (Tank/Warrior)
-    BROM(3, 200, 14, 18, 8, 16, 8, 12),
+    BROM(3, 200, Character.builder().AC(14).strength(18).dexterity(8).constitution(16).intelligence(8).wisdom(12)),
     // Cleric / Supporter
-    SELENE(4, 140, 14, 10, 12, 14, 14, 16);
+    SELENE(4, 140, Character.builder().AC(14).strength(10).dexterity(12).constitution(14).intelligence(14).wisdom(16));
 
     private final int index;
 
     private final int baseMaxHP;
-    private final int baseAC;
-    private final int baseStrength;
-    private final int baseDexterity;
-    private final int baseConstitution;
-    private final int baseIntelligence;
-    private final int baseWisdom;
+    private final Character.CharacterBuilder characterBuilder;
 
     public static Npc fromIndex(int index) {
         return stream(values()).filter(npc -> npc.index == index).findFirst().orElseThrow();
     }
 
     public Character createCharacter() {
-        return Character.builder()
-            .name(toString().charAt(0) + toString().substring(1).toLowerCase())
-            .maxHP(baseMaxHP + rollD20())
-            .AC(baseAC)
-            .strength(baseStrength)
-            .dexterity(baseDexterity)
-            .constitution(baseConstitution)
-            .intelligence(baseIntelligence)
-            .wisdom(baseWisdom)
-            .build();
+        return characterBuilder.name(toString().charAt(0) + toString().substring(1).toLowerCase()).maxHP(baseMaxHP + rollD20()).build();
     }
 }

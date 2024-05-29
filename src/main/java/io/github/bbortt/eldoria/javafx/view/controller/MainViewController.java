@@ -16,7 +16,7 @@
 
 package io.github.bbortt.eldoria.javafx.view.controller;
 
-import static io.github.bbortt.eldoria.javafx.view.controller.ViewUtils.setBackground;
+import static io.github.bbortt.eldoria.javafx.LayoutUtils.applyBackground;
 
 import io.github.bbortt.eldoria.game.event.StartNewGameEvent;
 import io.github.bbortt.eldoria.game.event.StartTutorialEvent;
@@ -24,7 +24,7 @@ import io.github.bbortt.eldoria.service.GameService;
 import io.github.bbortt.eldoria.service.UserPreferencesService;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import javafx.fxml.FXML;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
@@ -39,7 +39,7 @@ public class MainViewController {
     private final UserPreferencesService userPreferencesService;
 
     @FXML
-    private VBox viewBox;
+    private BorderPane viewBox;
 
     @FXML
     private MFXButton exitButton;
@@ -59,7 +59,7 @@ public class MainViewController {
     }
 
     public void initialize() {
-        setBackground("images/background.png", viewBox);
+        applyBackground("images/background.png", viewBox);
     }
 
     @FXML

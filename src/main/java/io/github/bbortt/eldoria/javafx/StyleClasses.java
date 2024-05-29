@@ -14,13 +14,18 @@
  * limitations under the License.
  */
 
-package io.github.bbortt.eldoria.game.event;
+package io.github.bbortt.eldoria.javafx;
 
-import static io.github.bbortt.eldoria.game.GameState.GAME_CONFIGURATION;
+import java.util.List;
+import lombok.Getter;
 
-public final class StartNewGameEvent extends AbstractGameStateChangeEvent {
+@Getter
+public enum StyleClasses {
+    BUTTON_OUTLINE(List.of("btn", "btn-outline"));
 
-    public StartNewGameEvent() {
-        super(GAME_CONFIGURATION, "GameConfiguration");
+    private final List<String> styleClasses;
+
+    StyleClasses(List<String> styleClasses) {
+        this.styleClasses = styleClasses;
     }
 }

@@ -14,33 +14,46 @@
  * limitations under the License.
  */
 
-package io.github.bbortt.eldoria.javafx.view.controller;
+package io.github.bbortt.eldoria.javafx;
 
 import static java.util.Objects.requireNonNull;
+import static javafx.geometry.Pos.CENTER;
+import static javafx.scene.layout.BackgroundRepeat.NO_REPEAT;
+import static javafx.scene.layout.BackgroundSize.AUTO;
 
+import io.github.palexdev.materialfx.controls.MFXButton;
+import jakarta.annotation.Nonnull;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
-import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 
-final class ViewUtils {
+public final class LayoutUtils {
 
-    private ViewUtils() {
+    private LayoutUtils() {
         throw new InstantiationError("Cannot instantiate utility class!");
     }
 
-    static void setBackground(String imageName, VBox container) {
-        var backgroundImage = new Image(requireNonNull(ViewUtils.class.getClassLoader().getResourceAsStream(imageName)));
+    public static @Nonnull HBox buttonGroup(MFXButton... buttons) {
+        var buttonGroup = new HBox(buttons);
+        buttonGroup.setAlignment(CENTER);
+        buttonGroup.setSpacing(5.0);
+        return buttonGroup;
+    }
+
+    public static void applyBackground(@Nonnull String imageName, @Nonnull Pane container) {
+        var backgroundImage = new Image(requireNonNull(LayoutUtils.class.getClassLoader().getResourceAsStream(imageName)));
         var background = new BackgroundImage(
             backgroundImage,
-            BackgroundRepeat.NO_REPEAT,
-            BackgroundRepeat.NO_REPEAT,
+            NO_REPEAT,
+            NO_REPEAT,
             BackgroundPosition.CENTER,
-            new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, false, true)
+            new BackgroundSize(AUTO, AUTO, false, false, false, true)
         );
+
         container.setBackground(new Background(background));
     }
 }

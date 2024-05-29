@@ -15,7 +15,7 @@ import io.github.bbortt.eldoria.service.UserPreferencesService;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import javafx.scene.Scene;
 import javafx.scene.layout.Background;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -50,8 +50,8 @@ class MainViewControllerTest {
 
         @Test
         void configuresBackground() {
-            var viewBoxMock = mock(VBox.class);
-            setField(fixture, "viewBox", viewBoxMock, VBox.class);
+            var viewBoxMock = mock(BorderPane.class);
+            setField(fixture, "viewBox", viewBoxMock, BorderPane.class);
 
             fixture.initialize();
 
