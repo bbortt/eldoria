@@ -14,23 +14,15 @@
  * limitations under the License.
  */
 
-package io.github.bbortt.eldoria.game;
+package io.github.bbortt.eldoria.common;
 
-import static io.github.bbortt.eldoria.common.Utils.utilityClassNotForInstantiation;
+public final class Utils {
 
-import java.util.concurrent.ThreadLocalRandom;
-
-public final class Dice {
-
-    private Dice() {
+    private Utils() {
         utilityClassNotForInstantiation();
     }
 
-    public static int rollD6() {
-        return (int) (ThreadLocalRandom.current().nextDouble() * 6) + 1;
-    }
-
-    public static int rollD20() {
-        return (int) (ThreadLocalRandom.current().nextDouble() * 20) + 1;
+    public static void utilityClassNotForInstantiation() {
+        throw new InstantiationError("Cannot instantiate utility class!");
     }
 }
