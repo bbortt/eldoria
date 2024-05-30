@@ -16,16 +16,17 @@
 
 package io.github.bbortt.eldoria.javafx;
 
+import static io.github.bbortt.eldoria.common.Utils.utilityClassNotForInstantiation;
+
 import java.util.List;
 import lombok.Getter;
 
 @Getter
-public enum StyleClasses {
-    BUTTON_OUTLINE(List.of("btn", "btn-outline"));
+public final class StyleClasses {
 
-    private final List<String> styleClasses;
+    public static final List<String> BUTTON_OUTLINE = List.of("btn", "btn-outline");
 
-    StyleClasses(List<String> styleClasses) {
-        this.styleClasses = styleClasses;
+    private StyleClasses() {
+        utilityClassNotForInstantiation();
     }
 }

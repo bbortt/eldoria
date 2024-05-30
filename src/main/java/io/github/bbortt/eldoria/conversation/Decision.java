@@ -31,7 +31,7 @@ public record Decision(@Nonnull List<Option> options) implements ConversationPar
 
         for (var option : options) {
             var button = new MFXButton(conversationPlayer.resolveTranslation(option.getTranslationKey()));
-            button.getStyleClass().addAll(BUTTON_OUTLINE.getStyleClasses());
+            button.getStyleClass().addAll(BUTTON_OUTLINE);
             button.setOnAction(event -> {
                 if (option instanceof ContinueButtonOption continueOption) {
                     conversationPlayer.continueWith(continueOption.getNextConversation());

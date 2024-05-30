@@ -16,6 +16,7 @@
 
 package io.github.bbortt.eldoria.javafx;
 
+import static io.github.bbortt.eldoria.common.Utils.utilityClassNotForInstantiation;
 import static java.util.Objects.requireNonNull;
 import static javafx.geometry.Pos.CENTER;
 import static javafx.scene.layout.BackgroundRepeat.NO_REPEAT;
@@ -34,7 +35,7 @@ import javafx.scene.layout.Pane;
 public final class LayoutUtils {
 
     private LayoutUtils() {
-        throw new InstantiationError("Cannot instantiate utility class!");
+        utilityClassNotForInstantiation();
     }
 
     public static @Nonnull HBox buttonGroup(MFXButton... buttons) {

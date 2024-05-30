@@ -69,7 +69,7 @@ public final class TextInput implements ConversationPart {
             });
 
         var confirmButton = new MFXButton(conversationPlayer.resolveTranslation("global.button.confirm"));
-        confirmButton.getStyleClass().addAll(BUTTON_OUTLINE.getStyleClasses());
+        confirmButton.getStyleClass().addAll(BUTTON_OUTLINE);
         confirmButton.setOnAction(event -> continueConversationWithInput(conversationPlayer, textInput));
 
         conversationGrid.addRow(1, textInput, buttonGroup(confirmButton));
