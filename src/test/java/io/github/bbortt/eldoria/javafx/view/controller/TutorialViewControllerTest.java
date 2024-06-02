@@ -1,6 +1,7 @@
 package io.github.bbortt.eldoria.javafx.view.controller;
 
 import static io.github.bbortt.eldoria.conversation.ConversationEnd.conversationEnd;
+import static io.github.bbortt.eldoria.domain.Character.Race.HUMAN;
 import static io.github.bbortt.eldoria.domain.Npc.ELYNDOR;
 import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -91,7 +92,7 @@ class TutorialViewControllerTest {
         @Test
         void startsGameAfterwards() {
             var tutorialConversationMock = mock(TutorialConversation.class);
-            doReturn(conversationEnd().get()).when(tutorialConversationMock).get();
+            doReturn(conversationEnd()).when(tutorialConversationMock).build(viewBoxMock);
 
             var playerName = "Parzival";
             doReturn(playerName).when(tutorialConversationMock).getPlayerName();
@@ -104,7 +105,7 @@ class TutorialViewControllerTest {
 
             waitForFxEvents();
 
-            verify(gameServiceMock).startNewGame(playerName, singletonList(ELYNDOR));
+            verify(gameServiceMock).startNewGame(playerName, HUMAN, singletonList(ELYNDOR));
             verify(userPreferencesServiceMock).setTutorialFinished();
         }
     }

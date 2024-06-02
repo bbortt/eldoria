@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane fx:id="viewBox" fx:controller="io.github.bbortt.eldoria.javafx.view.controller.ArenaViewController"
+            prefHeight="832.0" prefWidth="1216.0"
+            stylesheets="@../css/global.css"
+            xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+    <center>
+    </center>
+</BorderPane>

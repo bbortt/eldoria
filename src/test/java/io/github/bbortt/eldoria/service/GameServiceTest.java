@@ -1,5 +1,6 @@
 package io.github.bbortt.eldoria.service;
 
+import static io.github.bbortt.eldoria.domain.Character.Race.HUMAN;
 import static io.github.bbortt.eldoria.domain.Npc.BROM;
 import static io.github.bbortt.eldoria.domain.Npc.THANE;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -73,10 +74,10 @@ class GameServiceTest {
 
         @Test
         void persistsNewGame() {
-            var playerName = "Faker";
+            var playerName = "Bruce Vayne";
             var npcs = List.of(THANE, BROM);
 
-            fixture.startNewGame(playerName, npcs);
+            fixture.startNewGame(playerName, HUMAN, npcs);
 
             ArgumentCaptor<Game> gameArgumentCaptor = captor();
             verify(gameRepositoryMock).save(gameArgumentCaptor.capture());

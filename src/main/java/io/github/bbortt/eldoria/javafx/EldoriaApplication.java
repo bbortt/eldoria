@@ -50,8 +50,6 @@ public class EldoriaApplication extends Application {
         UserAgentBuilder.builder()
             .themes(JavaFXThemes.MODENA)
             .themes(MaterialFXStylesheets.forAssemble(false))
-            //            .themes(COLORS)
-            //            .themes(BUTTON)
             .setDeploy(true) // Whether to deploy each theme's assets on a temporary dir on the disk
             .setResolveAssets(true) // Whether to try resolving @import statements and resources urls
             .build()

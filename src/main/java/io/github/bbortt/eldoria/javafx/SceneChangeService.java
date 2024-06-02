@@ -68,13 +68,15 @@ public class SceneChangeService {
 
     @EventListener(AbstractGameStateChangeEvent.class)
     public void onGameStateChange(AbstractGameStateChangeEvent gameStateChange) {
+        log.debug("Caught game state change event: {}", gameStateChange);
+
         if (isNull(stage)) {
             throw new IllegalArgumentException("Stage not initialized; State change came too early!");
         }
 
         var nextScene = gameStateChange.getInitialScene();
         if (nonNull(nextScene)) {
-            log.info("Change to next scene: {}", nextScene);
+            log.info("Transition to next scene: {}", nextScene);
             loadScene(nextScene);
         }
     }
@@ -96,6 +98,7 @@ public class SceneChangeService {
             fadeScenes(nextScene);
         } else {
             stage.setScene(nextScene);
+            log.debug("Scene '{}' is ready", sceneName);
         }
     }
 
