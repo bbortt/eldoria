@@ -17,6 +17,7 @@
 package io.github.bbortt.eldoria.game;
 
 import io.github.bbortt.eldoria.game.event.AbstractGameStateChangeEvent;
+import io.github.bbortt.eldoria.game.event.StartGameEvent;
 import io.github.bbortt.eldoria.game.event.StartNewGameEvent;
 import io.github.bbortt.eldoria.game.event.StartTutorialEvent;
 import lombok.extern.slf4j.Slf4j;
@@ -35,10 +36,12 @@ public class GameStateManager {
 
     @EventListener(AbstractGameStateChangeEvent.class)
     public void onGameStateChangeEvent(AbstractGameStateChangeEvent gameStateChange) {
-        // TODO: This should also trigger the scene transition
+        log.debug("Caught game state change event: {}", gameStateChange);
+
         switch (gameStateChange) {
-            case StartNewGameEvent startNewGameEvent -> transitionToGameState(startNewGameEvent);
             case StartTutorialEvent startTutorialEvent -> transitionToGameState(startTutorialEvent);
+            case StartNewGameEvent startNewGameEvent -> transitionToGameState(startNewGameEvent);
+            case StartGameEvent startGameEvent -> transitionToGameState(startGameEvent);
             default -> throw new IllegalStateException("Unexpected value: " + gameStateChange);
         }
     }

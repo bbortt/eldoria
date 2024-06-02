@@ -42,9 +42,9 @@ public class GameService {
         return gameRepository.count() > 0;
     }
 
-    public void startNewGame(String playerName, List<Npc> alies) {
+    public void startNewGame(String playerName, Character.Race race, List<Npc> alies) {
         var game = Game.builder()
-            .character(Character.builder().name(playerName).build())
+            .character(Character.builder().name(playerName).race(race).build())
             .npcs(alies.stream().map(Npc::createCharacter).collect(toSet()))
             .build();
 

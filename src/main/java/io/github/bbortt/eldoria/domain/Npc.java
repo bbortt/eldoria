@@ -16,6 +16,9 @@
 
 package io.github.bbortt.eldoria.domain;
 
+import static io.github.bbortt.eldoria.domain.Character.Race.DWARF;
+import static io.github.bbortt.eldoria.domain.Character.Race.ELF;
+import static io.github.bbortt.eldoria.domain.Character.Race.HUMAN;
 import static io.github.bbortt.eldoria.game.Dice.rollD20;
 import static java.util.Arrays.stream;
 import static lombok.AccessLevel.PACKAGE;
@@ -28,15 +31,15 @@ import lombok.Getter;
 @AllArgsConstructor(access = PRIVATE)
 public enum Npc {
     // Frontline (Tank/Warrior)
-    THANE(0, 180, Character.builder().AC(16).strength(16).dexterity(12).constitution(14).intelligence(10).wisdom(10)),
+    THANE(0, 200, Character.builder().race(DWARF).AC(16).strength(18).dexterity(12).constitution(14).intelligence(10).wisdom(10)),
     // Rogue, probably
-    NYSSA(1, 120, Character.builder().AC(14).strength(10).dexterity(16).constitution(12).intelligence(14).wisdom(14)),
+    NYSSA(1, 120, Character.builder().race(HUMAN).AC(14).strength(10).dexterity(16).constitution(12).intelligence(14).wisdom(14)),
     // Mage
-    ELYNDOR(2, 100, Character.builder().AC(12).strength(8).dexterity(12).constitution(10).intelligence(16).wisdom(14)),
+    ELYNDOR(2, 100, Character.builder().race(DWARF).AC(12).strength(8).dexterity(12).constitution(12).intelligence(16).wisdom(14)),
     // Frontline (Tank/Warrior)
-    BROM(3, 200, Character.builder().AC(14).strength(18).dexterity(8).constitution(16).intelligence(8).wisdom(12)),
+    BROM(3, 200, Character.builder().race(HUMAN).AC(14).strength(18).dexterity(8).constitution(16).intelligence(8).wisdom(12)),
     // Cleric / Supporter
-    SELENE(4, 140, Character.builder().AC(14).strength(10).dexterity(12).constitution(14).intelligence(14).wisdom(16));
+    SELENE(4, 140, Character.builder().race(ELF).AC(14).strength(10).dexterity(14).constitution(14).intelligence(14).wisdom(17));
 
     private final int index;
 

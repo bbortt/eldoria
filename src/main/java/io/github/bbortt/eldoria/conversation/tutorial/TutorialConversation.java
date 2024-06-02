@@ -19,26 +19,28 @@ package io.github.bbortt.eldoria.conversation.tutorial;
 import static io.github.bbortt.eldoria.conversation.CombinedConversations.showTextAndConfirm;
 import static io.github.bbortt.eldoria.conversation.CombinedConversations.showTextWithVariablesAndConfirm;
 import static io.github.bbortt.eldoria.conversation.ConversationEnd.conversationEnd;
+import static io.github.bbortt.eldoria.conversation.ConversationUtils.continueActionWith;
 import static io.github.bbortt.eldoria.conversation.Text.showText;
 import static io.github.bbortt.eldoria.conversation.TextInput.awaitTextInput;
+import static io.github.bbortt.eldoria.javafx.LayoutUtils.applyBackground;
 import static java.lang.String.format;
 import static java.util.Collections.shuffle;
 
 import io.github.bbortt.eldoria.conversation.Conversation;
-import io.github.bbortt.eldoria.conversation.ConversationPart;
 import io.github.bbortt.eldoria.conversation.Decision;
 import io.github.bbortt.eldoria.conversation.Option;
 import io.github.bbortt.eldoria.conversation.OptionWithCallback;
 import jakarta.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.scene.layout.BorderPane;
 import lombok.Getter;
 
-public class TutorialConversation implements Conversation {
+public class TutorialConversation {
 
     private final List<Integer> partyIndices = new ArrayList<>(List.of(0, 1, 2, 3, 4));
 
-    private final Conversation tutorialConversation;
+    private Conversation tutorialConversation;
 
     @Getter
     private final List<Integer> partyDecision = new ArrayList<>();
@@ -48,65 +50,78 @@ public class TutorialConversation implements Conversation {
 
     public TutorialConversation() {
         shuffle(partyIndices);
+    }
 
+    public Conversation build(BorderPane viewBox) {
         tutorialConversation = showTextAndConfirm(
             "tutorial.welcome.introduction",
             showTextAndConfirm(
                 "tutorial.welcome.character-introduction",
                 showTextAndConfirm(
                     "tutorial.welcome.guild-introduction",
-                    showTextAndConfirm(
-                        "tutorial.welcome.arena-entrance",
-                        () ->
-                            List.of(
-                                showText("tutorial.welcome.chose-name"),
-                                awaitTextInput(
-                                    "global.character.username",
-                                    result -> playerName = result,
-                                    showTextWithVariablesAndConfirm(
-                                        "tutorial.welcome.your-journey-begins",
-                                        () -> new String[] { playerName },
-                                        showTextAndConfirm(
-                                            "tutorial.arena.introduction",
-                                            createPartyConversationContinuingWithNextConversation(0, conversationEnd())
+                    continueActionWith(
+                        conversationPlayer -> applyBackground("images/tutorial/arena.png", viewBox),
+                        showTextAndConfirm(
+                            "tutorial.welcome.arena-entrance",
+                            () ->
+                                List.of(
+                                    showText("tutorial.welcome.chose-name"),
+                                    awaitTextInput(
+                                        "global.character.username",
+                                        result -> playerName = result,
+                                        showTextWithVariablesAndConfirm(
+                                            "tutorial.welcome.your-journey-begins",
+                                            () -> new String[] { playerName },
+                                            showTextAndConfirm(
+                                                "tutorial.arena.introduction",
+                                                createPartyConversationContinuingWithNextConversation(
+                                                    0,
+                                                    viewBox,
+                                                    showTextAndConfirm("tutorial.arena.group", conversationEnd())
+                                                )
+                                            )
                                         )
                                     )
                                 )
-                            )
+                        )
                     )
                 )
             )
         );
+
+        return tutorialConversation;
     }
 
-    @Override
-    public List<ConversationPart> get() {
-        return tutorialConversation.get();
-    }
-
-    private Conversation createPartyConversationContinuingWithNextConversation(int currentIndex, Conversation nextConversation) {
+    private Conversation createPartyConversationContinuingWithNextConversation(
+        int currentIndex,
+        BorderPane viewBox,
+        Conversation nextConversation
+    ) {
         if (currentIndex == partyIndices.size() - 1) {
-            return newArenaEncounterConversation(currentIndex, nextConversation);
+            return newArenaEncounterConversation(currentIndex, viewBox, nextConversation);
         }
 
-        var partyConversation = createPartyConversationContinuingWithNextConversation(currentIndex + 1, nextConversation);
-        return newArenaEncounterConversation(currentIndex, partyConversation);
+        var partyConversation = createPartyConversationContinuingWithNextConversation(currentIndex + 1, viewBox, nextConversation);
+        return newArenaEncounterConversation(currentIndex, viewBox, partyConversation);
     }
 
-    private Conversation newArenaEncounterConversation(int currentIndex, @Nullable Conversation nextConversation) {
-        return () ->
-            List.of(
-                showText(format("tutorial.arena.encounter-%s", partyIndices.get(currentIndex))),
-                new Decision(
-                    List.of(
-                        new OptionWithCallback(
-                            "tutorial.arena.accept-company",
-                            nextConversation,
-                            () -> partyDecision.add(partyIndices.get(currentIndex))
-                        ),
-                        new Option("tutorial.arena.refuse-company", nextConversation)
+    private Conversation newArenaEncounterConversation(int currentIndex, BorderPane viewBox, @Nullable Conversation nextConversation) {
+        return continueActionWith(
+            conversationPlayer -> applyBackground(format("images/characters/encounter-%s.png", currentIndex), viewBox),
+            () ->
+                List.of(
+                    showText(format("tutorial.arena.encounter-%s", partyIndices.get(currentIndex))),
+                    new Decision(
+                        List.of(
+                            new OptionWithCallback(
+                                "tutorial.arena.accept-company",
+                                nextConversation,
+                                () -> partyDecision.add(partyIndices.get(currentIndex))
+                            ),
+                            new Option("tutorial.arena.refuse-company", nextConversation)
+                        )
                     )
                 )
-            );
+        );
     }
 }

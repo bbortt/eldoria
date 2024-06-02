@@ -11,6 +11,7 @@
             xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
     <bottom>
         <GridPane fx:id="conversationGrid" BorderPane.alignment="CENTER"
+                  vgap="10"
                   style="-fx-background-color: linear-gradient(to bottom, transparent 0%, -primary-background 10%);">
             <padding>
                 <Insets top="20" right="20" bottom="20" left="20"/>

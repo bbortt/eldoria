@@ -20,6 +20,7 @@ import static io.github.bbortt.eldoria.javafx.LayoutUtils.applyBackground;
 
 import io.github.bbortt.eldoria.conversation.ConversationManager;
 import io.github.bbortt.eldoria.conversation.tutorial.TutorialConversation;
+import io.github.bbortt.eldoria.domain.Character;
 import io.github.bbortt.eldoria.domain.Npc;
 import io.github.bbortt.eldoria.i18n.SpringResourceBundle;
 import io.github.bbortt.eldoria.service.GameService;
@@ -55,7 +56,7 @@ public class TutorialViewController {
     }
 
     public void initialize() {
-        applyBackground("images/tutorial-introduction.png", viewBox);
+        applyBackground("images/tutorial/introduction.png", viewBox);
 
         log.info("Tutorial starting");
 
@@ -63,18 +64,22 @@ public class TutorialViewController {
             conversationGrid,
             new SpringResourceBundle(messageSource, userPreferencesService.loadUserPreferences().getLocale())
         )
-            .playConversation(conversation)
-            .thenAccept(this::finishTutorialAndStartGame);
+            .playConversation(conversation.build(viewBox))
+            .thenRun(() -> finishTutorialAndStartGame(conversation))
+            .exceptionally(t -> {
+                log.error("Error during game creation!", t);
+                return null;
+            });
     }
 
-    private void finishTutorialAndStartGame(Void ignore) {
-        log.info("Tutorial finished");
+    private void finishTutorialAndStartGame(TutorialConversation conversation) {
+        log.info("Tutorial finished. Selected company: {}", conversation.getPartyDecision());
 
         userPreferencesService.setTutorialFinished();
-        gameService.startNewGame(conversation.getPlayerName(), getPartyDecision());
+        gameService.startNewGame(conversation.getPlayerName(), Character.Race.HUMAN, getPartyDecision(conversation));
     }
 
-    private List<Npc> getPartyDecision() {
+    private List<Npc> getPartyDecision(TutorialConversation conversation) {
         return conversation.getPartyDecision().stream().map(Npc::fromIndex).toList();
     }
 }

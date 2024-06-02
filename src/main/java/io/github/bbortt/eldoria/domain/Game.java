@@ -16,6 +16,7 @@
 
 package io.github.bbortt.eldoria.domain;
 
+import static jakarta.persistence.CascadeType.ALL;
 import static jakarta.persistence.GenerationType.SEQUENCE;
 
 import jakarta.persistence.Entity;
@@ -59,10 +60,10 @@ public class Game implements Serializable {
     @LastModifiedDate
     private Instant lastModifiedDate = Instant.now();
 
-    @OneToOne
+    @OneToOne(cascade = { ALL })
     private Character character;
 
-    @OneToMany
+    @OneToMany(cascade = { ALL })
     private Set<Character> npcs = new HashSet<>();
 
     @Builder

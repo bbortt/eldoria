@@ -16,9 +16,12 @@
 
 package io.github.bbortt.eldoria.domain;
 
+import static jakarta.persistence.EnumType.STRING;
 import static lombok.AccessLevel.PRIVATE;
 
+import jakarta.annotation.Nonnull;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.io.Serial;
@@ -42,32 +45,45 @@ public class Character implements Serializable {
     @Id
     private String name;
 
+    @Nonnull
+    @Enumerated(STRING)
+    private Race race;
+
     // Maximum hit points, determines how much health the character can have.
+    @Nonnull
     private int maxHP;
 
     // Current hit points, indicates the character's remaining health.
     private int currentHP;
 
     // Armor Class, influences the difficulty for enemies to hit the character in combat.
+    @Nonnull
     private int AC;
 
     // Affects physical damage dealt in melee combat and carrying capacity.
+    @Nonnull
     private int strength;
 
     // Influences accuracy with ranged weapons, reflexes (initiative), and defense (AC).
+    @Nonnull
     private int dexterity;
 
     // Determines base hit points, stamina, and resistance to harmful effects.
+    @Nonnull
     private int constitution;
 
     // Affects spellcasting ability, problem-solving skills, and some social interactions.
+    @Nonnull
     private int intelligence;
 
     // Influences perception, awareness, willpower (resisting spells), and some social interactions.
+    @Nonnull
     private int wisdom;
 
     // Affects social interactions, influence on others, and inspiring allies.
+    @Nonnull
     private int charisma;
+
     //    public void attack(Character target) {
     //        int attackRoll = rollD20() + getModifier(this.strength); // Roll d20 and add strength modifier
     //        if (attackRoll >= target.getAC()) {
@@ -89,4 +105,12 @@ public class Character implements Serializable {
     //    private int getModifier(int abilityScore) {
     //        return (abilityScore - 10) / 2;
     //    }
+
+    public enum Race {
+        HUMAN,
+        DWARF,
+        ELF,
+        GIANT,
+        HALFLING,
+    }
 }
