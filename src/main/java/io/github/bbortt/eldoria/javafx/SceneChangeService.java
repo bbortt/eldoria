@@ -23,6 +23,7 @@ import io.github.bbortt.eldoria.game.event.AbstractGameStateChangeEvent;
 import io.github.bbortt.eldoria.i18n.SpringResourceBundle;
 import io.github.bbortt.eldoria.service.UserPreferencesService;
 import java.io.IOException;
+import java.util.ResourceBundle;
 import javafx.animation.FadeTransition;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -39,8 +40,7 @@ import org.springframework.stereotype.Service;
 public class SceneChangeService {
 
     private final ApplicationContext applicationContext;
-    private final ResourceBundleMessageSource messageSource;
-    private final UserPreferencesService userPreferencesService;
+    private final ResourceBundle resourceBundle;
 
     private Stage stage;
 
@@ -50,8 +50,7 @@ public class SceneChangeService {
         UserPreferencesService userPreferencesService
     ) {
         this.applicationContext = applicationContext;
-        this.messageSource = messageSource;
-        this.userPreferencesService = userPreferencesService;
+        resourceBundle = new SpringResourceBundle(messageSource, userPreferencesService.loadUserPreferences().getLocale());
     }
 
     @EventListener(StageReadyEvent.class)
@@ -82,8 +81,6 @@ public class SceneChangeService {
     }
 
     private void loadScene(String sceneName) {
-        var resourceBundle = new SpringResourceBundle(messageSource, userPreferencesService.loadUserPreferences().getLocale());
-
         var fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("view/" + sceneName + "View.fxml"), resourceBundle);
         fxmlLoader.setControllerFactory(applicationContext::getBean);
 

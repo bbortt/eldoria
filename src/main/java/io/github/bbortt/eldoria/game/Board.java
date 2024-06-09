@@ -16,24 +16,21 @@
 
 package io.github.bbortt.eldoria.game;
 
-import static io.github.bbortt.eldoria.game.GameState.MAIN_MENU;
-
 import lombok.Getter;
-import org.springframework.stereotype.Component;
 
 @Getter
-@Component
-public final class Game {
+public class Board {
 
-    private Board board = new Board();
-    private GameState currentState;
+    private final Tile[][] tiles;
 
-    public Game() {
-        this.currentState = MAIN_MENU;
-    }
+    public Board() {
+        var boardSize = 8;
 
-    synchronized void transitionTo(GameState gameState) {
-        // TODO: validation could be added
-        this.currentState = gameState;
+        tiles = new Tile[8][8];
+        for (var row = 0; row < boardSize; row++) {
+            for (var col = 0; col < boardSize; col++) {
+                tiles[row][col] = new Tile();
+            }
+        }
     }
 }

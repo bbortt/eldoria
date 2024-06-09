@@ -14,26 +14,17 @@
  * limitations under the License.
  */
 
-package io.github.bbortt.eldoria.game;
+package io.github.bbortt.eldoria.javafx.view.controller;
 
-import static io.github.bbortt.eldoria.game.GameState.MAIN_MENU;
-
-import lombok.Getter;
+import io.github.bbortt.eldoria.game.Game;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-@Getter
+@Slf4j
 @Component
-public final class Game {
+public class TutorialArenaViewController extends ArenaViewController {
 
-    private Board board = new Board();
-    private GameState currentState;
-
-    public Game() {
-        this.currentState = MAIN_MENU;
-    }
-
-    synchronized void transitionTo(GameState gameState) {
-        // TODO: validation could be added
-        this.currentState = gameState;
+    public TutorialArenaViewController(Game game) {
+        super(game);
     }
 }

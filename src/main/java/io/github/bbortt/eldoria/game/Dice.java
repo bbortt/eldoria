@@ -27,10 +27,10 @@ public final class Dice {
     }
 
     public static int rollD6() {
-        return (int) (ThreadLocalRandom.current().nextDouble() * 6) + 1;
+        return ThreadLocalRandom.current().nextInt(6) + 1;
     }
 
     public static int rollD20() {
-        return (int) (ThreadLocalRandom.current().nextDouble() * 20) + 1;
+        return ThreadLocalRandom.current().nextInt(20) + 1;
     }
 }
