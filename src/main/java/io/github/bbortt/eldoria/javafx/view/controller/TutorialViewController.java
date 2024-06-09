@@ -56,7 +56,7 @@ public class TutorialViewController {
     }
 
     public void initialize() {
-        applyBackground("images/tutorial/introduction.png", viewBox);
+        applyBackground("images/tutorial/introduction.png", viewBox, false);
 
         log.info("Tutorial starting");
 

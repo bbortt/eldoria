@@ -59,7 +59,7 @@ public class MainViewController {
     }
 
     public void initialize() {
-        applyBackground("images/background.png", viewBox);
+        applyBackground("images/background.png", viewBox, false);
     }
 
     @FXML

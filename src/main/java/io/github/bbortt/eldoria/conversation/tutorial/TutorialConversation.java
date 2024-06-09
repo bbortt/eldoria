@@ -105,7 +105,7 @@ public class TutorialConversation {
 
     private Conversation newArenaEncounterConversation(int currentIndex, BorderPane viewBox, @Nullable Conversation nextConversation) {
         return continueActionWith(
-            conversationPlayer -> applyBackground(format("images/characters/encounter-%s.png", currentIndex), viewBox),
+            conversationPlayer -> applyBackground(format("images/characters/encounter-%s.png", partyIndices.get(currentIndex)), viewBox),
             () ->
                 List.of(
                     showText(format("tutorial.arena.encounter-%s", partyIndices.get(currentIndex))),
