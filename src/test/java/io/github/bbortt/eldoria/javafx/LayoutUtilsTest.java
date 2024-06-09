@@ -11,6 +11,7 @@ import static org.assertj.core.api.InstanceOfAssertFactories.type;
 import static org.mockito.ArgumentCaptor.captor;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
+import static org.testfx.util.WaitForAsyncUtils.waitForFxEvents;
 
 import io.github.palexdev.materialfx.controls.MFXButton;
 import javafx.scene.layout.Background;
@@ -67,9 +68,22 @@ class LayoutUtilsTest {
         }
 
         @Test
-        void validImage() {
+        void validImageWithAnimation() {
             applyBackground("images/background.png", paneSpy);
 
+            waitForFxEvents();
+
+            verifyBackgroundHasBeenApplied();
+        }
+
+        @Test
+        void validImageWithoutAnimation() {
+            applyBackground("images/background.png", paneSpy, false);
+
+            verifyBackgroundHasBeenApplied();
+        }
+
+        private void verifyBackgroundHasBeenApplied() {
             ArgumentCaptor<Background> backgroundArgumentCaptor = captor();
             verify(paneSpy).setBackground(backgroundArgumentCaptor.capture());
 
