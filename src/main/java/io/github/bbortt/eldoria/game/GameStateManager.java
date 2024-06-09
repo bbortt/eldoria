@@ -17,9 +17,6 @@
 package io.github.bbortt.eldoria.game;
 
 import io.github.bbortt.eldoria.game.event.AbstractGameStateChangeEvent;
-import io.github.bbortt.eldoria.game.event.StartGameEvent;
-import io.github.bbortt.eldoria.game.event.StartNewGameEvent;
-import io.github.bbortt.eldoria.game.event.StartTutorialEvent;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
@@ -38,15 +35,6 @@ public class GameStateManager {
     public void onGameStateChangeEvent(AbstractGameStateChangeEvent gameStateChange) {
         log.debug("Caught game state change event: {}", gameStateChange);
 
-        switch (gameStateChange) {
-            case StartTutorialEvent startTutorialEvent -> transitionToGameState(startTutorialEvent);
-            case StartNewGameEvent startNewGameEvent -> transitionToGameState(startNewGameEvent);
-            case StartGameEvent startGameEvent -> transitionToGameState(startGameEvent);
-            default -> throw new IllegalStateException("Unexpected value: " + gameStateChange);
-        }
-    }
-
-    private <T extends AbstractGameStateChangeEvent> void transitionToGameState(T gameStateChange) {
         var gameState = gameStateChange.getGameState();
         log.info("Transition to game state: {}", gameState);
         game.transitionTo(gameState);

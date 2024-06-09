@@ -14,26 +14,21 @@
  * limitations under the License.
  */
 
-package io.github.bbortt.eldoria.game;
+package io.github.bbortt.eldoria.game.event;
 
-import static io.github.bbortt.eldoria.game.GameState.MAIN_MENU;
+import static io.github.bbortt.eldoria.game.GameState.COMBAT;
 
+import io.github.bbortt.eldoria.domain.Game;
 import lombok.Getter;
-import org.springframework.stereotype.Component;
+import org.springframework.context.ApplicationEvent;
 
 @Getter
-@Component
-public final class Game {
+public class StartTutorialGameEvent extends AbstractGameStateChangeEvent {
 
-    private Board board = new Board();
-    private GameState currentState;
+    private final Game game;
 
-    public Game() {
-        this.currentState = MAIN_MENU;
-    }
-
-    synchronized void transitionTo(GameState gameState) {
-        // TODO: validation could be added
-        this.currentState = gameState;
+    public StartTutorialGameEvent(Game game) {
+        super(COMBAT, "TutorialArena");
+        this.game = game;
     }
 }

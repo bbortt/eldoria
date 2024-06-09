@@ -84,7 +84,7 @@ class TutorialViewControllerTest {
                     any(Locale.class)
                 );
 
-            fixture.initialize();
+            fixture.initialize(null, null);
 
             verify(viewBoxMock).setBackground(any(Background.class));
         }
@@ -101,7 +101,7 @@ class TutorialViewControllerTest {
 
             setField(fixture, "conversation", tutorialConversationMock, TutorialConversation.class);
 
-            fixture.initialize();
+            fixture.initialize(null, null);
 
             waitForFxEvents();
 
