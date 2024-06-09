@@ -23,7 +23,10 @@ import io.github.bbortt.eldoria.game.event.StartTutorialEvent;
 import io.github.bbortt.eldoria.service.GameService;
 import io.github.bbortt.eldoria.service.UserPreferencesService;
 import io.github.palexdev.materialfx.controls.MFXButton;
+import java.net.URL;
+import java.util.ResourceBundle;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import lombok.extern.slf4j.Slf4j;
@@ -32,7 +35,7 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
-public class MainViewController {
+public class MainViewController implements Initializable {
 
     private final ApplicationEventPublisher applicationEventPublisher;
     private final GameService gameService;
@@ -58,7 +61,8 @@ public class MainViewController {
         return gameService.hasSavedAnyGames();
     }
 
-    public void initialize() {
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
         applyBackground("images/background.png", viewBox, false);
     }
 

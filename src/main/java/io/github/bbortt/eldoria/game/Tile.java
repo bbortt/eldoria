@@ -16,24 +16,9 @@
 
 package io.github.bbortt.eldoria.game;
 
-import static io.github.bbortt.eldoria.game.GameState.MAIN_MENU;
+import jakarta.annotation.Nullable;
 
-import lombok.Getter;
-import org.springframework.stereotype.Component;
+public class Tile {
 
-@Getter
-@Component
-public final class Game {
-
-    private Board board = new Board();
-    private GameState currentState;
-
-    public Game() {
-        this.currentState = MAIN_MENU;
-    }
-
-    synchronized void transitionTo(GameState gameState) {
-        // TODO: validation could be added
-        this.currentState = gameState;
-    }
+    private @Nullable Character occupant;
 }

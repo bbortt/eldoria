@@ -53,7 +53,7 @@ class MainViewControllerTest {
             var viewBoxMock = mock(BorderPane.class);
             setField(fixture, "viewBox", viewBoxMock, BorderPane.class);
 
-            fixture.initialize();
+            fixture.initialize(null, null);
 
             verify(viewBoxMock).setBackground(any(Background.class));
         }

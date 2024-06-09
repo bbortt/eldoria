@@ -23,6 +23,7 @@ import io.github.bbortt.eldoria.domain.Game;
 import io.github.bbortt.eldoria.domain.Npc;
 import io.github.bbortt.eldoria.domain.repository.GameRepository;
 import io.github.bbortt.eldoria.game.event.StartGameEvent;
+import io.github.bbortt.eldoria.game.event.StartTutorialGameEvent;
 import java.util.List;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
@@ -43,13 +44,22 @@ public class GameService {
     }
 
     public void startNewGame(String playerName, Character.Race race, List<Npc> alies) {
+        var game = persistNewGame(playerName, race, alies);
+        applicationEventPublisher.publishEvent(new StartGameEvent(game));
+    }
+
+    public void startNewTutorialGame(String playerName, Character.Race race, List<Npc> alies) {
+        var game = persistNewGame(playerName, race, alies);
+        applicationEventPublisher.publishEvent(new StartTutorialGameEvent(game));
+    }
+
+    private Game persistNewGame(String playerName, Character.Race race, List<Npc> alies) {
         var game = Game.builder()
             .character(Character.builder().name(playerName).race(race).build())
             .npcs(alies.stream().map(Npc::createCharacter).collect(toSet()))
             .build();
 
         gameRepository.save(game);
-
-        applicationEventPublisher.publishEvent(new StartGameEvent(game));
+        return game;
     }
 }

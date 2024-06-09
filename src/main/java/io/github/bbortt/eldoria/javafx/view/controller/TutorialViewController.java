@@ -25,8 +25,11 @@ import io.github.bbortt.eldoria.domain.Npc;
 import io.github.bbortt.eldoria.i18n.SpringResourceBundle;
 import io.github.bbortt.eldoria.service.GameService;
 import io.github.bbortt.eldoria.service.UserPreferencesService;
+import java.net.URL;
 import java.util.List;
+import java.util.ResourceBundle;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import lombok.extern.slf4j.Slf4j;
@@ -35,7 +38,7 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
-public class TutorialViewController {
+public class TutorialViewController implements Initializable {
 
     private final MessageSource messageSource;
     private final GameService gameService;
@@ -55,7 +58,8 @@ public class TutorialViewController {
         this.userPreferencesService = userPreferencesService;
     }
 
-    public void initialize() {
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
         applyBackground("images/tutorial/introduction.png", viewBox, false);
 
         log.info("Tutorial starting");
@@ -76,7 +80,7 @@ public class TutorialViewController {
         log.info("Tutorial finished. Selected company: {}", conversation.getPartyDecision());
 
         userPreferencesService.setTutorialFinished();
-        gameService.startNewGame(conversation.getPlayerName(), Character.Race.HUMAN, getPartyDecision(conversation));
+        gameService.startNewTutorialGame(conversation.getPlayerName(), Character.Race.HUMAN, getPartyDecision(conversation));
     }
 
     private List<Npc> getPartyDecision(TutorialConversation conversation) {
