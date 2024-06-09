@@ -111,7 +111,10 @@ public class SceneChangeService {
         fadeIn.setFromValue(0.0);
         fadeIn.setToValue(1.0);
 
-        fadeOut.setOnFinished(e -> stage.setScene(nextScene));
+        fadeOut.setOnFinished(e -> {
+            stage.setScene(nextScene);
+            fadeIn.play();
+        });
 
         fadeOut.play();
     }
