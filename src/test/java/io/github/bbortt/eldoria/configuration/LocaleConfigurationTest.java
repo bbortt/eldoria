@@ -23,8 +23,7 @@ class LocaleConfigurationTest {
         void containsBasenames() {
             assertThat(fixture.messageSource())
                 .extracting(ResourceBundleMessageSource::getBasenameSet)
-                .satisfies(
-                    basenames -> assertThat(basenames).containsExactly("i18n/character", "i18n/global", "i18n/main", "i18n/tutorial")
+                .satisfies(basenames -> assertThat(basenames).containsExactly("i18n/character", "i18n/global", "i18n/main", "i18n/tutorial")
                 );
         }
     }

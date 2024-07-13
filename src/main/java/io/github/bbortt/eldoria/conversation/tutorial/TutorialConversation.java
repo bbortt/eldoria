@@ -61,28 +61,26 @@ public class TutorialConversation {
                     "tutorial.welcome.guild-introduction",
                     continueActionWith(
                         conversationPlayer -> applyBackground("images/tutorial/arena.png", viewBox),
-                        showTextAndConfirm(
-                            "tutorial.welcome.arena-entrance",
-                            () ->
-                                List.of(
-                                    showText("tutorial.welcome.chose-name"),
-                                    awaitTextInput(
-                                        "global.character.username",
-                                        result -> playerName = result,
-                                        showTextWithVariablesAndConfirm(
-                                            "tutorial.welcome.your-journey-begins",
-                                            () -> new String[] { playerName },
-                                            showTextAndConfirm(
-                                                "tutorial.arena.introduction",
-                                                createPartyConversationContinuingWithNextConversation(
-                                                    0,
-                                                    viewBox,
-                                                    showTextAndConfirm("tutorial.arena.group", conversationEnd())
-                                                )
+                        showTextAndConfirm("tutorial.welcome.arena-entrance", () ->
+                            List.of(
+                                showText("tutorial.welcome.chose-name"),
+                                awaitTextInput(
+                                    "global.character.username",
+                                    result -> playerName = result,
+                                    showTextWithVariablesAndConfirm(
+                                        "tutorial.welcome.your-journey-begins",
+                                        () -> new String[] { playerName },
+                                        showTextAndConfirm(
+                                            "tutorial.arena.introduction",
+                                            createPartyConversationContinuingWithNextConversation(
+                                                0,
+                                                viewBox,
+                                                showTextAndConfirm("tutorial.arena.group", conversationEnd())
                                             )
                                         )
                                     )
                                 )
+                            )
                         )
                     )
                 )
@@ -113,10 +111,8 @@ public class TutorialConversation {
                     showText(format("tutorial.arena.encounter-%s", partyIndices.get(currentIndex))),
                     new Decision(
                         List.of(
-                            new OptionWithCallback(
-                                "tutorial.arena.accept-company",
-                                nextConversation,
-                                () -> partyDecision.add(partyIndices.get(currentIndex))
+                            new OptionWithCallback("tutorial.arena.accept-company", nextConversation, () ->
+                                partyDecision.add(partyIndices.get(currentIndex))
                             ),
                             new Option("tutorial.arena.refuse-company", nextConversation)
                         )
