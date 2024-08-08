@@ -1,0 +1,26 @@
+bug:
+  - head-branch: ['^fix', '^bugfix', 'fix']
+
+ci/cd:
+  - changed-files:
+      - any-glob-to-any-file:
+        - '.github/**/*'
+
+dependencies:
+  - changed-files:
+      - any-glob-to-any-file:
+        - 'package*.json'
+        - 'pnpm*.json'
+
+documentation:
+  - changed-files:
+      - any-glob-to-any-file:
+        - '*.md'
+
+feature:
+  - head-branch: ['^feat', 'feature']
+
+typescript:
+  - changed-files:
+      - any-glob-to-any-file:
+          - '**/*.ts'
