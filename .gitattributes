@@ -1,1 +1,7 @@
-src/main/resources/images/**/*.png filter=lfs diff=lfs merge=lfs -text
+apps/web/public/characters/encounter-0.png filter=lfs diff=lfs merge=lfs -text
+apps/web/public/characters/encounter-1.png filter=lfs diff=lfs merge=lfs -text
+apps/web/public/characters/encounter-2.png filter=lfs diff=lfs merge=lfs -text
+apps/web/public/characters/encounter-3.png filter=lfs diff=lfs merge=lfs -text
+apps/web/public/characters/encounter-4.png filter=lfs diff=lfs merge=lfs -text
+apps/web/public/tutorial/arena.png filter=lfs diff=lfs merge=lfs -text
+apps/web/public/tutorial/introduction.png filter=lfs diff=lfs merge=lfs -text
