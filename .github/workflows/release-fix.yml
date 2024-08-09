@@ -1,27 +1,22 @@
-name: Application CI
+name: Release Preparation
 
 on:
   push:
-    branches-ignore:
-      - main
-
-concurrency:
-  group: ci-${{ github.ref }}
-  cancel-in-progress: true
+    branches:
+      - 'release-please-*'
 
 jobs:
-  ci:
-    name: 'Build and Test'
+  publish:
+    name: Fix Release Preparation
     runs-on: ubuntu-latest
-    if: github.event_name != 'pull_request'
+    permissions:
+      contents: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Check if PR exists
-        uses: 8BitJonny/gh-get-current-pr@3.0.0
-        id: check
+        with:
+          ref: ${{ github.head_ref }}
       - name: Install pnpm
-        if: '!steps.check.outputs.number'
         uses: pnpm/action-setup@v4
         with:
           run_install: false
@@ -33,14 +28,16 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-turbo-
       - name: Install Node.js
-        if: '!steps.check.outputs.number'
         uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: 'pnpm'
       - name: Install Dependencies
-        if: '!steps.check.outputs.number'
         run: pnpm install
-      - name: Run Unit-Tests
-        if: '!steps.check.outputs.number'
-        run: pnpm run test -- --coverage
+      - name: Fix package.json
+        run: pnpm run prettier:format
+      - name: Commit
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: 'ci(release): fix package.json formatting'
+          file_pattern: 'package.json'
