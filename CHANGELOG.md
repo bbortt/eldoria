@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.0.1](https://github.com/bbortt/eldoria/compare/v1.0.0...v1.0.1) (2024-08-09)
+
+
+### Bug Fixes
+
+* depenendabot pnpm value ([e1515bc](https://github.com/bbortt/eldoria/commit/e1515bc4483d17281c543fffc9ec14c4b5eaa476))
+* **deployment:** publish to github pages after release ([212b87a](https://github.com/bbortt/eldoria/commit/212b87a0a465fa72dc06798a248466255818a59a))
+* format package.json before release ([353ca9f](https://github.com/bbortt/eldoria/commit/353ca9fb5a95639b951013074f0b5266314a25c2))
+
 ## 1.0.0 (2024-08-09)
 
 
