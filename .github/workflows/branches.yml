@@ -38,7 +38,7 @@ jobs:
         with:
           node-version: 22
           cache: 'pnpm'
-      - name: Install dependencies
+      - name: Install Dependencies
         if: '!steps.check.outputs.number'
         run: pnpm install
       - name: Run Unit-Tests

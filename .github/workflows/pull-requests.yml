@@ -40,7 +40,7 @@ jobs:
         with:
           node-version: 22
           cache: 'pnpm'
-      - name: Install dependencies
+      - name: Install Dependencies
         run: pnpm install
       - name: Check Formatting
         run: pnpm run prettier:check
@@ -68,7 +68,7 @@ jobs:
         with:
           node-version: 22
           cache: 'pnpm'
-      - name: Install dependencies
+      - name: Install Dependencies
         run: pnpm install
       - name: Run Unit-Tests
         run: pnpm run test -- --coverage
