@@ -19,7 +19,7 @@ jobs:
     steps:
       - uses: actions/labeler@v5
   lint:
-    name: 'Eldoria: Lint'
+    name: 'Lint'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -47,7 +47,7 @@ jobs:
       - name: Lint Changes
         run: pnpm run lint
   ci:
-    name: 'Eldoria: Build and Test'
+    name: 'Build and Test'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout

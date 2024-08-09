@@ -1,5 +1,6 @@
 {
   "name": "eldoria",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "build": "turbo build",
@@ -25,6 +26,5 @@
   "packageManager": "pnpm@8.15.6",
   "engines": {
     "node": "=>20.16.0"
-  },
-  "version": "1.0.0"
+  }
 }
