@@ -7,8 +7,8 @@
     "dev": "turbo dev",
     "lint": "turbo lint",
     "prepare": "husky",
-    "prettier:check": "prettier --config .prettierrc.js --check \"{,{.github,apps,packages}/**/}*.{css,js,json,md,s(a|c)ss,ts,y(a|)ml}\"",
-    "prettier:format": "prettier --config .prettierrc.js --write \"{,{.github,apps,packages}/**/}*.{css,js,json,md,s(a|c)ss,ts,y(a|)ml}\"",
+    "prettier:check": "prettier --config .prettierrc.js --check \"{,{.github,apps,packages}/**/}*.{css,js,json,md,s(a|c)ss,ts(x|),y(a|)ml}\"",
+    "prettier:format": "prettier --config .prettierrc.js --write \"{,{.github,apps,packages}/**/}*.{css,js,json,md,s(a|c)ss,ts(x|),y(a|)ml}\"",
     "test": "turbo run test"
   },
   "devDependencies": {

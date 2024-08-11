@@ -7,7 +7,15 @@ const config: Config = {
     // './components/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        'primary-bg': '#f2e2c4',
+        'secondary-bg': '#a6401b',
+        'primary-text': '#592418',
+        'secondary-text': '#f2b56b',
+        outline: '#01060d',
+      },
+    },
   },
   plugins: [],
 };
