@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/bbortt/eldoria/compare/v1.0.1...v1.1.0) (2024-08-11)
+
+
+### Features
+
+* landing page without functionality ([a0ef76c](https://github.com/bbortt/eldoria/commit/a0ef76c2d98321e060f4f78b92c8aa9f10a0b7a4))
+
 ## [1.0.1](https://github.com/bbortt/eldoria/compare/v1.0.0...v1.0.1) (2024-08-09)
 
 
