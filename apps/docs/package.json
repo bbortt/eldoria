@@ -17,11 +17,11 @@
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
-    "@types/node": "20",
-    "@types/react": "18",
-    "@types/react-dom": "18",
-    "eslint": "8",
+    "@types/node": "22.2.0",
+    "@types/react": "18.3.3",
+    "@types/react-dom": "18.3.0",
+    "eslint": "8.57.0",
     "eslint-config-next": "15.0.0-rc.0",
-    "typescript": "5"
+    "typescript": "5.5.4"
   }
 }
