@@ -1,21 +1,24 @@
 {
   "name": "@repo/ui",
   "private": true,
-  "exports": {
-    "./button": "./src/button.tsx",
-    "./card": "./src/card.tsx",
-    "./code": "./src/code.tsx"
-  },
+  "main": "./index.tsx",
+  "types": "./index.tsx",
   "scripts": {
     "generate:component": "turbo gen react-component",
     "lint": "eslint . --max-warnings 0"
   },
   "dependencies": {
+    "autoprefixer": "10.4.20",
+    "postcss": "8.4.41",
     "react": "19.0.0-rc.0",
+    "sass": "^1.77.8",
+    "tailwind-variants": "0.1.13",
     "tailwindcss": "3.4.10"
   },
   "devDependencies": {
+    "@nextui-org/react": "^2.4.6",
     "@repo/eslint-config": "workspace:*",
+    "@repo/tailwind-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
     "@turbo/gen": "2.0.14",
     "@types/eslint": "8.56.5",
@@ -23,6 +26,9 @@
     "@types/react": "18.3.3",
     "@types/react-dom": "18.3.0",
     "eslint": "8.57.0",
+    "framer-motion": "^11.3.28",
+    "next-themes": "^0.3.0",
+    "tailwind-merge": "^2.5.2",
     "typescript": "5.5.4"
   }
 }

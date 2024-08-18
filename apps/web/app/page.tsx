@@ -1,5 +1,7 @@
 import styles from './page.module.css';
 
+import MainMenu from '@/layout/main-menu';
+
 export default function Home() {
   return (
     <div className={styles.page}>
@@ -7,10 +9,8 @@ export default function Home() {
         Chronicles of Eldoria <small>The Shadowed Realm</small>
       </h1>
 
-      <main className={styles.main}>
-        <button className="btn btn-blue">Start Game</button>
-        <button className="btn btn-blue">Load Game</button>
-      </main>
+      <MainMenu />
+
       <footer className={styles.footer}></footer>
     </div>
   );
