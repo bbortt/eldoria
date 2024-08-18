@@ -1,6 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export'
+  output: 'export',
+  reactStrictMode: true,
+	transpilePackages: ["ui", "tailwind-config"],
 };
 
 export default nextConfig;
