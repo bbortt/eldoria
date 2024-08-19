@@ -22,8 +22,10 @@ module.exports = {
     },
   },
   ignorePatterns: [
+    '.turbo/',
     // Ignore dotfiles
     '.*.js',
+    'coverage/',
     'node_modules/',
   ],
   overrides: [{ files: ['*.js?(x)', '*.ts?(x)'] }],

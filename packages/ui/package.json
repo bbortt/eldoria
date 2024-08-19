@@ -6,7 +6,7 @@
   "scripts": {
     "generate:component": "turbo gen react-component",
     "lint": "eslint . --max-warnings 0",
-    "test": "jest",
+    "test": "jest --config .jest.config.js",
     "test:watch": "jest --watch"
   },
   "dependencies": {
