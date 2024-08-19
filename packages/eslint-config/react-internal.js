@@ -27,10 +27,12 @@ module.exports = {
     },
   },
   ignorePatterns: [
+    '.turbo/',
     // Ignore dotfiles
     '.*.js',
-    'node_modules/',
+    'coverage/',
     'dist/',
+    'node_modules/',
   ],
   overrides: [
     // Force ESLint to detect .tsx files

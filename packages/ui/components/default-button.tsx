@@ -1,7 +1,7 @@
 import { Button, ButtonProps } from '@nextui-org/react'; // Assuming you're using Next UI
-import React from 'react';
 
 export interface DefaultButtonProps extends Omit<ButtonProps, 'color'> {
+  children: React.ReactNode;
   color?: 'primary' | 'secondary' | 'success' | 'warning' | 'danger';
 }
 

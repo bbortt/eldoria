@@ -1,10 +1,11 @@
 import '@testing-library/jest-dom';
+// eslint-disable-next-line no-redeclare
 import { render, screen } from '@testing-library/react';
 
-import DefaultButton from './default-button';
+import { DefaultButton, DefaultButtonProps } from './default-button';
 
 jest.mock('@nextui-org/react', () => ({
-  Button: ({ children, color, ...props }: MockButtonProps) => (
+  Button: ({ children, color, ...props }: DefaultButtonProps) => (
     <button data-testid="mock-button" data-color={color} {...props}>
       {children}
     </button>
