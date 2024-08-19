@@ -3,10 +3,6 @@
   flex-direction: column;
   gap: 32px;
   grid-row-start: 2;
-
-  button {
-    @apply bg-secondary text-primary;
-  }
 }
 
 @media (max-width: 600px) {
