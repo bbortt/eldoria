@@ -4,7 +4,7 @@
   "main": "index.ts",
   "types": "index.ts",
   "devDependencies": {
-    "tailwind-variants": "0.1.13",
+    "tailwind-variants": "0.2.1",
     "tailwindcss": "3.3.3"
   }
 }
