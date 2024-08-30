@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.0](https://github.com/bbortt/eldoria/compare/v1.1.0...v1.2.0) (2024-08-30)
+
+
+### Features
+
+* add react ui components ([bee9af1](https://github.com/bbortt/eldoria/commit/bee9af163412dd0a5d49879f44cb3b7fbcdd2a50))
+* index-page module ([6188462](https://github.com/bbortt/eldoria/commit/61884627edd6cdf5ea7950a50e5233956b4ea44c))
+
 ## [1.1.0](https://github.com/bbortt/eldoria/compare/v1.0.1...v1.1.0) (2024-08-11)
 
 
