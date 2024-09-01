@@ -33,6 +33,8 @@ jobs:
         run: pnpm install
       - name: Build Pages
         run: pnpm run build
+        env:
+          ELDORIA_BASE_PATH: '/eldoria'
       - name: Publish to GH Pages
         run: |
           git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
