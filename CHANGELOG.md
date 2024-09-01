@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.1](https://github.com/bbortt/eldoria/compare/v1.2.0...v1.2.1) (2024-09-01)
+
+
+### Bug Fixes
+
+* static pages build ([7fe426b](https://github.com/bbortt/eldoria/commit/7fe426b28cbfc6f57670b0f55ee91ec48a17c4a7))
+
 ## [1.2.0](https://github.com/bbortt/eldoria/compare/v1.1.0...v1.2.0) (2024-08-30)
 
 
