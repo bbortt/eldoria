@@ -12,7 +12,7 @@ export interface TextWithContinueButtonProps {
   text: string;
 }
 
-export const TextWithContinueButton: React.FC<TextWithContinueButtonProps> = ({ backgroundImage, currentIndex, text, ...props }) => {
+export const TextWithContinueButton: React.FC<TextWithContinueButtonProps> = ({ backgroundImage, currentIndex, text }) => {
   return (
     <div className={styles.container} style={{ backgroundImage: `url(` + backgroundImage + `)` }}>
       <footer className={styles.footer}>
