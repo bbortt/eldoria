@@ -2,7 +2,7 @@ import TextWithContinueButton from '@repo/ui/components/tutorial/text-with-conti
 
 const tutorialConversation: { [key: number]: { text: string; backgroundImage: string } } = {
   1: {
-    text: `Beneath the cloak of predawn\'s embrace, a figure moves with the quiet promise of youth, skirting the edges of Eldoria\'s grandeur.
+    text: `Beneath the cloak of predawn's embrace, a figure moves with the quiet promise of youth, skirting the edges of Eldoria's grandeur.
     The city, a tapestry of towering aspirations and hushed marketplaces, slumbers under a shroud of uneasy silence, its heartbeats muffled by whispers of shadows yet unseen.`,
     backgroundImage: '/tutorial/introduction.png',
   },

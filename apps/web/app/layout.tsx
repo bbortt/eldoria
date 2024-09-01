@@ -3,6 +3,8 @@ import localFont from 'next/font/local';
 
 import './globals.css';
 
+import RouterTransition from '@/layout/router-transition';
+
 import { Providers } from './providers';
 
 const geistSans = localFont({
@@ -28,7 +30,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <Providers>
-          <main className="main text-foreground bg-background"> {children}</main>
+          <RouterTransition>
+            <main className="main text-foreground bg-background"> {children}</main>
+          </RouterTransition>
         </Providers>
       </body>
     </html>
