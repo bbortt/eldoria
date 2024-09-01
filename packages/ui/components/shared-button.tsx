@@ -1,3 +1,5 @@
+'use client';
+
 type SharedButtonProps = {
   appName: string;
   children: React.ReactNode;

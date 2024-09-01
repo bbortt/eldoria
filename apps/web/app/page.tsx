@@ -2,7 +2,7 @@ import styles from './page.module.css';
 
 import MainMenu from '@/layout/main-menu';
 
-export const Home = () => {
+export default () => {
   return (
     <div className={styles.container}>
       <header className={styles.header}>
@@ -16,5 +16,3 @@ export const Home = () => {
     </div>
   );
 };
-
-export default Home;
