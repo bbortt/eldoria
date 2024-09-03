@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.3.0](https://github.com/bbortt/eldoria/compare/v1.2.1...v1.3.0) (2024-09-03)
+
+
+### Features
+
+* fading router transition ([651298f](https://github.com/bbortt/eldoria/commit/651298f93def4105dda015f813d442f5db3c3c86))
+
+
+### Bug Fixes
+
+* **github-pages:** release with base path ([450d9dc](https://github.com/bbortt/eldoria/commit/450d9dc18deae242eac6d709e160678874f344a3))
+
 ## [1.2.1](https://github.com/bbortt/eldoria/compare/v1.2.0...v1.2.1) (2024-09-01)
 
 
