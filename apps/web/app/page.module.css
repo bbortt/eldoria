@@ -12,5 +12,5 @@
 }
 
 .main {
-  @apply absolute inset-0 flex items-center justify-center;
+  @apply main-layout;
 }

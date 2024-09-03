@@ -1,0 +1,3 @@
+.container {
+  @apply bg-cover bg-center flex flex-col min-h-screen;
+}
