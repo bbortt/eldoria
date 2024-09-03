@@ -31,7 +31,7 @@ export default ({ params }: { params: { index: string } }) => {
   const { index } = params;
   const numberIndex: number = +index;
 
-  if (!tutorialConversation.hasOwnProperty(numberIndex)) {
+  if (!Object.hasOwn(tutorialConversation, numberIndex)) {
     return <></>;
   }
 
