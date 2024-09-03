@@ -1,0 +1,23 @@
+.main {
+  @apply main-layout;
+
+  & > div {
+    @apply grid gap-2 grid-cols-1;
+  }
+
+  & > form {
+    @apply w-full max-w-sm;
+  }
+}
+
+.flexBoxCenter {
+  @apply flex justify-center;
+}
+
+.inputContainer {
+  @apply flex items-center border-b border-secondary py-2;
+
+  & > input {
+    @apply appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none;
+  }
+}

@@ -1,5 +1,7 @@
-import { SharedButton } from '@repo/ui/components/shared-button';
 import Image from 'next/image';
+
+import { SharedButton } from '@repo/ui/components/shared-button';
+
 import styles from './page.module.css';
 
 export default () => {

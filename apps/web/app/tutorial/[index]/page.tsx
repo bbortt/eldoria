@@ -1,4 +1,6 @@
-import TextWithContinueButton from '@repo/ui/components/tutorial/text-with-continue-button';
+import { TextWithContinueButton, TextWithInputAndConfirmButton } from '@repo/ui/components';
+
+import styles from './page.module.css';
 
 const tutorialConversation: { [key: number]: { text: string; backgroundImage: string } } = {
   1: {
@@ -25,6 +27,10 @@ const tutorialConversation: { [key: number]: { text: string; backgroundImage: st
     Herein lies your odyssey, in the heart of Eldoria, where shadows sing secrets and every choice forges the path of your legacy.`,
     backgroundImage: '/tutorial/arena.png',
   },
+  5: {
+    text: `"What name shall the echoes of these halls whisper, young aspirant?" the shadows inquire, a prelude to the saga awaiting your breath.`,
+    backgroundImage: '',
+  },
 };
 
 export default ({ params }: { params: { index: string } }) => {
@@ -38,12 +44,22 @@ export default ({ params }: { params: { index: string } }) => {
   const { text, backgroundImage } = tutorialConversation[numberIndex]!;
 
   if (numberIndex <= 4) {
-    return <TextWithContinueButton currentIndex={numberIndex} text={text} backgroundImage={backgroundImage} />;
+    return (
+      <div className={styles.container} style={{ backgroundImage: `url(` + backgroundImage + `)` }}>
+        <TextWithContinueButton currentIndex={numberIndex} text={text} />;
+      </div>
+    );
+  } else if (numberIndex == 5) {
+    return (
+      <div className={styles.container}>
+        <TextWithInputAndConfirmButton text={text} />
+      </div>
+    );
   }
 };
 
 export async function generateStaticParams() {
-  return [...Array(4).keys()]
+  return [...Array(5).keys()]
     .map(i => String(i + 1))
     .map(index => ({
       index,
