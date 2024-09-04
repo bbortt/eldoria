@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.1](https://github.com/bbortt/eldoria/compare/v1.3.0...v1.3.1) (2024-09-04)
+
+
+### Bug Fixes
+
+* read base path from .env file ([d704b66](https://github.com/bbortt/eldoria/commit/d704b66299142a04d44ba47108c55ba0703d8eee))
+
 ## [1.3.0](https://github.com/bbortt/eldoria/compare/v1.2.1...v1.3.0) (2024-09-03)
 
 
