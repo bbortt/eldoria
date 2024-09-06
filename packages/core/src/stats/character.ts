@@ -4,6 +4,7 @@ import { Specialization } from './specialization';
 export class Character {
   public maxHP: number;
   public ac: number;
+
   public strength: number;
   public dexterity: number;
   public constitution: number;
@@ -13,8 +14,8 @@ export class Character {
 
   constructor(
     public name: string,
-    public race: Race,
-    public specialization: Specialization,
+    private race: Race,
+    private specialization: Specialization,
   ) {
     this.strength = race.baseStrength + specialization.strengthMod;
     this.dexterity = race.baseDexterity + specialization.dexterityMod;

@@ -6,6 +6,9 @@
     "nextjs.json",
     "react-library.json"
   ],
+  "dependencies": {
+    "@repo/typescript-config": "file:"
+  },
   "devDependencies": {
     "typescript": "5.5.4"
   }

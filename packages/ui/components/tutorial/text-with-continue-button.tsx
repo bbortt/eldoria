@@ -1,24 +1,20 @@
 'use client';
 
-import { Link } from '@nextui-org/react';
-
-import styles from './text-with-continue-button.module.css';
+import styles from './tutorial.module.css';
 
 import DefaultButton from '../default-button';
 
 export interface TextWithContinueButtonProps {
-  currentIndex: number;
+  continueFunction: () => void;
   text: string;
 }
 
-export const TextWithContinueButton: React.FC<TextWithContinueButtonProps> = ({ currentIndex, text }) => {
+export const TextWithContinueButton: React.FC<TextWithContinueButtonProps> = ({ continueFunction, text }) => {
   return (
     <footer className={styles.footer}>
       <p>{text}</p>
       <div>
-        <Link href={`/tutorial/${currentIndex + 1}`}>
-          <DefaultButton>Continue</DefaultButton>
-        </Link>
+        <DefaultButton onClick={continueFunction}>Continue</DefaultButton>
       </div>
     </footer>
   );
