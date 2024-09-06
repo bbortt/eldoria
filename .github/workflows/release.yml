@@ -40,6 +40,6 @@ jobs:
       - name: Publish to GH Pages
         run: |
           git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
-          npx --no-install gh-pages -u "GitHub Actions Bot <actions@github.com>" -b gh-pages -d apps/web/out
+          npx --no-install gh-pages -u "GitHub Actions Bot <actions@github.com>" -b gh-pages -d apps/web/out -t true
         env:
           GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
