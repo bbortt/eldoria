@@ -33,7 +33,7 @@ export const MainMenu = () => {
           className="flex flex-col gap-y-2 items-center"
         >
           <motion.div variants={buttonVariants} transition={{ delay: 0.1 }}>
-            <Link href="/tutorial/1">
+            <Link href="/tutorial">
               <DefaultButton>Start Tutorial</DefaultButton>
             </Link>
           </motion.div>
