@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.0](https://github.com/bbortt/eldoria/compare/v1.3.1...v1.4.0) (2024-09-08)
+
+
+### Features
+
+* start boardgame from tutorial ([3448128](https://github.com/bbortt/eldoria/commit/3448128f51286b408e38c461e380f27e4429e708))
+
 ## [1.3.1](https://github.com/bbortt/eldoria/compare/v1.3.0...v1.3.1) (2024-09-04)
 
 
