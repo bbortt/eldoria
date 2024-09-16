@@ -2,7 +2,9 @@
 
 import { useState } from 'react';
 
-import DefaultButton from '../default-button';
+import { Input } from '@repo/ui';
+
+import DefaultButton from '@repo/ui/components/default-button';
 
 import styles from './text-with-input-and-confirm-button.module.css';
 
@@ -31,8 +33,21 @@ export const TextWithInputAndConfirmButton: React.FC<TextWithInputAndConfirmButt
         <div className={styles.flexBoxCenter}>
           <form onSubmit={e => onSubmit(e)}>
             <div className={styles.inputContainer}>
-              <input type="text" placeholder="Username" aria-label="Username" value={username} onChange={handleInputChange} />
-              <DefaultButton type="submit">Continue</DefaultButton>
+              <Input
+                key="username"
+                type="text"
+                label="Username"
+                value={username}
+                onChange={handleInputChange}
+                variant="bordered"
+                color="secondary"
+                fullWidth={true}
+                isRequired={true}
+              />
+
+              <DefaultButton color="secondary" type="submit">
+                Continue
+              </DefaultButton>
             </div>
           </form>
         </div>

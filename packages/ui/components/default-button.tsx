@@ -8,9 +8,9 @@ export interface DefaultButtonProps extends Omit<ButtonProps, 'color'> {
   type?: 'button' | 'submit';
 }
 
-export const DefaultButton: React.FC<DefaultButtonProps> = ({ children, color = 'secondary', type = 'button', ...props }) => {
+export const DefaultButton: React.FC<DefaultButtonProps> = ({ children, color = 'primary', type = 'button', ...props }) => {
   return (
-    <Button color={color} className="text-primary" type={type} {...props}>
+    <Button color={color} type={type} {...props}>
       {children}
     </Button>
   );

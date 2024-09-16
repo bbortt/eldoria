@@ -31,7 +31,7 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <Providers>
           <RouterTransition>
-            <main className="main text-foreground bg-background"> {children}</main>
+            <main className="main"> {children}</main>
           </RouterTransition>
         </Providers>
       </body>

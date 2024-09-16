@@ -34,11 +34,11 @@ export const MainMenu = () => {
         >
           <motion.div variants={buttonVariants} transition={{ delay: 0.1 }}>
             <Link href="/tutorial">
-              <DefaultButton>Start Tutorial</DefaultButton>
+              <DefaultButton color="secondary">Start Tutorial</DefaultButton>
             </Link>
           </motion.div>
           <motion.div variants={buttonVariants} transition={{ delay: 0.2 }}>
-            <DefaultButton>Configure Game</DefaultButton>
+            <DefaultButton color="secondary">Configure Game</DefaultButton>
           </motion.div>
           <motion.div variants={buttonVariants} transition={{ delay: 0.3 }}>
             <DefaultButton color="warning" onClick={() => setStartGame(false)}>
@@ -61,10 +61,12 @@ export const MainMenu = () => {
           className="flex flex-col gap-y-2 items-center"
         >
           <motion.div variants={buttonVariants} transition={{ delay: 0.1 }}>
-            <DefaultButton onClick={() => setStartGame(true)}>Start Game</DefaultButton>
+            <DefaultButton color="secondary" onClick={() => setStartGame(true)}>
+              Start Game
+            </DefaultButton>
           </motion.div>
           <motion.div variants={buttonVariants} transition={{ delay: 0.2 }}>
-            <DefaultButton>Load Game</DefaultButton>
+            <DefaultButton color="secondary">Load Game</DefaultButton>
           </motion.div>
         </motion.div>
       )}

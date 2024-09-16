@@ -1,10 +1,10 @@
 'use client';
 
-import { ButtonGroup } from '@nextui-org/react';
+import { ButtonGroup } from '@repo/ui';
 
 import styles from './tutorial.module.css';
 
-import DefaultButton from '../default-button';
+import DefaultButton from '@repo/ui/components/default-button';
 
 export interface TextWithAcceptOrRefuseButtonsProps {
   acceptFunction: () => void;
@@ -17,7 +17,9 @@ export const TextWithAcceptOrRefuseButtons: React.FC<TextWithAcceptOrRefuseButto
     <footer className={styles.footer}>
       <p>{text}</p>
       <ButtonGroup>
-        <DefaultButton onClick={acceptFunction}>Accept</DefaultButton>
+        <DefaultButton color="success" onClick={acceptFunction}>
+          Accept
+        </DefaultButton>
         <DefaultButton onClick={refuseFunction} color="warning">
           Refuse
         </DefaultButton>

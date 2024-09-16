@@ -11,5 +11,5 @@
     }
   },
   "include": ["next-env.d.ts", "next.config.mjs", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": [".turbo", "coverage", "node_modules", "out", "**/*.spec.ts"]
+  "exclude": [".turbo", "coverage", "node_modules", "out"]
 }
