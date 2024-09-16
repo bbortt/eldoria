@@ -14,11 +14,11 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        'primary-bg': '#f2e2c4',
-        'secondary-bg': '#a6401b',
-        'primary-text': '#592418',
-        'secondary-text': '#f2b56b',
-        outline: '#01060d',
+        'primary-bg': '#F2B56B',
+        'secondary-bg': '#592418',
+        'primary-text': '#FAF3E0',
+        'secondary-text': '#F7D8A3',
+        outline: '#E07942',
       },
     },
   },

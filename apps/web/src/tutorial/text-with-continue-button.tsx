@@ -2,7 +2,7 @@
 
 import styles from './tutorial.module.css';
 
-import DefaultButton from '../default-button';
+import DefaultButton from '@repo/ui/components/default-button';
 
 export interface TextWithContinueButtonProps {
   continueFunction: () => void;

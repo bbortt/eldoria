@@ -8,7 +8,7 @@
 }
 
 .title {
-  @apply text-4xl font-bold text-secondary-text;
+  @apply text-4xl font-bold;
 }
 
 .main {

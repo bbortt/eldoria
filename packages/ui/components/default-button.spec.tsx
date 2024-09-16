@@ -14,10 +14,10 @@ jest.mock('@nextui-org/react', () => ({
 }));
 
 describe('DefaultButton', () => {
-  it('renders with default secondary color', () => {
+  it('renders with default primary color', () => {
     render(<DefaultButton>Test Button</DefaultButton>);
     const button = screen.getByTestId('mock-button');
-    expect(button).toHaveAttribute('data-color', 'secondary');
+    expect(button).toHaveAttribute('data-color', 'primary');
     expect(button).toHaveTextContent('Test Button');
   });
 

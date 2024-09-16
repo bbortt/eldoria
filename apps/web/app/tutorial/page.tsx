@@ -3,10 +3,12 @@
 import { useEffect, useState } from 'react';
 
 import { Character, NYSSA, THANE } from '@repo/core';
-
-import { TextWithAcceptOrRefuseButtons, TextWithContinueButton, TextWithInputAndConfirmButton } from '@repo/ui/components';
 import { AnimatePresence, motion } from '@repo/ui/lib';
 
+import { TextWithAcceptOrRefuseButtons, TextWithContinueButton, TextWithInputAndConfirmButton } from '@/tutorial';
+
+import { persistConfiguration } from '@/game/configuration';
+import { useRouter } from 'next/navigation';
 import styles from './page.module.css';
 
 const tutorialConversation: { [key: number]: { text: string; backgroundImage?: string; character?: Character } } = {
@@ -91,7 +93,7 @@ const tutorialConversation: { [key: number]: { text: string; backgroundImage?: s
     Remember, the path ahead is a tangled skein, woven with the threads of both triumph and tribulation.
     Let your camaraderie be a shield against the coming storms, and may your cunning and courage illuminate the shadows that lurk in every corner.
     This is your odyssey, etched in the annals of legend. Go forth, and claim your destiny with the unwavering spirit of Eldoria's heroes.`,
-    backgroundImage: '/characters/encounter-4.png',
+    backgroundImage: '/tutorial/6.png',
   },
 };
 
@@ -106,6 +108,8 @@ export default () => {
     }
   }, [username, allies]);
 
+  const router = useRouter();
+
   if (!Object.hasOwn(tutorialConversation, index)) {
     return null;
   }
@@ -113,6 +117,10 @@ export default () => {
   const { text, backgroundImage, character } = tutorialConversation[index]!;
 
   const continueToNextConversation = (): void => setIndex((i: number) => i + 1);
+  const startGame = (): void => {
+    persistConfiguration({ username, allies: allies });
+    router.push('/board');
+  };
 
   const renderContent = () => {
     if (index <= 3) {
@@ -130,7 +138,7 @@ export default () => {
         />
       );
     } else if (index === 11) {
-      return <TextWithContinueButton continueFunction={continueToNextConversation} text={text} />;
+      return <TextWithContinueButton continueFunction={startGame} text={text} />;
     }
 
     return null;
