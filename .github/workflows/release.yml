@@ -32,11 +32,11 @@ jobs:
       - name: Install Dependencies
         run: pnpm install
       - name: Prepare Build
-        run: echo 'ELDORIA_BASE_PATH="/eldoria"' > apps/web/.env
+        run: |
+          echo 'ELDORIA_ASSET_PATH="https://github.com/bbortt/eldoria"' > apps/web/.env
+          echo 'ELDORIA_BASE_PATH="/eldoria"' >> apps/web/.env
       - name: Build Pages
         run: pnpm run build
-        env:
-          ELDORIA_BASE_PATH: '/eldoria'
       - name: Publish to GH Pages
         run: |
           git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
