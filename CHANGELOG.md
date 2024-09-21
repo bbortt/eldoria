@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.0](https://github.com/bbortt/eldoria/compare/v1.4.0...v1.5.0) (2024-09-21)
+
+
+### Features
+
+* setup board based on tutorial ([672c23d](https://github.com/bbortt/eldoria/commit/672c23da8cf3c0651696ae33097032ec5895511c))
+
 ## [1.4.0](https://github.com/bbortt/eldoria/compare/v1.3.1...v1.4.0) (2024-09-08)
 
 
