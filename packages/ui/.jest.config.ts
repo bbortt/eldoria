@@ -1,13 +1,15 @@
-/** @type {import('ts-jest').JestConfigWithTsJest} **/
-const config = {
+import type { Config } from 'jest';
+
+const config: Config = {
   collectCoverageFrom: ['./components/**'],
   coverageReporters: ['lcov', 'text'],
   modulePathIgnorePatterns: ['<rootDir>/.turbo/', '<rootDir>/node_modules/'],
   rootDir: '',
+  setupFilesAfterEnv: ['<rootDir>/.jest.setup.ts'],
   testEnvironment: 'jsdom',
   transform: {
-    '^.+.tsx?$': ['ts-jest', {}],
+    '^.+\\.(ts|tsx)$': ['ts-jest', {}],
   },
 };
 
-module.exports = config;
+export default config;

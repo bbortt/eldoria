@@ -2,16 +2,17 @@
 
 import { useEffect, useState } from 'react';
 
+import { useRouter } from 'next/navigation';
+
 import { Character, NYSSA, THANE } from '@repo/core';
 import { AnimatePresence, motion } from '@repo/ui/lib';
 
+import { persistConfiguration } from '@/game/configuration';
 import { TextWithAcceptOrRefuseButtons, TextWithContinueButton, TextWithInputAndConfirmButton } from '@/tutorial';
 
-import { persistConfiguration } from '@/game/configuration';
-import { useRouter } from 'next/navigation';
 import styles from './page.module.css';
 
-const tutorialConversation: { [key: number]: { text: string; backgroundImage?: string; character?: Character } } = {
+export const tutorialConversation: { [key: number]: { text: string; backgroundImage?: string; character?: Character } } = {
   0: {
     text: `Beneath the cloak of predawn's embrace, a figure moves with the quiet promise of youth, skirting the edges of Eldoria's grandeur.
     The city, a tapestry of towering aspirations and hushed marketplaces, slumbers under a shroud of uneasy silence, its heartbeats muffled by whispers of shadows yet unseen.`,

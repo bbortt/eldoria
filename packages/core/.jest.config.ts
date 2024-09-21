@@ -1,12 +1,13 @@
-/** @type {import('ts-jest').JestConfigWithTsJest} **/
-const config = {
+import type { Config } from 'jest';
+
+const config: Config = {
   collectCoverageFrom: ['./src/**'],
   coverageReporters: ['lcov', 'text'],
   rootDir: 'src',
   testEnvironment: 'node',
   transform: {
-    '^.+.tsx?$': ['ts-jest', {}],
+    '^.+\\.(ts|tsx)$': ['ts-jest', {}],
   },
 };
 
-module.exports = config;
+export default config;

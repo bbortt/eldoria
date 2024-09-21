@@ -1,5 +1,5 @@
 .main {
-  @apply main-layout;
+  @apply main-layout p-4 text-center;
 
   & > div {
     @apply grid gap-2 grid-cols-1;
