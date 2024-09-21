@@ -19,3 +19,7 @@ export const restoreConfiguration = (): InitGameState | null => {
 
   return null;
 };
+
+export const resetConfiguration = () => {
+  localStorage.removeItem(LOCALSTORAGE_KEY);
+};

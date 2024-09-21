@@ -1,8 +1,7 @@
 import { InitGameState } from '@repo/core';
 
-import { persistConfiguration, restoreConfiguration } from './configuration';
+import { persistConfiguration, resetConfiguration, restoreConfiguration } from './configuration';
 
-// Mock localStorage
 const localStorageMock = (() => {
   let store: { [key: string]: string } = {};
   return {
@@ -10,6 +9,7 @@ const localStorageMock = (() => {
     setItem: (key: string, value: string) => {
       store[key] = value.toString();
     },
+    removeItem: (key: string) => delete store[key],
     clear: () => {
       store = {};
     },
@@ -51,6 +51,19 @@ describe('Configuration Persistence', () => {
       expect(restoredConfig).toBeNull();
       expect(consoleSpy).toHaveBeenCalledWith('Failed to parse stored configuration:', expect.any(Error));
       consoleSpy.mockRestore();
+    });
+  });
+
+  describe('resetConfiguration', () => {
+    it('removes and existing items', () => {
+      const mockConfig: InitGameState = { username: 'someValue', allies: [] };
+      localStorage.setItem('eldoria-configuration', JSON.stringify(mockConfig));
+      resetConfiguration();
+      expect(localStorage.getItem('eldoria-configuration')).toBeNull();
+    });
+
+    it('ignores any non-existent items', () => {
+      expect(() => resetConfiguration()).not.toThrowError();
     });
   });
 });
