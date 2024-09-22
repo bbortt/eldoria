@@ -15,7 +15,7 @@ describe('Tutorial', () => {
       Object.values(tutorialConversation).forEach(conversation => {
         if (conversation.backgroundImage) {
           const imagePath = join(publicDir, conversation.backgroundImage);
-          expect(fileExists(imagePath)).toBe(true);
+          expect(fileExists(imagePath)).toBeTruthy();
           if (!fileExists(imagePath)) {
             console.error(`Image not found: ${conversation.backgroundImage}`);
           }

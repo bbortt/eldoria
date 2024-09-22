@@ -1,3 +1,6 @@
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
+
 import { act, render } from '@testing-library/react';
 
 import { GameState, Move } from '@repo/core';
@@ -48,5 +51,11 @@ describe('Board Component', () => {
 
     expect(mockMoves.initGame).not.toHaveBeenCalled();
     expect(resetConfiguration).not.toHaveBeenCalled();
+  });
+
+  it('has "use client" directive at the top of the file', () => {
+    const filePath = resolve(__dirname, './board.tsx');
+    const fileContent = readFileSync(filePath, 'utf8');
+    expect(fileContent.trimStart().startsWith("'use client';")).toBeTruthy();
   });
 });
