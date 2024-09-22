@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.2](https://github.com/bbortt/eldoria/compare/v1.5.1...v1.5.2) (2024-09-22)
+
+
+### Bug Fixes
+
+* **gh-pages:** pages url instead of repository url ([ecc3ddd](https://github.com/bbortt/eldoria/commit/ecc3dddc0722bf5a6c0f349acc602f5e9d7fa748))
+
 ## [1.5.1](https://github.com/bbortt/eldoria/compare/v1.5.0...v1.5.1) (2024-09-22)
 
 
