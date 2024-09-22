@@ -1,7 +1,7 @@
 import { existsSync } from 'node:fs';
 import { join } from 'node:path';
 
-import { tutorialConversation } from './page';
+import tutorialConversation from './tutorial.conversation';
 
 describe('Tutorial', () => {
   const publicDir = join(process.cwd(), 'public');
