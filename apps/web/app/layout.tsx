@@ -1,11 +1,11 @@
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 
-import './globals.css';
-
 import RouterTransition from '@/layout/router-transition';
 
 import { Providers } from './providers';
+
+import './globals.css';
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',
