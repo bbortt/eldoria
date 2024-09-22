@@ -1,3 +1,6 @@
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
+
 // eslint-disable-next-line no-redeclare
 import { render, screen } from '@testing-library/react';
 
@@ -45,5 +48,12 @@ describe('DefaultButton', () => {
     rerender(<DefaultButton color="warning">Warning Button</DefaultButton>);
     button = screen.getByTestId('mock-button');
     expect(button).toHaveAttribute('data-color', 'warning');
+  });
+
+  it('has "use client" directive at the top of the file', () => {
+    // eslint-disable-next-line no-undef
+    const filePath = resolve(__dirname, './default-button.tsx');
+    const fileContent = readFileSync(filePath, 'utf8');
+    expect(fileContent.trimStart().startsWith("'use client';")).toBeTruthy();
   });
 });
