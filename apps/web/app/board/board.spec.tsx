@@ -3,7 +3,7 @@ import { resolve } from 'node:path';
 
 import { act, render } from '@testing-library/react';
 
-import { GameState, Move } from '@repo/core';
+import { INIT } from '@repo/core/src/game/phases';
 
 import { resetConfiguration, restoreConfiguration } from '@/game/configuration';
 
@@ -16,10 +16,13 @@ jest.mock('@/game/configuration', () => ({
 
 describe('Board Component', () => {
   const mockMoves = {
-    initGame: jest.fn() as Move<GameState>,
+    initGame: jest.fn(), // as Move<GameState>
   };
 
   const boardGameProps = {
+    ctx: {
+      phase: INIT,
+    },
     moves: mockMoves,
   } as unknown as BoardGameProps;
 
@@ -32,7 +35,7 @@ describe('Board Component', () => {
     expect(restoreConfiguration).toHaveBeenCalledTimes(1);
   });
 
-  it('should call initGame and resetConfiguration when gameConfiguration is set', async () => {
+  it('should call initGame when gameConfiguration is set', async () => {
     const mockGameState = { someKey: 'someValue' };
     (restoreConfiguration as jest.Mock).mockReturnValue(mockGameState);
 
@@ -41,11 +44,29 @@ describe('Board Component', () => {
     });
 
     expect(mockMoves.initGame).toHaveBeenCalledWith(mockGameState);
-    expect(resetConfiguration).toHaveBeenCalledTimes(1);
+    expect(resetConfiguration).not.toHaveBeenCalled();
   });
 
-  it('should not call initGame or resetConfiguration if gameConfiguration is null', () => {
+  it('should not do anything if gameConfiguration is null', () => {
     (restoreConfiguration as jest.Mock).mockReturnValue(null);
+
+    render(<Board {...boardGameProps} />);
+
+    expect(mockMoves.initGame).not.toHaveBeenCalled();
+    expect(resetConfiguration).not.toHaveBeenCalled();
+  });
+
+  it('should call resetConfiguration if phase changes', () => {
+    boardGameProps.ctx.phase = 'not-init';
+
+    render(<Board {...boardGameProps} />);
+
+    expect(mockMoves.initGame).not.toHaveBeenCalled();
+    expect(resetConfiguration).toHaveBeenCalled();
+  });
+
+  it('should not do anything if phase is null', () => {
+    boardGameProps.ctx.phase = null;
 
     render(<Board {...boardGameProps} />);
 

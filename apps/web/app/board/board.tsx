@@ -5,10 +5,11 @@ import { useEffect, useState } from 'react';
 import type { BoardProps, GameState } from '@repo/core';
 
 import { resetConfiguration, restoreConfiguration } from '@/game/configuration';
+import { INIT } from '@repo/core/src/game/phases';
 
 export interface BoardGameProps extends BoardProps<GameState> {}
 
-export const Board: React.FC<BoardGameProps> = ({ moves }) => {
+export const Board: React.FC<BoardGameProps> = ({ ctx, G, moves }) => {
   const [gameConfiguration, setGameConfiguration] = useState(null as GameState | null);
 
   useEffect(() => {
@@ -16,11 +17,16 @@ export const Board: React.FC<BoardGameProps> = ({ moves }) => {
   }, []);
 
   useEffect(() => {
-    if (gameConfiguration !== null && moves.initGame) {
+    if (gameConfiguration && moves.initGame) {
       moves.initGame(gameConfiguration);
-      resetConfiguration();
     }
   }, [gameConfiguration]);
+
+  useEffect(() => {
+    if (ctx.phase && ctx.phase !== INIT) {
+      resetConfiguration();
+    }
+  }, [ctx.phase]);
 
   return <></>;
 };
