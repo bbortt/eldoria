@@ -4,7 +4,7 @@ import { Character } from '../stats';
 
 import { GameState } from './game-state';
 
-import initGame from './moves/init-game';
+import initPhase from './phases/init';
 
 export * from './game-state';
 
@@ -32,12 +32,7 @@ export const Eldoria: Game<GameState> = {
   turn: { minMoves: 1, maxMoves: 1 },
 
   phases: {
-    init: {
-      moves: { initGame },
-      next: 'phaseB',
-      endIf: ({ G }) => !!G.username,
-      start: true,
-    },
+    init: initPhase,
     phaseB: {},
   },
 };
