@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.5.1](https://github.com/bbortt/eldoria/compare/v1.5.0...v1.5.1) (2024-09-22)
+
+
+### Bug Fixes
+
+* multiple board loads ([e037ac6](https://github.com/bbortt/eldoria/commit/e037ac6e74081a6fb772ea13a18d61fa312af075))
+* release assets path ([3919394](https://github.com/bbortt/eldoria/commit/391939483b8b926e53d67cc09081693bc093224d))
+* render board on clients only ([7795110](https://github.com/bbortt/eldoria/commit/7795110078c82c80b50cc77dc1f7830939b1c2be))
+* tutorial conversation build ([ec4e3b9](https://github.com/bbortt/eldoria/commit/ec4e3b9ca323f045f98347647bc5a22cbfa50bc7))
+
 ## [1.5.0](https://github.com/bbortt/eldoria/compare/v1.4.0...v1.5.0) (2024-09-21)
 
 
