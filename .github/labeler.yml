@@ -17,6 +17,16 @@ documentation:
       - any-glob-to-any-file:
           - '*.md'
 
+javascript:
+  - changed-files:
+      - any-glob-to-any-file:
+          - '**/*.js'
+
+github_actions:
+  - changed-files:
+      - any-glob-to-any-file:
+          - '.github/workflows/*'
+
 feature:
   - head-branch: ['^feat', 'feature']
 
