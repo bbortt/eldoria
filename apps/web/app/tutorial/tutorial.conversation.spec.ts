@@ -1,6 +1,8 @@
 import { existsSync } from 'node:fs';
 import { join } from 'node:path';
 
+import { getTutorialConversation } from './tutorial.conversation';
+
 describe('Tutorial', () => {
   const publicDir = join(process.cwd(), 'public');
 
@@ -8,7 +10,7 @@ describe('Tutorial', () => {
     return existsSync(filePath);
   };
 
-  describe('Conversation', () => {
+  describe('getTutorialConversation', () => {
     let originalEnv;
 
     beforeEach(() => {
@@ -16,9 +18,7 @@ describe('Tutorial', () => {
     });
 
     test('all background images exist in public folder', () => {
-      const tutorialConversation = require('./tutorial.conversation');
-
-      Object.values(tutorialConversation).forEach(conversation => {
+      Object.values(getTutorialConversation()).forEach(conversation => {
         if (conversation.backgroundImage) {
           const imagePath = join(publicDir, conversation.backgroundImage);
           expect(fileExists(imagePath)).toBeTruthy();
@@ -33,16 +33,26 @@ describe('Tutorial', () => {
       const mockBasePath = '/mock-base-path';
       process.env.NEXT_PUBLIC_ELDORIA_BASE_PATH = mockBasePath;
 
-      const tutorialConversation = require('./tutorial.conversation');
-
-      Object.values(tutorialConversation).forEach(conversation => {
+      Object.values(getTutorialConversation()).forEach(conversation => {
         if (conversation.backgroundImage) {
           expect(conversation.backgroundImage.startsWith(mockBasePath)).toBeTruthy();
         }
       });
     });
 
-    beforeEach(() => {
+    test('all character conversations have an NPC linked', () => {
+      let npcCount = 0;
+
+      Object.values(getTutorialConversation()).forEach(conversation => {
+        if (conversation.character) {
+          npcCount += 1;
+        }
+      });
+
+      expect(npcCount).toEqual(5);
+    });
+
+    afterEach(() => {
       process.env = originalEnv;
     });
   });

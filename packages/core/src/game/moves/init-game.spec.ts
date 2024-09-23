@@ -5,12 +5,12 @@ import initGame from './init-game';
 
 const mockGameState: GameState = {
   username: '',
-  allies: [],
+  team: [],
 };
 
 const mockGameConfiguration: InitGameState = {
   username: 'bbortt',
-  allies: [{} as Character],
+  team: [{} as Character],
 };
 
 describe('initGame', () => {
@@ -21,6 +21,6 @@ describe('initGame', () => {
     initGame(context, mockGameConfiguration);
 
     expect(context.G.username).toBe('bbortt');
-    expect(context.G.allies).toHaveLength(1);
+    expect(context.G.team).toHaveLength(1);
   });
 });

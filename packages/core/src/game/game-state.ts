@@ -2,7 +2,7 @@ import { Character } from '../stats';
 
 export interface InitGameState {
   username: string;
-  allies: Character[];
+  team: Character[];
 }
 
 export interface GameState extends InitGameState {}

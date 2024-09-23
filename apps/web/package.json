@@ -10,7 +10,7 @@
     "serve": "http-server out -o /eldoria -P http://localhost:8080?",
     "start": "next start",
     "test": "jest --config .jest.config.ts",
-    "test:watch": "jest --watch"
+    "test:watch": "pnpm run test --watch"
   },
   "dependencies": {
     "@repo/core": "workspace:*",
@@ -25,6 +25,7 @@
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.5.0",
     "@testing-library/react": "^16.0.1",
+    "@testing-library/user-event": "^14.5.2",
     "@types/jest": "29.5.13",
     "@types/node": "22.7.3",
     "@types/react": "18.3.9",
