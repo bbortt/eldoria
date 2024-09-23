@@ -7,7 +7,7 @@
     "postbuild": "copy .nojekyll out",
     "dev": "next dev --turbo",
     "lint": "next lint",
-    "serve": "http-server out -o /eldoria",
+    "serve": "http-server out -o /eldoria -P http://localhost:8080?",
     "start": "next start",
     "test": "jest --config .jest.config.ts",
     "test:watch": "jest --watch"
