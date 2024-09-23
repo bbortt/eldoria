@@ -33,8 +33,7 @@ jobs:
         run: pnpm install
       - name: Prepare Build
         run: |
-          echo 'ELDORIA_ASSET_PATH="https://bbortt.github.io/eldoria"' > apps/web/.env
-          echo 'ELDORIA_BASE_PATH="/eldoria"' >> apps/web/.env
+          echo 'NEXT_PUBLIC_ELDORIA_BASE_PATH="/eldoria"' > apps/web/.env
       - name: Build Pages
         run: pnpm run build
       - name: Publish to GH Pages

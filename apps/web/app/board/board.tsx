@@ -9,7 +9,7 @@ import { INIT } from '@repo/core/src/game/phases';
 
 export interface BoardGameProps extends BoardProps<GameState> {}
 
-export const Board: React.FC<BoardGameProps> = ({ ctx, G, moves }) => {
+export const Board: React.FC<BoardGameProps> = ({ ctx, moves }) => {
   const [gameConfiguration, setGameConfiguration] = useState(null as GameState | null);
 
   useEffect(() => {

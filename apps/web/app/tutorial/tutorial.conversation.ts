@@ -1,20 +1,22 @@
 import { Character, NYSSA, THANE } from '@repo/core';
 
+const basePath = process.env.NEXT_PUBLIC_ELDORIA_BASE_PATH ?? '';
+
 const tutorialConversation: { [key: number]: { text: string; backgroundImage?: string; character?: Character } } = {
   0: {
     text: `Beneath the cloak of predawn's embrace, a figure moves with the quiet promise of youth, skirting the edges of Eldoria's grandeur.
       The city, a tapestry of towering aspirations and hushed marketplaces, slumbers under a shroud of uneasy silence, its heartbeats muffled by whispers of shadows yet unseen.`,
-    backgroundImage: '/tutorial/1.png',
+    backgroundImage: basePath + '/tutorial/1.png',
   },
   1: {
     text: `This is your story, etched in the fervor of dreams too vast for the confines of cobblestone realities.
       Armed with naught but the raw edge of daring and a spark of cunning, you stand at the precipice of fate, drawn inexorably to the one haven where chaos births legends: the veiled sanctum of the Thieves' Guild of Eldoria.`,
-    backgroundImage: '/tutorial/2.png',
+    backgroundImage: basePath + '/tutorial/2.png',
   },
   2: {
     text: `Yet, the Guild's embrace is not for the faint of heart, for its thresholds are guarded by riddles and trials, known only to those whose courage outshines the glint of steel in the moonlight.
       A trial awaits in the arena, an ancient dance of destiny where the threads of future are woven or severed.`,
-    backgroundImage: '/tutorial/3.png',
+    backgroundImage: basePath + '/tutorial/3.png',
   },
   3: {
     text: `With dawn's first whisper, the city's ancient bones are cast in a tapestry of shadows, and it is here you find yourself, before a gateway shrouded in secrecy, its whispers laden with promise and peril alike.
@@ -23,7 +25,7 @@ const tutorialConversation: { [key: number]: { text: string; backgroundImage?: s
       Prove your mettle, let the Guild be your crucible, your sanctuary, your kin. Falter, and fade into the annals of the forgotten, another wraith in the city's endless lament."
       Drawing a breath that tastes of destiny, you cross the threshold, the gates behind you whispering tales of those who walked this path before.
       Herein lies your odyssey, in the heart of Eldoria, where shadows sing secrets and every choice forges the path of your legacy.`,
-    backgroundImage: '/tutorial/4.png',
+    backgroundImage: basePath + '/tutorial/4.png',
   },
   4: {
     text: `"What name shall the echoes of these halls whisper, young aspirant?" the shadows inquire, a prelude to the saga awaiting your breath.`,
@@ -35,7 +37,7 @@ const tutorialConversation: { [key: number]: { text: string; backgroundImage?: s
       Torches flicker in their sconces, casting a wavering glow upon the figures gathered within, each a potential ally or adversary in the crucible that awaits.
       You know that you must prove your worth to the Guild by facing different encounters in the future. Each figure you meet can become a valuable ally, or a fierce opponent.
       The more allies you gather, the easier your journey will be after this trial. However, you may choose to walk this path alone, should you seek the challenge.`,
-    backgroundImage: '/tutorial/5.png',
+    backgroundImage: basePath + '/tutorial/5.png',
   },
   6: {
     text: `Unexpectedly, a figure steps forward and the firelight dances across a weathered face, etched with lines deeper than any canyon.
@@ -43,14 +45,14 @@ const tutorialConversation: { [key: number]: { text: string; backgroundImage?: s
       Though his stature is impressive, a hint of something low-slung lurks beneath his heavy cloak.
       "They call me Thane," his voice rumbles, a tremor in the earth itself.
       "Will you stand with me, or will we test the weight of each other's steel?"`,
-    backgroundImage: '/characters/encounter-0.png',
+    backgroundImage: basePath + '/characters/encounter-0.png',
     character: THANE,
   },
   7: {
     text: `Without warning, a shadow detaches itself from the periphery, coalescing into a lithe, hooded form.
       "Call me Nyssa," she whispers, a dagger spinning lazily in her fingers.
       "The shadows are my domain. Together, we could dance through danger unseen. What say you?"`,
-    backgroundImage: '/characters/encounter-1.png',
+    backgroundImage: basePath + '/characters/encounter-1.png',
     character: NYSSA,
   },
   8: {
@@ -59,14 +61,14 @@ const tutorialConversation: { [key: number]: { text: string; backgroundImage?: s
       Yet, his eyes burn with an intensity that speaks of power beyond the physical realm.
       "I am Elyndor," his voice a smooth caress that sends shivers down your spine.
       "Ally with me, and the very elements shall bow to our will. Or shall I test your resistance to the unknown?"`,
-    backgroundImage: '/characters/encounter-2.png',
+    backgroundImage: basePath + '/characters/encounter-2.png',
   },
   9: {
     text: `Suddenly, a warrior encased in gleaming armor strides forward, his broad shoulders filling the space with an air of restrained power.
       A dark hood obscures his features entirely, leaving only the glint of steel from his visor visible.
       "They call me Brom," his voice booms, a low rumble that vibrates through the ground.
       "Together, we could topple fortresses. But make no mistake, my kindness has limits. Choose your path wisely."`,
-    backgroundImage: '/characters/encounter-3.png',
+    backgroundImage: basePath + '/characters/encounter-3.png',
   },
   10: {
     text: `As you step further into the arena, a woman of otherworldly grace emerges.
@@ -74,7 +76,7 @@ const tutorialConversation: { [key: number]: { text: string; backgroundImage?: s
       Pointed ears peek through her flowing hair, a whisper of ancient lineage.
       "I am Selene," her voice lilts like a gentle breeze.
       "Walk with me, and I can guide you through darkness and light. Or will you succumb to the shadows that cling to us all?"`,
-    backgroundImage: '/characters/encounter-4.png',
+    backgroundImage: basePath + '/characters/encounter-4.png',
   },
   11: {
     text: `Congratulations, fledgling band of shadows.
@@ -82,7 +84,7 @@ const tutorialConversation: { [key: number]: { text: string; backgroundImage?: s
       Remember, the path ahead is a tangled skein, woven with the threads of both triumph and tribulation.
       Let your camaraderie be a shield against the coming storms, and may your cunning and courage illuminate the shadows that lurk in every corner.
       This is your odyssey, etched in the annals of legend. Go forth, and claim your destiny with the unwavering spirit of Eldoria's heroes.`,
-    backgroundImage: '/tutorial/6.png',
+    backgroundImage: basePath + '/tutorial/6.png',
   },
 };
 
