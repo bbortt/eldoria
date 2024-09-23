@@ -7,6 +7,7 @@ on:
 
 jobs:
   release-please:
+    name: 'Release Please'
     runs-on: ubuntu-latest
     environment: build
     permissions:
