@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build": "next build",
-    "postbuild": "copy .nojekyll out",
+    "postbuild": "node scripts/update-css-urls.js && copy .nojekyll out",
     "dev": "next dev --turbo",
     "lint": "next lint",
     "serve": "http-server out -o /eldoria -P http://localhost:8080?",
@@ -31,6 +31,7 @@
     "@types/react-dom": "18.3.0",
     "autoprefixer": "10.4.20",
     "copy": "^0.3.2",
+    "dotenv": "^16.4.5",
     "eslint": "8.57.0",
     "eslint-config-next": "15.0.0-rc.0",
     "jest": "29.7.0",
