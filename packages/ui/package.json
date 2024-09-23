@@ -7,7 +7,7 @@
     "generate:component": "turbo gen react-component",
     "lint": "eslint . --max-warnings 0",
     "test": "jest --config .jest.config.ts",
-    "test:watch": "jest --watch"
+    "test:watch": "pnpm run test --watch"
   },
   "dependencies": {
     "autoprefixer": "10.4.20",

@@ -17,7 +17,7 @@ export const Eldoria: Game<GameState> = {
 
   setup: ctx => ({
     username: '',
-    allies: [] as Character[],
+    team: [] as Character[],
   }),
 
   validateSetupData: (numPlayers: number) => {

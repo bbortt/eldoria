@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 
-import type { BoardProps, GameState } from '@repo/core';
+import { type BoardProps, type GameState } from '@repo/core';
 
 import { resetConfiguration, restoreConfiguration } from '@/game/configuration';
 import { INIT } from '@repo/core/src/game/phases';

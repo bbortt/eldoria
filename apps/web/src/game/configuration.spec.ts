@@ -25,7 +25,7 @@ describe('Configuration Persistence', () => {
 
   describe('persistConfiguration', () => {
     it('should store configuration in localStorage', () => {
-      const mockConfig: InitGameState = { username: 'someValue', allies: [] };
+      const mockConfig: InitGameState = { username: 'someValue', team: [] };
       persistConfiguration(mockConfig);
       expect(localStorage.getItem('eldoria-configuration')).toBe(JSON.stringify(mockConfig));
     });
@@ -38,7 +38,7 @@ describe('Configuration Persistence', () => {
     });
 
     it('should restore configuration from localStorage', () => {
-      const mockConfig: InitGameState = { username: 'someValue', allies: [] };
+      const mockConfig: InitGameState = { username: 'someValue', team: [] };
       localStorage.setItem('eldoria-configuration', JSON.stringify(mockConfig));
       const restoredConfig = restoreConfiguration();
       expect(restoredConfig).toEqual(mockConfig);
@@ -56,7 +56,7 @@ describe('Configuration Persistence', () => {
 
   describe('resetConfiguration', () => {
     it('removes and existing items', () => {
-      const mockConfig: InitGameState = { username: 'someValue', allies: [] };
+      const mockConfig: InitGameState = { username: 'someValue', team: [] };
       localStorage.setItem('eldoria-configuration', JSON.stringify(mockConfig));
       resetConfiguration();
       expect(localStorage.getItem('eldoria-configuration')).toBeNull();

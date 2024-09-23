@@ -4,26 +4,27 @@ import { useEffect, useState } from 'react';
 
 import { useRouter } from 'next/navigation';
 
-import { Character } from '@repo/core';
+import { Character, Race, Specialization } from '@repo/core';
 import { AnimatePresence, motion } from '@repo/ui/lib';
 
 import { persistConfiguration } from '@/game/configuration';
 import { TextWithAcceptOrRefuseButtons, TextWithContinueButton, TextWithInputAndConfirmButton } from '@/tutorial';
 
-import tutorialConversation from './tutorial.conversation';
+import { getTutorialConversation } from './tutorial.conversation';
+const tutorialConversation = getTutorialConversation();
 
 import styles from './page.module.css';
 
 export default () => {
   const [index, setIndex] = useState(0);
   const [username, setUsername] = useState('');
-  const [allies, setAllies] = useState([] as Character[]);
+  const [team, setTeam] = useState([] as Character[]);
 
   useEffect(() => {
     if (username) {
       setIndex(i => i + 1);
     }
-  }, [username, allies]);
+  }, [username, team]);
 
   const router = useRouter();
 
@@ -35,7 +36,7 @@ export default () => {
 
   const continueToNextConversation = (): void => setIndex((i: number) => i + 1);
   const startGame = (): void => {
-    persistConfiguration({ username, allies: allies });
+    persistConfiguration({ username, team: [new Character(username, Race.HUMAN, Specialization.ARCHER), ...team] });
     router.push('/board');
   };
 
@@ -49,7 +50,7 @@ export default () => {
     } else if (index >= 6 && index <= 10) {
       return (
         <TextWithAcceptOrRefuseButtons
-          acceptFunction={() => setAllies([...allies, character!])}
+          acceptFunction={() => setTeam([...team, character!])}
           refuseFunction={continueToNextConversation}
           text={text}
         />
