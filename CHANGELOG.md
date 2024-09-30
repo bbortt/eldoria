@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.5.3](https://github.com/bbortt/eldoria/compare/v1.5.2...v1.5.3) (2024-09-30)
+
+
+### Bug Fixes
+
+* create script expanding css urls with base path ([2db86ee](https://github.com/bbortt/eldoria/commit/2db86ee5661ff610625aff62def027701bcaffef))
+* expose base path to client ([80b069f](https://github.com/bbortt/eldoria/commit/80b069f5f1194e59b7905123992e070e69fa8627))
+
 ## [1.5.2](https://github.com/bbortt/eldoria/compare/v1.5.1...v1.5.2) (2024-09-22)
 
 
