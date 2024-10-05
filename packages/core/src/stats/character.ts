@@ -14,8 +14,8 @@ export class Character {
 
   constructor(
     public name: string,
-    private race: Race,
-    private specialization: Specialization,
+    public race: Race,
+    public specialization: Specialization,
   ) {
     this.strength = race.baseStrength + specialization.strengthMod;
     this.dexterity = race.baseDexterity + specialization.dexterityMod;

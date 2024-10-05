@@ -14,7 +14,7 @@ jest.mock('@/game/configuration', () => ({
   resetConfiguration: jest.fn(),
 }));
 
-describe('Board Component', () => {
+describe('Board', () => {
   const mockMoves = {
     initGame: jest.fn(), // as Move<GameState>
   };

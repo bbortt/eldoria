@@ -32,7 +32,7 @@ jest.mock('./tutorial.conversation', () => ({
   }),
 }));
 
-describe('TutorialComponent', () => {
+describe('Tutorial', () => {
   const mockPush = jest.fn();
 
   beforeEach(() => {
