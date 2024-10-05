@@ -1,5 +1,7 @@
 'use client';
 
+import { forwardRef } from 'react';
+
 import { Button, ButtonProps } from '@nextui-org/react';
 
 export interface DefaultButtonProps extends Omit<ButtonProps, 'color'> {
@@ -8,12 +10,14 @@ export interface DefaultButtonProps extends Omit<ButtonProps, 'color'> {
   type?: 'button' | 'submit';
 }
 
-export const DefaultButton: React.FC<DefaultButtonProps> = ({ children, color = 'primary', type = 'button', ...props }) => {
-  return (
-    <Button color={color} type={type} {...props}>
-      {children}
-    </Button>
-  );
-};
+export const DefaultButton = forwardRef<HTMLButtonElement, DefaultButtonProps>(
+  ({ children, color = 'primary', type = 'button', ...props }, ref) => {
+    return (
+      <Button color={color} ref={ref} type={type} {...props}>
+        {children}
+      </Button>
+    );
+  },
+);
 
 export default DefaultButton;
