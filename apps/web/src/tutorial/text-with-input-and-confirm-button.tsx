@@ -31,7 +31,7 @@ export const TextWithInputAndConfirmButton: React.FC<TextWithInputAndConfirmButt
           <p>{text}</p>
         </div>
         <div className={styles.flexBoxCenter}>
-          <form onSubmit={e => onSubmit(e)} data-testid="input-form">
+          <form onSubmit={onSubmit} data-testid="input-form">
             <div className={styles.inputContainer}>
               <Input
                 key="username"
@@ -45,7 +45,7 @@ export const TextWithInputAndConfirmButton: React.FC<TextWithInputAndConfirmButt
                 isRequired={true}
               />
 
-              <DefaultButton color="secondary" type="submit" disabled={!textInput}>
+              <DefaultButton color="secondary" type="submit" isDisabled={!textInput}>
                 Continue
               </DefaultButton>
             </div>

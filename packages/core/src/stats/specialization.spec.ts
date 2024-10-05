@@ -2,8 +2,10 @@ import { Specialization } from './specialization';
 
 describe('Specialization', () => {
   it('should create a Specialization instance with the correct properties', () => {
-    const specialization = new Specialization(50, 3, 2, 0, 3, -1, 1, 0);
+    const label = 'annoy';
+    const specialization = new Specialization(label, 50, 3, 2, 0, 3, -1, 1, 0);
 
+    expect(specialization.label).toEqual(label);
     expect(specialization.hpBonus).toBe(50);
     expect(specialization.acBonus).toBe(3);
     expect(specialization.strengthMod).toBe(2);

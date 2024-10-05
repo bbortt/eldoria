@@ -13,7 +13,7 @@ jest.mock('@repo/ui/components/default-button', () => {
   };
 });
 
-describe('TextWithContinueButton', () => {
+describe('Text with Continue Button', () => {
   const mockContinueFunction = jest.fn();
   const mockText = 'Test text';
 

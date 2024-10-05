@@ -19,7 +19,7 @@ jest.mock('./providers', () => {
   };
 });
 
-describe('RootLayout', () => {
+describe('Root Layout', () => {
   it('renders correctly', () => {
     const { getByTestId, getByRole } = render(
       <RootLayout>
