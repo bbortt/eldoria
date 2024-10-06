@@ -2,8 +2,10 @@ import { Race } from './race';
 
 describe('Race', () => {
   it('should create a Race instance with the correct properties', () => {
-    const race = new Race(10, 10, 10, 10, 10, 10);
+    const label = 'flies';
+    const race = new Race(label, 10, 10, 10, 10, 10, 10);
 
+    expect(race.label).toEqual(label);
     expect(race.baseStrength).toBe(10);
     expect(race.baseDexterity).toBe(10);
     expect(race.baseConstitution).toBe(10);

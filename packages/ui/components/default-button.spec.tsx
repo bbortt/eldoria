@@ -15,7 +15,7 @@ jest.mock('@nextui-org/react', () => ({
   ),
 }));
 
-describe('DefaultButton', () => {
+describe('Default Button', () => {
   it('renders with default primary color', () => {
     render(<DefaultButton>Test Button</DefaultButton>);
     const button = screen.getByTestId('mock-button');

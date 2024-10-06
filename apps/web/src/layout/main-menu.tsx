@@ -4,14 +4,16 @@ import Link from 'next/link';
 
 import { useState } from 'react';
 
+import { buttonVariants } from '@/layout/framer-motion.const';
+
 import { DefaultButton } from '@repo/ui/components';
 import { AnimatePresence, motion } from '@repo/ui/lib';
 
-const buttonVariants = {
-  initial: { opacity: 0, y: 50 },
-  animate: { opacity: 1, y: 0 },
-  exit: { opacity: 0, y: -50 },
-};
+const menuVariants = Object.freeze({
+  initial: { opacity: 0 },
+  animate: { opacity: 1 },
+  exit: { opacity: 0 },
+});
 
 export const MainMenu = () => {
   const [startGame, setStartGame] = useState(false);
@@ -24,23 +26,21 @@ export const MainMenu = () => {
           initial="initial"
           animate="animate"
           exit="exit"
-          variants={{
-            initial: { opacity: 0 },
-            animate: { opacity: 1 },
-            exit: { opacity: 0 },
-          }}
-          transition={{ duration: 0.3 }}
           className="flex flex-col gap-y-2 items-center"
+          transition={{ duration: 0.3 }}
+          variants={menuVariants}
         >
-          <motion.div variants={buttonVariants} transition={{ delay: 0.1 }}>
+          <motion.div transition={{ delay: 0.1 }} variants={buttonVariants}>
             <Link href="/tutorial">
               <DefaultButton color="secondary">Start Tutorial</DefaultButton>
             </Link>
           </motion.div>
-          <motion.div variants={buttonVariants} transition={{ delay: 0.2 }}>
-            <DefaultButton color="secondary">Configure Game</DefaultButton>
+          <motion.div transition={{ delay: 0.2 }} variants={buttonVariants}>
+            <Link href="/configuration">
+              <DefaultButton color="secondary">Configure Game</DefaultButton>
+            </Link>
           </motion.div>
-          <motion.div variants={buttonVariants} transition={{ delay: 0.3 }}>
+          <motion.div transition={{ delay: 0.3 }} variants={buttonVariants}>
             <DefaultButton color="warning" onClick={() => setStartGame(false)}>
               Cancel
             </DefaultButton>
@@ -52,20 +52,16 @@ export const MainMenu = () => {
           initial="initial"
           animate="animate"
           exit="exit"
-          variants={{
-            initial: { opacity: 0 },
-            animate: { opacity: 1 },
-            exit: { opacity: 0 },
-          }}
-          transition={{ duration: 0.3 }}
           className="flex flex-col gap-y-2 items-center"
+          transition={{ duration: 0.3 }}
+          variants={menuVariants}
         >
-          <motion.div variants={buttonVariants} transition={{ delay: 0.1 }}>
+          <motion.div transition={{ delay: 0.1 }} variants={buttonVariants}>
             <DefaultButton color="secondary" onClick={() => setStartGame(true)}>
               Start Game
             </DefaultButton>
           </motion.div>
-          <motion.div variants={buttonVariants} transition={{ delay: 0.2 }}>
+          <motion.div transition={{ delay: 0.2 }} variants={buttonVariants}>
             <DefaultButton color="secondary">Load Game</DefaultButton>
           </motion.div>
         </motion.div>
