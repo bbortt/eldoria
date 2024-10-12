@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.0](https://github.com/bbortt/eldoria/compare/v1.5.3...v1.6.0) (2024-10-12)
+
+
+### Features
+
+* configure game ([0721fed](https://github.com/bbortt/eldoria/commit/0721fed3dd560f7d6495141fce0bf3887294e9c6))
+
 ## [1.5.3](https://github.com/bbortt/eldoria/compare/v1.5.2...v1.5.3) (2024-09-30)
 
 
