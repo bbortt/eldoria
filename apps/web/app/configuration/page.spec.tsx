@@ -3,10 +3,16 @@ import userEvent from '@testing-library/user-event';
 
 import { useRouter } from 'next/navigation';
 
+import { persistConfiguration } from '@/game/configuration';
+
 import CharacterConfigurationPage from './page';
 
 jest.mock('next/navigation', () => ({
   useRouter: jest.fn(),
+}));
+
+jest.mock('@/game/configuration', () => ({
+  persistConfiguration: jest.fn(),
 }));
 
 jest.mock('@/game/character-configuration', () => {
@@ -94,7 +100,27 @@ describe('CharacterConfigurationPage', () => {
     await waitFor(() => expect(startButton).not.toBeDisabled());
   });
 
-  it('calls router.push when "Cancel" button is clicked', async () => {
+  it('starts game when form is submitted ("Start Game" button click)', async () => {
+    const user = userEvent.setup();
+    render(<CharacterConfigurationPage />);
+
+    const nameInput = screen.getByTestId('name-input');
+    const username = 'Test Character';
+    await user.type(nameInput, username);
+
+    const startButton = screen.getByTestId('button-Start Game');
+    await user.click(startButton);
+
+    await waitFor(() =>
+      expect(persistConfiguration).toHaveBeenCalledWith({
+        username,
+        team: [expect.objectContaining({ name: username })],
+      }),
+    );
+    await waitFor(() => expect(mockPush).toHaveBeenCalledWith('/board'));
+  });
+
+  it('navigates back to homepage when "Cancel" button is clicked', async () => {
     const user = userEvent.setup();
     render(<CharacterConfigurationPage />);
 

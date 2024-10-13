@@ -12,6 +12,7 @@ import { ButtonGroup } from '@repo/ui';
 import { DefaultButton } from '@repo/ui/components';
 import { AnimatePresence, Modal, ModalBody, ModalContent, motion } from '@repo/ui/lib';
 
+import { persistConfiguration } from '@/game/configuration';
 import styles from './page.module.css';
 
 const initialAlly = (): Character => new Character('', Race.HUMAN, Specialization.HEALER);
@@ -47,9 +48,15 @@ export default () => {
     setAllies(updatedAllies);
   };
 
-  const onSubmit = (e: React.FormEvent) => {
+  const startGame = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('allies:', allies);
+
+    persistConfiguration({
+      username: allies[0]!.name,
+      team: allies,
+    });
+
+    router.push('/board');
   };
 
   return (
@@ -64,7 +71,7 @@ export default () => {
         <ModalContent>
           <ModalBody>
             <AnimatePresence mode="wait">
-              <form onSubmit={onSubmit} data-testid="input-form">
+              <form onSubmit={startGame} data-testid="input-form">
                 <motion.div
                   key="configure-game-options"
                   initial="initial"
