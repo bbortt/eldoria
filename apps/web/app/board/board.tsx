@@ -6,6 +6,7 @@ import { type BoardProps, type GameState } from '@repo/core';
 
 import { resetConfiguration, restoreConfiguration } from '@/game/configuration';
 import { INIT } from '@repo/core/src/game/phases';
+import { InfiniteGameGrid } from './infinite-grid';
 
 // TODO: Remove, once `BoardGameProps` has additional properties
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
@@ -30,7 +31,11 @@ export const Board: React.FC<BoardGameProps> = ({ ctx, moves }) => {
     }
   }, [ctx.phase]);
 
-  return <></>;
+  return (
+    <div>
+      <InfiniteGameGrid />
+    </div>
+  );
 };
 
 export default Board;
