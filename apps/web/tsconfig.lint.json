@@ -10,6 +10,17 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "next.config.mjs", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": [".turbo", "coverage", "node_modules", "out"]
+  "include": [
+    ".jest.config.ts",
+    ".jest.setup.ts",
+    ".next/types/**/*.ts",
+    "next-env.d.ts",
+    "next.config.mjs",
+    "postcss.config.js",
+    "scripts/*",
+    "tailwind.config.ts",
+    "**/*.ts",
+    "**/*.tsx"
+  ],
+  "exclude": [".next", ".turbo", "coverage", "node_modules", "out"]
 }

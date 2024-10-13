@@ -9,7 +9,6 @@ import DefaultButton from '@repo/ui/components/default-button';
 import styles from './text-with-input-and-confirm-button.module.css';
 
 export interface TextWithInputAndConfirmButtonProps {
-  // eslint-disable-next-line no-unused-vars
   continueFunction: (username: string) => void;
   text: string;
 }

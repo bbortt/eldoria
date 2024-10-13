@@ -1,36 +1,53 @@
-const { resolve } = require('node:path');
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-const project = resolve(process.cwd(), 'tsconfig.json');
+import { FlatCompat } from '@eslint/eslintrc';
+import js from '@eslint/js';
 
-/** @type {import("eslint").Linter.Config} */
-module.exports = {
-  extends: ['eslint:recommended', 'prettier', 'turbo'],
-  plugins: ['only-warn'],
-  globals: {
-    React: true,
-    JSX: true,
-  },
-  env: {
-    node: true,
-  },
-  settings: {
-    'import/resolver': {
-      typescript: {
-        project,
+import eslintConfigPrettier from 'eslint-config-prettier';
+import eslintPluginOnlyWarn from 'eslint-plugin-only-warn';
+
+import globals from 'globals';
+
+import ts from 'typescript-eslint';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const compat = new FlatCompat({
+  baseDirectory: __dirname,
+});
+
+export const libraryConfig = parserOptions =>
+  ts.config(
+    {
+      ignores: ['.turbo/', 'coverage/', 'node_modules/', 'dist/'],
+    },
+    {
+      languageOptions: {
+        parserOptions: {
+          ecmaFeatures: {
+            jsx: true,
+          },
+        },
+        globals: {
+          ...globals.node,
+        },
       },
     },
-  },
-  ignorePatterns: [
-    '.turbo/',
-    // Ignore dotfiles
-    '.*.js',
-    'coverage/',
-    'dist/',
-    'node_modules/',
-  ],
-  overrides: [
     {
-      files: ['*.js?(x)', '*.ts?(x)'],
+      plugins: {
+        ['only-warn']: eslintPluginOnlyWarn,
+      },
     },
-  ],
-};
+    js.configs.recommended,
+    ...compat.extends('turbo'),
+    ...ts.config({
+      files: ['**/*.js?(x)', '**/*.ts?(x)'],
+      extends: [...ts.configs.recommended],
+      languageOptions: {
+        parserOptions,
+      },
+    }),
+    eslintConfigPrettier,
+  );

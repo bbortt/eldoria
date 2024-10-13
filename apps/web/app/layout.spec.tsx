@@ -52,6 +52,7 @@ describe('Root Layout', () => {
   });
 
   it('exports correct metadata', () => {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     const { metadata } = require('./layout');
     expect(metadata).toEqual({
       title: 'Chronicles of Eldoria',

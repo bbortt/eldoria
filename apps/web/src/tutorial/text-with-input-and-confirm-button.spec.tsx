@@ -77,7 +77,7 @@ describe('Text with Input and Confirm Button', () => {
     const input = screen.getByTestId('mock-input');
     const button = screen.getByText('Continue');
 
-    var inputValue = 'testuser';
+    const inputValue = 'testuser';
     await user.type(input, inputValue);
     await user.click(button);
 
@@ -90,7 +90,7 @@ describe('Text with Input and Confirm Button', () => {
 
     const input = screen.getByTestId('mock-input');
 
-    var inputValue = 'testuser';
+    const inputValue = 'testuser';
     await user.type(input, `${inputValue}{enter}`);
 
     expect(mockContinueFunction).toHaveBeenCalledWith(inputValue);
