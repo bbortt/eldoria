@@ -1,0 +1,8 @@
+.gameGridContainer {
+  @apply flex items-center justify-center h-screen w-screen;
+}
+
+.gameGrid {
+  @apply grid grid-cols-10 gap-0 w-[50vw] h-[50vw];
+  touch-action: none;
+}
