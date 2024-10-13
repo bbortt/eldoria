@@ -1,7 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 
-// eslint-disable-next-line no-redeclare
 import { render, screen } from '@testing-library/react';
 
 import { DefaultButton, DefaultButtonProps } from './default-button';
@@ -51,7 +50,6 @@ describe('Default Button', () => {
   });
 
   it('has "use client" directive at the top of the file', () => {
-    // eslint-disable-next-line no-undef
     const filePath = resolve(__dirname, './default-button.tsx');
     const fileContent = readFileSync(filePath, 'utf8');
     expect(fileContent.trimStart().startsWith("'use client';")).toBeTruthy();

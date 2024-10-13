@@ -15,7 +15,7 @@ export const Eldoria: Game<GameState> = {
   minPlayers: 1,
   maxPlayers: 1,
 
-  setup: ctx => ({
+  setup: () => ({
     username: '',
     team: [] as Character[],
   }),

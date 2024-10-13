@@ -22,6 +22,7 @@ describe('Game Page', () => {
   });
 
   it('uses dynamic import with correct options', () => {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     const dynamic = require('next/dynamic');
     expect(dynamic).toHaveBeenCalledWith(expect.any(Function), expect.objectContaining({ ssr: false }));
   });

@@ -1,32 +1,58 @@
-const { resolve } = require('node:path');
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-const project = resolve(process.cwd(), 'tsconfig.json');
+import { fixupConfigRules } from '@eslint/compat';
+import { FlatCompat } from '@eslint/eslintrc';
+import js from '@eslint/js';
 
-/** @type {import("eslint").Linter.Config} */
-module.exports = {
-  extends: ['eslint:recommended', 'prettier', require.resolve('@vercel/style-guide/eslint/next'), 'turbo'],
-  globals: {
-    React: true,
-    JSX: true,
-  },
-  env: {
-    node: true,
-    browser: true,
-  },
-  plugins: ['only-warn'],
-  settings: {
-    'import/resolver': {
-      typescript: {
-        project,
+import next from '@vercel/style-guide/eslint/next';
+
+import eslintConfigPrettier from 'eslint-config-prettier';
+import eslintPluginOnlyWarn from 'eslint-plugin-only-warn';
+
+import globals from 'globals';
+
+import ts from 'typescript-eslint';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const compat = new FlatCompat({
+  baseDirectory: __dirname,
+});
+
+export const nextConfig = parserOptions =>
+  ts.config(
+    {
+      ignores: ['.next/', 'coverage/', 'node_modules/', 'out/'],
+    },
+    {
+      languageOptions: {
+        parserOptions: {
+          ecmaFeatures: {
+            jsx: true,
+          },
+        },
+        globals: {
+          ...globals.node,
+          ...globals.browser,
+        },
       },
     },
-  },
-  ignorePatterns: [
-    '.turbo/',
-    // Ignore dotfiles
-    '.*.js',
-    'coverage/',
-    'node_modules/',
-  ],
-  overrides: [{ files: ['*.js?(x)', '*.ts?(x)'] }],
-};
+    {
+      plugins: {
+        ['only-warn']: eslintPluginOnlyWarn,
+      },
+    },
+    js.configs.recommended,
+    ...fixupConfigRules(compat.config(next)),
+    ...compat.extends('turbo'),
+    ...ts.config({
+      files: ['**/*.js?(x)', '**/*.ts?(x)'],
+      extends: [...ts.configs.recommended],
+      languageOptions: {
+        parserOptions,
+      },
+    }),
+    eslintConfigPrettier,
+  );

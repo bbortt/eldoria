@@ -16,7 +16,6 @@ const specializations = [
 
 export interface CharacterConfigurationProps {
   character: Character;
-  // eslint-disable-next-line no-unused-vars
   onChange: (updatedCharacter: Character) => void;
 }
 

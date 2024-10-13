@@ -63,7 +63,7 @@ describe('Tutorial', () => {
 
     // Input username
     const input = await waitFor(() => {
-      let textbox = screen.getByRole('textbox');
+      const textbox = screen.getByRole('textbox');
       expect(textbox).toBeInTheDocument();
       return textbox;
     });
