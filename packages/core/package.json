@@ -9,7 +9,7 @@
     "test:watch": "pnpm run test --watch"
   },
   "dependencies": {
-    "boardgame.io": "^0.50.2"
+    "boardgame.io": "0.50.2"
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
