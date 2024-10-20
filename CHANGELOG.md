@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.6.1](https://github.com/bbortt/eldoria/compare/v1.6.0...v1.6.1) (2024-10-20)
+
+
+### Bug Fixes
+
+* **configuration:** persist for board ([bfebb51](https://github.com/bbortt/eldoria/commit/bfebb51a4c17faecd51dd8196b8cf151bd910d05))
+* **eslint:** configuration ([dd53eb7](https://github.com/bbortt/eldoria/commit/dd53eb73deec56f472c3eaf1243a9c745ee0d811))
+* **tutorial:** hide background on mobile devices ([5977b9d](https://github.com/bbortt/eldoria/commit/5977b9dd0b017e484ed07f3bcd81dbb2fb728a72))
+
 ## [1.6.0](https://github.com/bbortt/eldoria/compare/v1.5.3...v1.6.0) (2024-10-12)
 
 
