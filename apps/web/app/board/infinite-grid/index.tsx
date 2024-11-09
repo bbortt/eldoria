@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, WheelEvent } from 'react';
+import { useEffect, useMemo, useState, WheelEvent } from 'react';
 
 import type { GameGrid } from '@repo/core';
 
@@ -23,7 +23,9 @@ export interface InfiniteGameGridProps {
 export const InfiniteGameGrid: React.FC<InfiniteGameGridProps> = ({ grid }) => {
   const gridBoundary = grid.cells.length;
 
-  const [center, setCenter] = useState({ x: 32, y: 32 }); // Start centered in the 64x64 grid
+  const initialCenter = useMemo(() => Math.floor(gridBoundary / 2), [gridBoundary]);
+  const [center, setCenter] = useState({ x: initialCenter, y: initialCenter });
+
   const [gridSize, setGridSize] = useState(10);
   const [gridInformation, setGridInformation] = useState({ startX: 0, endX: 10, startY: 0, endY: 10 } as GridInformation);
   const [isDragging] = useState(false);

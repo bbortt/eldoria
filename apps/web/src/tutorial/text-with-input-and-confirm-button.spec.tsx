@@ -30,7 +30,7 @@ describe('Text with Input and Confirm Button', () => {
   const mockText = 'Test text';
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    jest.resetAllMocks();
   });
 
   it('renders the text, input, and button', () => {

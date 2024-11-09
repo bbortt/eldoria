@@ -27,7 +27,7 @@ describe('TextWithAcceptOrRefuseButtons', () => {
   const mockText = 'Test text';
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    jest.resetAllMocks();
   });
 
   it('renders the text and both buttons', () => {
