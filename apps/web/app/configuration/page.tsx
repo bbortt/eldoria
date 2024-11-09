@@ -5,14 +5,14 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 import CharacterConfiguration from '@/game/character-configuration';
+import { persistConfiguration } from '@/game/configuration';
 import { buttonVariants } from '@/layout/framer-motion.const';
 
-import { Character, Race, Specialization } from '@repo/core';
+import { Character, MAX_GROUP_SIZE, Race, Specialization } from '@repo/core';
 import { ButtonGroup } from '@repo/ui';
 import { DefaultButton } from '@repo/ui/components';
 import { AnimatePresence, Modal, ModalBody, ModalContent, motion } from '@repo/ui/lib';
 
-import { persistConfiguration } from '@/game/configuration';
 import styles from './page.module.css';
 
 const initialAlly = (): Character => new Character('', Race.HUMAN, Specialization.HEALER);
@@ -110,7 +110,7 @@ export default () => {
                   ))}
                   <motion.div transition={{ delay: 0.1 * (allies.length + 1) }} variants={buttonVariants}>
                     <ButtonGroup>
-                      <DefaultButton color="secondary" onClick={addAlly} variant="bordered">
+                      <DefaultButton color="secondary" onClick={addAlly} variant="bordered" isDisabled={allies.length >= MAX_GROUP_SIZE}>
                         Add Ally
                       </DefaultButton>
                       <DefaultButton onClick={() => router.push('/')} color="warning">
