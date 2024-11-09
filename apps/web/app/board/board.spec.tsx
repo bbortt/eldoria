@@ -8,7 +8,12 @@ import { INIT } from '@repo/core/src/game/phases';
 
 import { resetConfiguration, restoreConfiguration } from '@/game/configuration';
 
+import { useRouter } from 'next/navigation';
 import { Board, BoardGameProps } from './board';
+
+jest.mock('next/navigation', () => ({
+  useRouter: jest.fn(),
+}));
 
 jest.mock('@/game/configuration', () => ({
   restoreConfiguration: jest.fn(),
@@ -16,6 +21,8 @@ jest.mock('@/game/configuration', () => ({
 }));
 
 describe('Board', () => {
+  const mockPush = jest.fn();
+
   const mockMoves = {
     initGame: jest.fn(), // as Move<GameState>
   };
@@ -30,8 +37,18 @@ describe('Board', () => {
     moves: mockMoves,
   } as unknown as BoardGameProps;
 
+  let originalEnv: NodeJS.ProcessEnv;
+
   beforeEach(() => {
-    jest.clearAllMocks();
+    jest.resetModules();
+    jest.resetAllMocks();
+    (useRouter as jest.Mock).mockReturnValue({ push: mockPush });
+
+    originalEnv = { ...process.env };
+  });
+
+  afterEach(() => {
+    process.env = originalEnv;
   });
 
   it('should call restoreConfiguration on mount', () => {
@@ -49,6 +66,7 @@ describe('Board', () => {
 
     expect(mockMoves.initGame).toHaveBeenCalledWith(mockGameState);
     expect(resetConfiguration).not.toHaveBeenCalled();
+    expect(mockPush).not.toHaveBeenCalled();
   });
 
   it('should not do anything if gameConfiguration is null', () => {
@@ -58,24 +76,29 @@ describe('Board', () => {
 
     expect(mockMoves.initGame).not.toHaveBeenCalled();
     expect(resetConfiguration).not.toHaveBeenCalled();
+    expect(mockPush).toHaveBeenCalledWith('/configuration');
   });
 
-  it('should call resetConfiguration if phase changes', () => {
+  it('should call `resetConfiguration` if phase changes in production', () => {
+    process.env.NODE_ENV = 'production';
+
     boardGameProps.ctx.phase = 'not-init';
 
     render(<Board {...boardGameProps} />);
 
     expect(mockMoves.initGame).not.toHaveBeenCalled();
     expect(resetConfiguration).toHaveBeenCalled();
+    expect(mockPush).toHaveBeenCalledWith('/configuration');
   });
 
-  it('should not do anything if phase is null', () => {
-    boardGameProps.ctx.phase = null;
+  it.each(['not-init', null])('should not call `resetConfiguration` if phase is not `INIT` (%s)', phase => {
+    boardGameProps.ctx.phase = phase;
 
     render(<Board {...boardGameProps} />);
 
     expect(mockMoves.initGame).not.toHaveBeenCalled();
     expect(resetConfiguration).not.toHaveBeenCalled();
+    expect(mockPush).toHaveBeenCalledWith('/configuration');
   });
 
   it('has "use client" directive at the top of the file', () => {

@@ -1,29 +1,38 @@
 import { render, screen } from '@testing-library/react';
 
-jest.mock('next/dynamic', () =>
-  jest.fn(() => {
-    const DynamicComponent = () => <div data-testid="mocked-game">Mocked Game Component</div>;
-    DynamicComponent.displayName = 'DynamicComponent';
-    return DynamicComponent;
-  }),
-);
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
 
+import { Client, Eldoria } from '@repo/core';
+
+import Board from './board';
 import GamePage from './page';
 
-describe('Game Page', () => {
-  it('renders the dynamically imported Game component', async () => {
+jest.mock('@repo/core', () => ({
+  Client: jest.fn(() => () => <div data-testId="mocked-client"></div>),
+  Eldoria: { name: 'Eldoria' },
+}));
+
+jest.mock('./board', () => ({
+  __esModule: true,
+  default: { name: 'Board' },
+}));
+
+describe('Game Client', () => {
+  it('creates a client with correct parameters', () => {
     render(<GamePage />);
 
-    // Wait for the component to be rendered
-    const gameComponent = await screen.findByTestId('mocked-game');
+    expect(screen.getByTestId('mocked-client')).toBeInTheDocument();
 
-    expect(gameComponent).toBeInTheDocument();
-    expect(gameComponent).toHaveTextContent('Mocked Game Component');
+    expect(Client).toHaveBeenCalledWith({
+      game: Eldoria,
+      board: Board,
+    });
   });
 
-  it('uses dynamic import with correct options', () => {
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
-    const dynamic = require('next/dynamic');
-    expect(dynamic).toHaveBeenCalledWith(expect.any(Function), expect.objectContaining({ ssr: false }));
+  it('has "use client" directive at the top of the file', () => {
+    const filePath = resolve(__dirname, './page.tsx');
+    const fileContent = readFileSync(filePath, 'utf8');
+    expect(fileContent.trimStart().startsWith("'use client';")).toBeTruthy();
   });
 });

@@ -40,7 +40,7 @@ describe('Tutorial', () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    jest.resetAllMocks();
   });
 
   test('renders initial conversation', () => {

@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from 'react';
 
+import { useRouter } from 'next/navigation';
+
 import type { BoardProps, GameState, InitGameState } from '@repo/core';
 import { Spinner } from '@repo/ui';
 
@@ -19,8 +21,15 @@ export interface BoardGameProps extends BoardProps<GameState> {}
 export const Board: React.FC<BoardGameProps> = ({ ctx, G, moves }) => {
   const [gameConfiguration, setGameConfiguration] = useState(null as InitGameState | null);
 
+  const router = useRouter();
+
   useEffect(() => {
-    setGameConfiguration(restoreConfiguration());
+    const restoredConfiguration = restoreConfiguration();
+    if (!gameConfiguration && restoredConfiguration) {
+      setGameConfiguration(restoredConfiguration);
+    } else if (!gameConfiguration && !restoredConfiguration) {
+      router.push('/configuration');
+    }
   }, []);
 
   useEffect(() => {
@@ -30,7 +39,7 @@ export const Board: React.FC<BoardGameProps> = ({ ctx, G, moves }) => {
   }, [gameConfiguration]);
 
   useEffect(() => {
-    if (ctx.phase && ctx.phase !== INIT) {
+    if (process.env.NODE_ENV === 'production' && ctx.phase !== INIT) {
       resetConfiguration();
     }
   }, [ctx.phase]);
