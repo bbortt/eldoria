@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.6.2](https://github.com/bbortt/eldoria/compare/v1.6.1...v1.6.2) (2024-11-09)
+
+
+### Bug Fixes
+
+* bind grid to game state ([7293b69](https://github.com/bbortt/eldoria/commit/7293b69b5ae35a3b0447c32d317401f286cdd749))
+* limit team size to 6 characters when configuring game ([2e1608f](https://github.com/bbortt/eldoria/commit/2e1608fd767ae126b09fc4484d857fce0adaac44))
+
 ## [1.6.1](https://github.com/bbortt/eldoria/compare/v1.6.0...v1.6.1) (2024-10-20)
 
 
