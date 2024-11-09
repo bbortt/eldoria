@@ -4,7 +4,7 @@
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "env": ["NEXT_PUBLIC_ELDORIA_BASE_PATH"],
+      "env": ["NEXT_PUBLIC_ELDORIA_BASE_PATH", "NODE_ENV"],
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
       "outputs": [".next/**", "!.next/cache/**", "dist/**"]
     },

@@ -17,7 +17,7 @@ describe('Tutorial', () => {
       originalEnv = process.env;
     });
 
-    test('all background images exist in public folder', () => {
+    it('all background images exist in public folder', () => {
       Object.values(getTutorialConversation()).forEach(conversation => {
         if (conversation.backgroundImage) {
           const imagePath = join(publicDir, conversation.backgroundImage);
@@ -29,7 +29,7 @@ describe('Tutorial', () => {
       });
     });
 
-    test('all background images have the correct basePath prefix', () => {
+    it('all background images have the correct basePath prefix', () => {
       const mockBasePath = '/mock-base-path';
       process.env.NEXT_PUBLIC_ELDORIA_BASE_PATH = mockBasePath;
 
@@ -40,7 +40,7 @@ describe('Tutorial', () => {
       });
     });
 
-    test('all character conversations have an NPC linked', () => {
+    it('all character conversations have an NPC linked', () => {
       let npcCount = 0;
 
       Object.values(getTutorialConversation()).forEach(conversation => {

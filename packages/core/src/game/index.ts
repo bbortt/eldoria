@@ -3,8 +3,10 @@ import type { Game } from 'boardgame.io';
 import { initGameGrid } from './game-grid';
 import type { GameState } from './game-state';
 
-import { INIT } from './phases';
+import { GATHER_GROUP, INIT, ROLL_PHASE } from './phases';
+import gatherGroupPhase from './phases/gather-group';
 import initPhase from './phases/init';
+import rollPhase from './phases/roll';
 
 export * from './constants';
 export * from './game-grid';
@@ -15,20 +17,19 @@ import type { Character } from '../stats';
 export const Eldoria: Game<GameState> = {
   name: 'fantasy-board-game',
 
-  minPlayers: 1,
-  maxPlayers: 1,
+  minPlayers: 2,
+  maxPlayers: 2,
 
   setup: (): GameState => ({
-    username: '',
-    team: [] as Character[],
+    diceRoll: {
+      '0': 0,
+      '1': 0,
+    },
     grid: initGameGrid(),
+    startingPlayer: null,
+    team: [] as Character[],
+    username: '',
   }),
-
-  validateSetupData: (numPlayers: number) => {
-    if (numPlayers !== 1) {
-      return 'Multiplayer is currently not supported!';
-    }
-  },
 
   // A phase that doesn’t specify any moves just uses moves from the main moves section in the game.
   // However, if it does, then the moves section in the phase overrides the global one.
@@ -38,6 +39,8 @@ export const Eldoria: Game<GameState> = {
 
   phases: {
     [INIT]: initPhase,
+    [ROLL_PHASE]: rollPhase,
+    [GATHER_GROUP]: gatherGroupPhase,
     phaseB: {},
   },
 };

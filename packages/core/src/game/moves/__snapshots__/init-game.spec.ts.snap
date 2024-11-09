@@ -1,0 +1,8 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`initGame should initialize the game state with the provided configuration 1`] = `
+[
+  "0",
+  "1",
+]
+`;

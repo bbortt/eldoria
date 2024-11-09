@@ -3,12 +3,13 @@ import { resolve } from 'node:path';
 
 import { act, render } from '@testing-library/react';
 
+import { useRouter } from 'next/navigation';
+
 import { initGameGrid } from '@repo/core';
 import { INIT } from '@repo/core/src/game/phases';
 
 import { resetConfiguration, restoreConfiguration } from '@/game/configuration';
 
-import { useRouter } from 'next/navigation';
 import { Board, BoardGameProps } from './board';
 
 jest.mock('next/navigation', () => ({
