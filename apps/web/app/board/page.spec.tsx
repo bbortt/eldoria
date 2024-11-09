@@ -27,6 +27,7 @@ describe('Game Client', () => {
     expect(Client).toHaveBeenCalledWith({
       game: Eldoria,
       board: Board,
+      numPlayers: 2,
     });
   });
 

@@ -43,12 +43,12 @@ describe('Tutorial', () => {
     jest.resetAllMocks();
   });
 
-  test('renders initial conversation', () => {
+  it('renders initial conversation', () => {
     render(<TutorialComponent />);
     expect(screen.getByText('Conversation 0')).toBeInTheDocument();
   });
 
-  test('navigation through conversation', async () => {
+  it('navigation through conversation', async () => {
     const user = userEvent.setup();
     render(<TutorialComponent />);
 
