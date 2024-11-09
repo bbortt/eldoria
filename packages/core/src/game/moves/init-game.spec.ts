@@ -1,11 +1,13 @@
 import { Character } from '../../stats';
 import { GameState, InitGameState } from '../game-state';
 
+import type { GameGrid } from '../game-grid';
 import initGame from './init-game';
 
 const mockGameState: GameState = {
   username: '',
   team: [],
+  grid: {} as GameGrid,
 };
 
 const mockGameConfiguration: InitGameState = {

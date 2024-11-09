@@ -1,13 +1,16 @@
 import type { Game } from 'boardgame.io';
 
-import { Character } from '../stats';
-
-import { GameState } from './game-state';
+import { initGameGrid } from './game-grid';
+import type { GameState } from './game-state';
 
 import { INIT } from './phases';
 import initPhase from './phases/init';
 
+export * from './constants';
+export * from './game-grid';
 export * from './game-state';
+
+import type { Character } from '../stats';
 
 export const Eldoria: Game<GameState> = {
   name: 'fantasy-board-game',
@@ -15,14 +18,15 @@ export const Eldoria: Game<GameState> = {
   minPlayers: 1,
   maxPlayers: 1,
 
-  setup: () => ({
+  setup: (): GameState => ({
     username: '',
     team: [] as Character[],
+    grid: initGameGrid(),
   }),
 
   validateSetupData: (numPlayers: number) => {
     if (numPlayers !== 1) {
-      return 'Mulitplayer is currently not supported!';
+      return 'Multiplayer is currently not supported!';
     }
   },
 

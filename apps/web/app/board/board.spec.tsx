@@ -3,6 +3,7 @@ import { resolve } from 'node:path';
 
 import { act, render } from '@testing-library/react';
 
+import { initGameGrid } from '@repo/core';
 import { INIT } from '@repo/core/src/game/phases';
 
 import { resetConfiguration, restoreConfiguration } from '@/game/configuration';
@@ -22,6 +23,9 @@ describe('Board', () => {
   const boardGameProps = {
     ctx: {
       phase: INIT,
+    },
+    G: {
+      grid: initGameGrid(),
     },
     moves: mockMoves,
   } as unknown as BoardGameProps;

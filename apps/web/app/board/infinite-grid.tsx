@@ -2,6 +2,8 @@
 
 import { useCallback, useEffect, useState, WheelEvent } from 'react';
 
+import type { Cell, GameGrid } from '@repo/core';
+
 import styles from './infinite-grid.module.css';
 
 const GAME_GRID = 'game-grid';
@@ -9,8 +11,14 @@ const GAME_GRID = 'game-grid';
 const MIN_GRID_SIZE = 2;
 const MAX_GRID_SIZE = 12;
 
-export const InfiniteGameGrid: React.FC = () => {
-  const [center, setCenter] = useState({ x: 5, y: 5 });
+export interface InfiniteGameGridProps {
+  grid: GameGrid;
+}
+
+export const InfiniteGameGrid: React.FC<InfiniteGameGridProps> = ({ grid }) => {
+  const gridBoundary = grid.cells.length;
+
+  const [center, setCenter] = useState({ x: 32, y: 32 }); // Start centered in the 64x64 grid
   const [gridSize, setGridSize] = useState(10);
   const [gridInformation, setGridInformation] = useState({ startX: 0, endX: 10, startY: 0, endY: 10 });
   const [isDragging] = useState(false);
@@ -29,21 +37,41 @@ export const InfiniteGameGrid: React.FC = () => {
   }, [preventDefaultZoom]);
 
   useEffect(() => {
-    setGridInformation({
-      startX: center.x - Math.floor(gridSize / 2),
-      endX: center.x + Math.ceil(gridSize / 2),
-      startY: center.y - Math.floor(gridSize / 2),
-      endY: center.y + Math.ceil(gridSize / 2),
-    });
+    // Calculate initial boundaries
+    let startX = center.x - Math.floor(gridSize / 2);
+    let endX = center.x + Math.ceil(gridSize / 2);
+    let startY = center.y - Math.floor(gridSize / 2);
+    let endY = center.y + Math.ceil(gridSize / 2);
+
+    // Clamp boundaries to stay within 0-63
+    if (startX < 0) {
+      endX -= startX; // Shift the window right
+      startX = 0;
+    }
+    if (endX > gridBoundary) {
+      startX -= endX - gridBoundary; // Shift the window left
+      endX = gridBoundary;
+    }
+    if (startY < 0) {
+      endY -= startY; // Shift the window down
+      startY = 0;
+    }
+    if (endY > gridBoundary) {
+      startY -= endY - gridBoundary; // Shift the window up
+      endY = gridBoundary;
+    }
+
+    setGridInformation({ startX, endX, startY, endY });
   }, [center, gridSize]);
 
-  const getCellContent = useCallback((x: number, y: number): string => {
-    return `(${x},${y})`;
+  const getCellContent = useCallback((cell: Cell): string => {
+    return `(${cell.x},${cell.y})`;
   }, []);
 
   const handleWheel = (wheelEvent: WheelEvent<HTMLDivElement>): void => {
     if (wheelEvent.ctrlKey) {
       wheelEvent.preventDefault();
+
       const gridElement = document.getElementById(GAME_GRID);
       if (!gridElement) return;
 
@@ -68,8 +96,12 @@ export const InfiniteGameGrid: React.FC = () => {
         setGridSize(newGridSize);
 
         // Calculate new center position to keep cursor over the same cell
-        const newCenterX = Math.round(globalX - (cursorX - 0.5) * newGridSize);
-        const newCenterY = Math.round(globalY - (cursorY - 0.5) * newGridSize);
+        let newCenterX = Math.round(globalX - (cursorX - 0.5) * newGridSize);
+        let newCenterY = Math.round(globalY - (cursorY - 0.5) * newGridSize);
+
+        // Clamp center position to ensure grid stays within bounds
+        newCenterX = Math.min(Math.max(Math.floor(newGridSize / 2), newCenterX), gridBoundary - Math.ceil(newGridSize / 2));
+        newCenterY = Math.min(Math.max(Math.floor(newGridSize / 2), newCenterY), gridBoundary - Math.ceil(newGridSize / 2));
 
         setCenter({ x: newCenterX, y: newCenterY });
       }
@@ -77,27 +109,32 @@ export const InfiniteGameGrid: React.FC = () => {
   };
 
   const renderGrid = () => {
-    const cells = [];
     const { startX, endX, startY, endY } = gridInformation;
 
+    const visibleCells = [];
     for (let y = startY; y < endY; y++) {
       for (let x = startX; x < endX; x++) {
-        cells.push(
-          <div
-            key={`${x},${y}`}
-            style={{
-              border: '1px solid',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          >
-            {getCellContent(x, y)}
-          </div>,
-        );
+        // Only render cells within the boundary
+        if (x >= 0 && x < gridBoundary && y >= 0 && y < gridBoundary) {
+          const cell = grid.cells[x]![y]!;
+          visibleCells.push(
+            <div
+              key={`${cell.x},${cell.y}`}
+              style={{
+                border: '1px solid',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              {getCellContent(cell)}
+            </div>,
+          );
+        }
       }
     }
-    return cells;
+
+    return visibleCells;
   };
 
   return (
