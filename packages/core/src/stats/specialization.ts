@@ -18,4 +18,27 @@ export class Specialization {
   static MAGE = new Specialization('Mage', 0, 0, -1, 1, 0, 4, 2, 1);
   static HEALER = new Specialization('Healer', 20, 0, 0, 0, 1, 1, 4, 1);
   static BUFFER = new Specialization('Buffer', 10, 0, 0, 1, 1, 2, 2, 2);
+
+  static fromLabel(label: string): Specialization {
+    const normalizedLabel = label.trim().toLowerCase();
+
+    switch (normalizedLabel) {
+      case 'tank':
+        return Specialization.TANK;
+      case 'warrior':
+        return Specialization.WARRIOR;
+      case 'assassin':
+        return Specialization.ASSASSIN;
+      case 'archer':
+        return Specialization.ARCHER;
+      case 'mage':
+        return Specialization.MAGE;
+      case 'healer':
+        return Specialization.HEALER;
+      case 'buffer':
+        return Specialization.BUFFER;
+      default:
+        throw new Error(`Unknown specialization label: ${label}`);
+    }
+  }
 }

@@ -11,5 +11,5 @@ export interface InitGameState {
 export interface GameState extends InitGameState {
   diceRoll: DiceRoll;
   grid: GameGrid;
-  startingPlayer: string | undefined;
+  startingPlayer?: string;
 }

@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 
 import { useRouter } from 'next/navigation';
 
-import { Character, Race, Specialization } from '@repo/core';
+import { Character, newCharacter, Race, Specialization } from '@repo/core';
 import { AnimatePresence, motion } from '@repo/ui/lib';
 
 import { persistConfiguration } from '@/game/configuration';
@@ -36,7 +36,7 @@ export default () => {
 
   const continueToNextConversation = (): void => setIndex((i: number) => i + 1);
   const startGame = (): void => {
-    persistConfiguration({ username, team: [new Character(username, Race.HUMAN, Specialization.ARCHER), ...team] });
+    persistConfiguration({ username, team: [newCharacter(username, Race.HUMAN, Specialization.ARCHER), ...team] });
     router.push('/board');
   };
 

@@ -15,7 +15,7 @@ describe('nextFunction', () => {
       random: undefined,
     } as unknown as FnContext<GameState>;
 
-    expect(nextFunction(mockContext)).toBe(1);
+    expect(nextFunction(mockContext)).toEqual(1);
   });
 
   it('should wrap around to first player when at last position', () => {
@@ -28,7 +28,7 @@ describe('nextFunction', () => {
       random: undefined,
     } as unknown as FnContext<GameState>;
 
-    expect(nextFunction(mockContext)).toBe(0);
+    expect(nextFunction(mockContext)).toEqual(0);
   });
 
   it('should work with 3 players', () => {
@@ -41,7 +41,7 @@ describe('nextFunction', () => {
       random: undefined,
     } as unknown as FnContext<GameState>;
 
-    expect(nextFunction(mockContext)).toBe(2);
+    expect(nextFunction(mockContext)).toEqual(2);
   });
 
   it('should wrap around in 3 player game', () => {
@@ -54,6 +54,6 @@ describe('nextFunction', () => {
       random: undefined,
     } as unknown as FnContext<GameState>;
 
-    expect(nextFunction(mockContext)).toBe(0);
+    expect(nextFunction(mockContext)).toEqual(0);
   });
 });

@@ -6,12 +6,12 @@ describe('Race', () => {
     const race = new Race(label, 10, 10, 10, 10, 10, 10);
 
     expect(race.label).toEqual(label);
-    expect(race.baseStrength).toBe(10);
-    expect(race.baseDexterity).toBe(10);
-    expect(race.baseConstitution).toBe(10);
-    expect(race.baseIntelligence).toBe(10);
-    expect(race.baseWisdom).toBe(10);
-    expect(race.baseCharisma).toBe(10);
+    expect(race.baseStrength).toEqual(10);
+    expect(race.baseDexterity).toEqual(10);
+    expect(race.baseConstitution).toEqual(10);
+    expect(race.baseIntelligence).toEqual(10);
+    expect(race.baseWisdom).toEqual(10);
+    expect(race.baseCharisma).toEqual(10);
   });
 
   it('should have pre-defined Race instances', () => {
@@ -20,5 +20,19 @@ describe('Race', () => {
     expect(Race.ELF).toBeDefined();
     expect(Race.HALFLING).toBeDefined();
     expect(Race.GIANT).toBeDefined();
+  });
+
+  it.each([
+    [Race.HUMAN.label, Race.HUMAN],
+    [Race.DWARF.label, Race.DWARF],
+    [Race.ELF.label, Race.ELF],
+    [Race.HALFLING.label, Race.HALFLING],
+    [Race.GIANT.label, Race.GIANT],
+  ])('should return the correctly labelled Race (%s)', (label: string, race: Race) => {
+    expect(Race.fromLabel(label)).toEqual(race);
+  });
+
+  it('should throw an error on unknown label', () => {
+    expect(() => Race.fromLabel('unknown')).toThrow('Unknown race label: unknown');
   });
 });

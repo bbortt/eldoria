@@ -16,7 +16,7 @@ describe('initPhase', () => {
   describe('moves', () => {
     it('should include initGame', () => {
       expect(initPhase.moves).toHaveProperty('initGame');
-      expect(initPhase.moves!.initGame).toBe(initGame);
+      expect(initPhase.moves!.initGame).toEqual(initGame);
     });
   });
 

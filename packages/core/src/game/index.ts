@@ -27,7 +27,7 @@ export const Eldoria: Game<GameState> = {
       '1': 0,
     },
     grid: initGameGrid(),
-    startingPlayer: null,
+    startingPlayer: undefined,
     team: [] as Character[],
     username: '',
   }),

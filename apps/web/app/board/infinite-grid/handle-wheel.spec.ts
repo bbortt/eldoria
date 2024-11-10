@@ -4,7 +4,6 @@ import { handleWheel } from './handle-wheel';
 const gridInformation: GridInformation = { startX: 0, endX: 10, startY: 0, endY: 10 };
 
 describe('handleWheel', () => {
-  // Mock document.getElementById
   const mockGetBoundingClientRect = jest.fn();
   const mockGridElement = {
     getBoundingClientRect: mockGetBoundingClientRect,
@@ -86,9 +85,9 @@ describe('handleWheel', () => {
 
     expect(wheelEvent.preventDefault).toHaveBeenCalled();
     expect(result).toBeDefined();
-    expect(result.newCenterX).toBe(5);
-    expect(result.newCenterY).toBe(5);
-    expect(result.newGridSize).toBe(9); // Should decrease by 1
+    expect(result.newCenterX).toEqual(5);
+    expect(result.newCenterY).toEqual(5);
+    expect(result.newGridSize).toEqual(9); // Should decrease by 1
   });
 
   it('should zoom out when deltaY is positive', () => {
@@ -104,9 +103,9 @@ describe('handleWheel', () => {
 
     expect(wheelEvent.preventDefault).toHaveBeenCalled();
     expect(result).toBeDefined();
-    expect(result.newCenterX).toBe(5);
-    expect(result.newCenterY).toBe(5);
-    expect(result.newGridSize).toBe(11); // Should increase by 1
+    expect(result.newCenterX).toEqual(5);
+    expect(result.newCenterY).toEqual(5);
+    expect(result.newGridSize).toEqual(11); // Should increase by 1
   });
 
   it('should not exceed MAX_GRID_SIZE when zooming out', () => {
@@ -171,8 +170,8 @@ describe('handleWheel', () => {
 
     expect(result).toBeDefined();
     // The center coordinates should be clamped within the grid boundary
-    expect(result.newCenterX).toBe(5);
-    expect(result.newCenterY).toBe(5);
-    expect(result.newGridSize).toBe(11);
+    expect(result.newCenterX).toEqual(5);
+    expect(result.newCenterY).toEqual(5);
+    expect(result.newGridSize).toEqual(11);
   });
 });
