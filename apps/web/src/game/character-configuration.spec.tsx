@@ -1,11 +1,10 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import { Character, Race, Specialization } from '@repo/core';
+import { Character, newCharacter, Race, Specialization } from '@repo/core';
 
 import { CharacterConfiguration } from './character-configuration';
 
-// Mock the custom components
 jest.mock('@repo/ui', () => ({
   Input: ({ label, onChange, value }) => <input data-testid={label} onChange={onChange} value={value} />,
 }));
@@ -24,7 +23,7 @@ jest.mock('@repo/ui/components', () => ({
 }));
 
 describe('Character Configuration', () => {
-  const mockCharacter = new Character('Test Character', Race.HUMAN, Specialization.TANK);
+  const mockCharacter: Character = newCharacter('Test Character', Race.HUMAN, Specialization.TANK);
   const mockOnChange = jest.fn();
 
   beforeEach(() => {

@@ -32,10 +32,10 @@ describe('renderGrid', () => {
     expect(result).toHaveLength(4);
 
     // Check content of rendered cells
-    expect(result[0]?.key).toBe('0,0');
-    expect(result[1]?.key).toBe('1,0');
-    expect(result[2]?.key).toBe('0,1');
-    expect(result[3]?.key).toBe('1,1');
+    expect(result[0]?.key).toEqual('0,0');
+    expect(result[1]?.key).toEqual('1,0');
+    expect(result[2]?.key).toEqual('0,1');
+    expect(result[3]?.key).toEqual('1,1');
   });
 
   it('should respect grid boundaries when rendering', () => {
@@ -75,7 +75,7 @@ describe('renderGrid', () => {
 
     result.forEach(cell => {
       // Check if cell is a div element
-      expect(cell.type).toBe('div');
+      expect(cell.type).toEqual('div');
 
       // Check styling
       const style = cell.props.style;
@@ -88,7 +88,7 @@ describe('renderGrid', () => {
 
       // Check content format
       const [x, y] = (cell.key as string).split(',').map(Number);
-      expect(cell.props.children).toBe(`(${x},${y})`);
+      expect(cell.props.children).toEqual(`(${x},${y})`);
     });
   });
 

@@ -9,9 +9,9 @@ describe('initGameGrid', () => {
   });
 
   it('should create a grid with correct dimensions', () => {
-    expect(gameGrid.cells.length).toBe(MAX_GRID_SIZE);
+    expect(gameGrid.cells.length).toEqual(MAX_GRID_SIZE);
     gameGrid.cells.forEach(row => {
-      expect(row.length).toBe(MAX_GRID_SIZE);
+      expect(row.length).toEqual(MAX_GRID_SIZE);
     });
   });
 
@@ -28,17 +28,17 @@ describe('initGameGrid', () => {
     const grid = initGameGrid();
 
     // Test that the main cells array is frozen
-    expect(Object.isFrozen(grid.cells)).toBe(true);
+    expect(Object.isFrozen(grid.cells)).toEqual(true);
 
     // Test that each row is frozen
     grid.cells.forEach(row => {
-      expect(Object.isFrozen(row)).toBe(true);
+      expect(Object.isFrozen(row)).toEqual(true);
     });
 
     // Test that individual cells are not frozen
     grid.cells.forEach(row => {
       row.forEach(cell => {
-        expect(Object.isFrozen(cell)).toBe(false);
+        expect(Object.isFrozen(cell)).toEqual(false);
       });
     });
   });

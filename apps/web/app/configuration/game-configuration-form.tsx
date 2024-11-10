@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { useRouter } from 'next/navigation';
 
-import { Character, MAX_GROUP_SIZE, Race, Specialization } from '@repo/core';
+import { Character, MAX_GROUP_SIZE, newCharacter, Race, Specialization } from '@repo/core';
 
 import { ButtonGroup } from '@repo/ui';
 import { DefaultButton } from '@repo/ui/components';
@@ -14,7 +14,7 @@ import { buttonVariants } from '@/layout/framer-motion.const';
 
 import styles from './game-configuration-form.module.css';
 
-const initialAlly = (): Character => new Character('', Race.HUMAN, Specialization.HEALER);
+const initialAlly = (): Character => newCharacter('', Race.HUMAN, Specialization.HEALER);
 
 export const GameConfigurationForm: React.FC = () => {
   const [allies, setAllies] = useState([initialAlly()]);
@@ -43,7 +43,11 @@ export const GameConfigurationForm: React.FC = () => {
 
   const handleAllyChange = (index: number, updatedCharacter: Character): void => {
     const updatedAllies = [...allies];
-    updatedAllies[index] = new Character(updatedCharacter.name, updatedCharacter.race, updatedCharacter.specialization);
+    updatedAllies[index] = newCharacter(
+      updatedCharacter.name,
+      Race.fromLabel(updatedCharacter.race),
+      Specialization.fromLabel(updatedCharacter.specialization),
+    );
     setAllies(updatedAllies);
   };
 

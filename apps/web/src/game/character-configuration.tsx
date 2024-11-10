@@ -24,7 +24,7 @@ export const CharacterConfiguration: React.FC<CharacterConfigurationProps> = ({ 
   const setCharacterRace = (selection: Set<string>): void => {
     const race = races.find((race: Race) => race.label === selection.values().next().value);
     if (race) {
-      onChange({ ...character, race });
+      onChange({ ...character, race: race!.label });
     }
   };
   const setCharacterSpecialization = (selection: Set<string>): void => {
@@ -32,7 +32,7 @@ export const CharacterConfiguration: React.FC<CharacterConfigurationProps> = ({ 
       (specialization: Specialization) => specialization.label === selection.values().next().value,
     );
     if (specialization) {
-      onChange({ ...character, specialization });
+      onChange({ ...character, specialization: specialization!.label });
     }
   };
 
@@ -53,13 +53,13 @@ export const CharacterConfiguration: React.FC<CharacterConfigurationProps> = ({ 
       <DrowdownForListItems
         ariaLabel="Character race selection"
         items={races}
-        label={character.race.label}
+        label={character.race}
         onSelectionChange={setCharacterRace}
       />
       <DrowdownForListItems
         ariaLabel="Character specialization selection"
         items={specializations}
-        label={character.specialization.label}
+        label={character.specialization}
         onSelectionChange={setCharacterSpecialization}
       />
     </>

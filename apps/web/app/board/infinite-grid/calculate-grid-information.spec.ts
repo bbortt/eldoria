@@ -22,13 +22,13 @@ describe('calculateGridInformation', () => {
 
     // Even grid size (10)
     const evenResult = calculateGridInformation(center, 10, GRID_BOUNDARY);
-    expect(evenResult.endX - evenResult.startX).toBe(10);
-    expect(evenResult.endY - evenResult.startY).toBe(10);
+    expect(evenResult.endX - evenResult.startX).toEqual(10);
+    expect(evenResult.endY - evenResult.startY).toEqual(10);
 
     // Odd grid size (9)
     const oddResult = calculateGridInformation(center, 9, GRID_BOUNDARY);
-    expect(oddResult.endX - oddResult.startX).toBe(9);
-    expect(oddResult.endY - oddResult.startY).toBe(9);
+    expect(oddResult.endX - oddResult.startX).toEqual(9);
+    expect(oddResult.endY - oddResult.startY).toEqual(9);
   });
 
   it('should clamp to left boundary', () => {
@@ -37,9 +37,9 @@ describe('calculateGridInformation', () => {
 
     const result = calculateGridInformation(center, gridSize, GRID_BOUNDARY);
 
-    expect(result.startX).toBe(0);
-    expect(result.endX).toBe(10);
-    expect(result.endX - result.startX).toBe(gridSize);
+    expect(result.startX).toEqual(0);
+    expect(result.endX).toEqual(10);
+    expect(result.endX - result.startX).toEqual(gridSize);
   });
 
   it('should clamp to right boundary', () => {
@@ -48,9 +48,9 @@ describe('calculateGridInformation', () => {
 
     const result = calculateGridInformation(center, gridSize, GRID_BOUNDARY);
 
-    expect(result.startX).toBe(54);
-    expect(result.endX).toBe(64);
-    expect(result.endX - result.startX).toBe(gridSize);
+    expect(result.startX).toEqual(54);
+    expect(result.endX).toEqual(64);
+    expect(result.endX - result.startX).toEqual(gridSize);
   });
 
   it('should clamp to top boundary', () => {
@@ -59,9 +59,9 @@ describe('calculateGridInformation', () => {
 
     const result = calculateGridInformation(center, gridSize, GRID_BOUNDARY);
 
-    expect(result.startY).toBe(0);
-    expect(result.endY).toBe(10);
-    expect(result.endY - result.startY).toBe(gridSize);
+    expect(result.startY).toEqual(0);
+    expect(result.endY).toEqual(10);
+    expect(result.endY - result.startY).toEqual(gridSize);
   });
 
   it('should clamp to bottom boundary', () => {
@@ -70,9 +70,9 @@ describe('calculateGridInformation', () => {
 
     const result = calculateGridInformation(center, gridSize, GRID_BOUNDARY);
 
-    expect(result.startY).toBe(54);
-    expect(result.endY).toBe(64);
-    expect(result.endY - result.startY).toBe(gridSize);
+    expect(result.startY).toEqual(54);
+    expect(result.endY).toEqual(64);
+    expect(result.endY - result.startY).toEqual(gridSize);
   });
 
   it('should handle corner cases', () => {
@@ -110,8 +110,8 @@ describe('calculateGridInformation', () => {
     testCases.forEach(({ center, desc }) => {
       const result = calculateGridInformation(center, gridSize, GRID_BOUNDARY);
 
-      expect(result.endX - result.startX).toBe(gridSize, `Grid width should be ${gridSize} for ${desc} case`);
-      expect(result.endY - result.startY).toBe(gridSize, `Grid height should be ${gridSize} for ${desc} case`);
+      expect(result.endX - result.startX).toEqual(gridSize, `Grid width should be ${gridSize} for ${desc} case`);
+      expect(result.endY - result.startY).toEqual(gridSize, `Grid height should be ${gridSize} for ${desc} case`);
 
       // Verify boundaries
       expect(result.startX).toBeGreaterThanOrEqual(0);
@@ -137,8 +137,8 @@ describe('calculateGridInformation', () => {
       expect(result.endX).toBeLessThanOrEqual(GRID_BOUNDARY);
       expect(result.startY).toBeGreaterThanOrEqual(0);
       expect(result.endY).toBeLessThanOrEqual(GRID_BOUNDARY);
-      expect(result.endX - result.startX).toBe(gridSize);
-      expect(result.endY - result.startY).toBe(gridSize);
+      expect(result.endX - result.startX).toEqual(gridSize);
+      expect(result.endY - result.startY).toEqual(gridSize);
     });
   });
 });

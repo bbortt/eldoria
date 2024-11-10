@@ -18,7 +18,7 @@ describe('rollPhase', () => {
   describe('moves', () => {
     it('should include rollDice', () => {
       expect(rollPhase.moves).toHaveProperty('rollDice');
-      expect(rollPhase.moves!.rollDice).toBe(rollDice);
+      expect(rollPhase.moves!.rollDice).toEqual(rollDice);
     });
   });
 

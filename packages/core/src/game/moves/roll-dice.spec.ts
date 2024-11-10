@@ -20,8 +20,7 @@ describe('rollDice', () => {
   it('should return INVALID_MOVE for invalid player', () => {
     const G = {
       diceRoll: { '0': 0, '1': 0 },
-      startingPlayer: null,
-    } as GameState;
+    } as unknown as GameState;
 
     const ctx = {
       currentPlayer: '2', // Invalid player
@@ -31,7 +30,7 @@ describe('rollDice', () => {
     // @ts-expect-error - type is not callable
     const result = rollDice({ G, ctx, events, random: mockRandom });
 
-    expect(result).toBe(INVALID_MOVE);
+    expect(result).toEqual(INVALID_MOVE);
     expect(mockD20).not.toHaveBeenCalled();
     expect(mockEndTurn).not.toHaveBeenCalled();
   });
@@ -39,17 +38,16 @@ describe('rollDice', () => {
   it('should set dice roll for player 0', () => {
     const G = {
       diceRoll: { '0': 0, '1': 0 },
-      startingPlayer: null,
-    } as GameState;
+    } as unknown as GameState;
 
     mockD20.mockReturnValue(4);
 
     // @ts-expect-error - type is not callable
     rollDice({ G, ctx: { currentPlayer: '0' }, events, random: mockRandom });
 
-    expect(G.diceRoll['0']).toBe(4);
-    expect(G.diceRoll['1']).toBe(0);
-    expect(G.startingPlayer).toBeNull();
+    expect(G.diceRoll['0']).toEqual(4);
+    expect(G.diceRoll['1']).toEqual(0);
+    expect(G.startingPlayer).toBeUndefined();
     expect(mockD20).toHaveBeenCalledTimes(1);
     expect(mockEndTurn).toHaveBeenCalledTimes(1);
   });
@@ -57,17 +55,16 @@ describe('rollDice', () => {
   it('should set dice roll for player 1', () => {
     const G = {
       diceRoll: { '0': 0, '1': 0 },
-      startingPlayer: null,
-    } as GameState;
+    } as unknown as GameState;
 
     mockD20.mockReturnValue(3);
 
     // @ts-expect-error - type is not callable
     rollDice({ G, ctx: { currentPlayer: '1' }, events, random: mockRandom });
 
-    expect(G.diceRoll['0']).toBe(0);
-    expect(G.diceRoll['1']).toBe(3);
-    expect(G.startingPlayer).toBeNull();
+    expect(G.diceRoll['0']).toEqual(0);
+    expect(G.diceRoll['1']).toEqual(3);
+    expect(G.startingPlayer).toBeUndefined();
     expect(mockD20).toHaveBeenCalledTimes(1);
     expect(mockEndTurn).toHaveBeenCalledTimes(1);
   });
@@ -75,42 +72,39 @@ describe('rollDice', () => {
   it('should determine winner when player 0 rolls higher', () => {
     const G = {
       diceRoll: { '0': 6, '1': 0 },
-      startingPlayer: null,
-    } as GameState;
+    } as unknown as GameState;
 
     mockD20.mockReturnValue(3);
 
     // @ts-expect-error - type is not callable
     rollDice({ G, ctx: { currentPlayer: '1' }, events, random: mockRandom });
 
-    expect(G.diceRoll['0']).toBe(6);
-    expect(G.diceRoll['1']).toBe(3);
-    expect(G.startingPlayer).toBe('0');
+    expect(G.diceRoll['0']).toEqual(6);
+    expect(G.diceRoll['1']).toEqual(3);
+    expect(G.startingPlayer).toEqual('0');
     expect(mockEndTurn).toHaveBeenCalledTimes(1);
   });
 
   it('should determine winner when player 1 rolls higher', () => {
     const G = {
       diceRoll: { '0': 2, '1': 0 },
-      startingPlayer: null,
-    } as GameState;
+    } as unknown as GameState;
 
     mockD20.mockReturnValue(5);
 
     // @ts-expect-error - type is not callable
     rollDice({ G, ctx: { currentPlayer: '1' }, events, random: mockRandom });
 
-    expect(G.diceRoll['0']).toBe(2);
-    expect(G.diceRoll['1']).toBe(5);
-    expect(G.startingPlayer).toBe('1');
+    expect(G.diceRoll['0']).toEqual(2);
+    expect(G.diceRoll['1']).toEqual(5);
+    expect(G.startingPlayer).toEqual('1');
     expect(mockEndTurn).toHaveBeenCalledTimes(1);
   });
 
   it('should reset dice on tie', () => {
     const G = {
       diceRoll: { '0': 4, '1': 0 },
-      startingPlayer: null,
-    } as GameState;
+    } as unknown as GameState;
 
     mockD20.mockReturnValue(4);
 
@@ -118,7 +112,7 @@ describe('rollDice', () => {
     rollDice({ G, ctx: { currentPlayer: '1' }, events, random: mockRandom });
 
     expect(G.diceRoll).toEqual({ '0': 0, '1': 0 });
-    expect(G.startingPlayer).toBeNull();
+    expect(G.startingPlayer).toBeUndefined();
     expect(mockEndTurn).toHaveBeenCalledTimes(1);
   });
 });

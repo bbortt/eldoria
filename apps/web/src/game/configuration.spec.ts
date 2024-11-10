@@ -27,7 +27,7 @@ describe('Configuration Persistence', () => {
     it('should store configuration in localStorage', () => {
       const mockConfig: InitGameState = { username: 'someValue', team: [] };
       persistConfiguration(mockConfig);
-      expect(localStorage.getItem('eldoria-configuration')).toBe(JSON.stringify(mockConfig));
+      expect(localStorage.getItem('eldoria-configuration')).toEqual(JSON.stringify(mockConfig));
     });
   });
 
