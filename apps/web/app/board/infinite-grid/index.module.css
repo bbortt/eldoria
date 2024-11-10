@@ -3,6 +3,6 @@
 }
 
 .gameGrid {
-  @apply grid grid-cols-10 gap-0 w-[50vw] h-[50vw];
+  @apply grid grid-cols-10 gap-0 w-[50vh] h-[50vh];
   touch-action: none;
 }
