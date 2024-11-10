@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 
 import { persistConfiguration } from '@/game/configuration';
 
-import CharacterConfigurationPage from './page';
+import GameConfigurationForm from './game-configuration-form';
 
 jest.mock('next/navigation', () => ({
   useRouter: jest.fn(),
@@ -47,7 +47,7 @@ jest.mock('@repo/ui/lib', () => ({
 
 global.window.scrollTo = jest.fn();
 
-describe('CharacterConfigurationPage', () => {
+describe('GameConfigurationForm', () => {
   const mockPush = jest.fn();
 
   beforeEach(() => {
@@ -55,7 +55,7 @@ describe('CharacterConfigurationPage', () => {
   });
 
   it('renders the initial character configuration', () => {
-    render(<CharacterConfigurationPage />);
+    render(<GameConfigurationForm />);
     expect(screen.getByTestId('character-config')).toBeInTheDocument();
     expect(screen.getByTestId('button-Add Ally')).toBeInTheDocument();
     expect(screen.getByTestId('button-Cancel')).toBeInTheDocument();
@@ -64,7 +64,7 @@ describe('CharacterConfigurationPage', () => {
 
   it('adds a new ally when "Add Ally" button is clicked', async () => {
     const user = userEvent.setup();
-    render(<CharacterConfigurationPage />);
+    render(<GameConfigurationForm />);
 
     const addButton = screen.getByTestId('button-Add Ally');
     await user.click(addButton);
@@ -74,7 +74,7 @@ describe('CharacterConfigurationPage', () => {
 
   it('removes an ally when remove button is clicked', async () => {
     const user = userEvent.setup();
-    render(<CharacterConfigurationPage />);
+    render(<GameConfigurationForm />);
 
     const addButton = screen.getByTestId('button-Add Ally');
     await user.click(addButton);
@@ -89,7 +89,7 @@ describe('CharacterConfigurationPage', () => {
 
   it('disables "Start Game" button when ally name is empty', async () => {
     const user = userEvent.setup();
-    render(<CharacterConfigurationPage />);
+    render(<GameConfigurationForm />);
 
     const startButton = screen.getByTestId('button-Start Game');
     expect(startButton).toBeDisabled();
@@ -102,7 +102,7 @@ describe('CharacterConfigurationPage', () => {
 
   it('starts game when form is submitted ("Start Game" button click)', async () => {
     const user = userEvent.setup();
-    render(<CharacterConfigurationPage />);
+    render(<GameConfigurationForm />);
 
     const nameInput = screen.getByTestId('name-input');
     const username = 'Test Character';
@@ -122,7 +122,7 @@ describe('CharacterConfigurationPage', () => {
 
   it('navigates back to homepage when "Cancel" button is clicked', async () => {
     const user = userEvent.setup();
-    render(<CharacterConfigurationPage />);
+    render(<GameConfigurationForm />);
 
     const cancelButton = screen.getByTestId('button-Cancel');
     await user.click(cancelButton);
