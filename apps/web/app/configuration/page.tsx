@@ -15,6 +15,7 @@ export default () => {
         classNames={{
           body: styles.modalBody,
         }}
+        hideCloseButton={true}
         isOpen={true}
       >
         <ModalContent>

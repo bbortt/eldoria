@@ -5,9 +5,13 @@ import rollDice from './roll-dice';
 import { GameState } from '../game-state';
 
 describe('rollDice', () => {
-  // Mock random function
-  const mockD6 = jest.fn();
-  const mockRandom = { D6: mockD6 };
+  const mockEndTurn = jest.fn();
+  const mockD20 = jest.fn();
+  const mockRandom = { D20: mockD20 };
+
+  const events = {
+    endTurn: mockEndTurn,
+  };
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -25,10 +29,11 @@ describe('rollDice', () => {
     };
 
     // @ts-expect-error - type is not callable
-    const result = rollDice({ G, ctx, random: mockRandom });
+    const result = rollDice({ G, ctx, events, random: mockRandom });
 
     expect(result).toBe(INVALID_MOVE);
-    expect(mockD6).not.toHaveBeenCalled();
+    expect(mockD20).not.toHaveBeenCalled();
+    expect(mockEndTurn).not.toHaveBeenCalled();
   });
 
   it('should set dice roll for player 0', () => {
@@ -37,15 +42,16 @@ describe('rollDice', () => {
       startingPlayer: null,
     } as GameState;
 
-    mockD6.mockReturnValue(4);
+    mockD20.mockReturnValue(4);
 
     // @ts-expect-error - type is not callable
-    rollDice({ G, ctx: { currentPlayer: '0' }, random: mockRandom });
+    rollDice({ G, ctx: { currentPlayer: '0' }, events, random: mockRandom });
 
     expect(G.diceRoll['0']).toBe(4);
     expect(G.diceRoll['1']).toBe(0);
     expect(G.startingPlayer).toBeNull();
-    expect(mockD6).toHaveBeenCalledTimes(1);
+    expect(mockD20).toHaveBeenCalledTimes(1);
+    expect(mockEndTurn).toHaveBeenCalledTimes(1);
   });
 
   it('should set dice roll for player 1', () => {
@@ -54,15 +60,16 @@ describe('rollDice', () => {
       startingPlayer: null,
     } as GameState;
 
-    mockD6.mockReturnValue(3);
+    mockD20.mockReturnValue(3);
 
     // @ts-expect-error - type is not callable
-    rollDice({ G, ctx: { currentPlayer: '1' }, random: mockRandom });
+    rollDice({ G, ctx: { currentPlayer: '1' }, events, random: mockRandom });
 
     expect(G.diceRoll['0']).toBe(0);
     expect(G.diceRoll['1']).toBe(3);
     expect(G.startingPlayer).toBeNull();
-    expect(mockD6).toHaveBeenCalledTimes(1);
+    expect(mockD20).toHaveBeenCalledTimes(1);
+    expect(mockEndTurn).toHaveBeenCalledTimes(1);
   });
 
   it('should determine winner when player 0 rolls higher', () => {
@@ -71,14 +78,15 @@ describe('rollDice', () => {
       startingPlayer: null,
     } as GameState;
 
-    mockD6.mockReturnValue(3);
+    mockD20.mockReturnValue(3);
 
     // @ts-expect-error - type is not callable
-    rollDice({ G, ctx: { currentPlayer: '1' }, random: mockRandom });
+    rollDice({ G, ctx: { currentPlayer: '1' }, events, random: mockRandom });
 
     expect(G.diceRoll['0']).toBe(6);
     expect(G.diceRoll['1']).toBe(3);
     expect(G.startingPlayer).toBe('0');
+    expect(mockEndTurn).toHaveBeenCalledTimes(1);
   });
 
   it('should determine winner when player 1 rolls higher', () => {
@@ -87,14 +95,15 @@ describe('rollDice', () => {
       startingPlayer: null,
     } as GameState;
 
-    mockD6.mockReturnValue(5);
+    mockD20.mockReturnValue(5);
 
     // @ts-expect-error - type is not callable
-    rollDice({ G, ctx: { currentPlayer: '1' }, random: mockRandom });
+    rollDice({ G, ctx: { currentPlayer: '1' }, events, random: mockRandom });
 
     expect(G.diceRoll['0']).toBe(2);
     expect(G.diceRoll['1']).toBe(5);
     expect(G.startingPlayer).toBe('1');
+    expect(mockEndTurn).toHaveBeenCalledTimes(1);
   });
 
   it('should reset dice on tie', () => {
@@ -103,12 +112,13 @@ describe('rollDice', () => {
       startingPlayer: null,
     } as GameState;
 
-    mockD6.mockReturnValue(4);
+    mockD20.mockReturnValue(4);
 
     // @ts-expect-error - type is not callable
-    rollDice({ G, ctx: { currentPlayer: '1' }, random: mockRandom });
+    rollDice({ G, ctx: { currentPlayer: '1' }, events, random: mockRandom });
 
     expect(G.diceRoll).toEqual({ '0': 0, '1': 0 });
     expect(G.startingPlayer).toBeNull();
+    expect(mockEndTurn).toHaveBeenCalledTimes(1);
   });
 });

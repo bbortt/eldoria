@@ -9,6 +9,7 @@ import initPhase from './phases/init';
 import rollPhase from './phases/roll';
 
 export * from './constants';
+export * from './dice-roll';
 export * from './game-grid';
 export * from './game-state';
 

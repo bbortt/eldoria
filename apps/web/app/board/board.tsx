@@ -10,6 +10,7 @@ import { Spinner } from '@repo/ui';
 import { resetConfiguration, restoreConfiguration } from '@/game/configuration';
 import { INIT } from '@repo/core/src/game/phases';
 
+import DiceRoll from './dice-roll';
 import { InfiniteGameGrid } from './infinite-grid';
 
 import styles from './board.module.css';
@@ -55,6 +56,7 @@ export const Board: React.FC<BoardGameProps> = ({ ctx, G, moves }) => {
 
   return (
     <div>
+      {moves.rollDice ? <DiceRoll diceRoll={G.diceRoll} rollDice={moves.rollDice} startingPlayer={G.startingPlayer} /> : null}
       <InfiniteGameGrid grid={G.grid} />
     </div>
   );

@@ -59,7 +59,7 @@ export const GameConfigurationForm: React.FC = () => {
   };
 
   return (
-    <form onSubmit={startGame} data-testid="input-form">
+    <form onSubmit={startGame}>
       <motion.div
         key="configure-game-options"
         initial="initial"

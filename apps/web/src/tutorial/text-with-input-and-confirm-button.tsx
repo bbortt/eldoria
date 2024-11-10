@@ -30,7 +30,7 @@ export const TextWithInputAndConfirmButton: React.FC<TextWithInputAndConfirmButt
           <p>{text}</p>
         </div>
         <div className={styles.flexBoxCenter}>
-          <form onSubmit={onSubmit} data-testid="input-form">
+          <form onSubmit={onSubmit}>
             <div className={styles.inputContainer}>
               <Input
                 key="username"
