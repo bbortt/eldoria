@@ -1,3 +1,4 @@
+import type { DiceRoll } from './dice-roll';
 import type { GameGrid } from './game-grid';
 
 import type { Character } from '../stats';
@@ -8,7 +9,7 @@ export interface InitGameState {
 }
 
 export interface GameState extends InitGameState {
-  diceRoll: { '0': number; '1': number };
+  diceRoll: DiceRoll;
   grid: GameGrid;
-  startingPlayer: string | null;
+  startingPlayer: string | undefined;
 }

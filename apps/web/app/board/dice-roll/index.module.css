@@ -1,0 +1,11 @@
+.modalBody {
+  @apply bg-primary py-4;
+}
+
+.title {
+  @apply text-2xl font-bold;
+}
+
+.scoreGrid {
+  @apply grid grid-cols-2;
+}
