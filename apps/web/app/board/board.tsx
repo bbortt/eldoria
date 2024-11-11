@@ -8,10 +8,11 @@ import type { BoardProps, GameState, InitGameState } from '@repo/core';
 import { Spinner } from '@repo/ui';
 
 import { resetConfiguration, restoreConfiguration } from '@/game/configuration';
-import { INIT } from '@repo/core/src/game/phases';
+import { GATHER_GROUP, INIT } from '@repo/core/src/game/phases';
 
+import CharacterBar from './character-bar';
 import DiceRoll from './dice-roll';
-import { InfiniteGameGrid } from './infinite-grid';
+import InfiniteGameGrid from './infinite-grid';
 
 import styles from './board.module.css';
 
@@ -58,6 +59,7 @@ export const Board: React.FC<BoardGameProps> = ({ ctx, G, moves }) => {
     <div>
       {moves.rollDice ? <DiceRoll diceRoll={G.diceRoll} rollDice={moves.rollDice} startingPlayer={G.startingPlayer} /> : null}
       <InfiniteGameGrid grid={G.grid} />
+      {ctx.phase === GATHER_GROUP ? <CharacterBar characters={G.team} /> : null}
     </div>
   );
 };

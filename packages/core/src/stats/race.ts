@@ -1,5 +1,5 @@
 export class Race {
-  constructor(
+  private constructor(
     public label: string,
     public baseStrength: number,
     public baseDexterity: number,
