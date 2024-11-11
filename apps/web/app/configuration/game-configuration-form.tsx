@@ -12,6 +12,8 @@ import CharacterConfiguration from '@/game/character-configuration';
 import { persistConfiguration } from '@/game/configuration';
 import { buttonVariants } from '@/layout/framer-motion.const';
 
+import { Trash2 } from 'lucide-react';
+
 import styles from './game-configuration-form.module.css';
 
 const initialAlly = (): Character => newCharacter('', Race.HUMAN, Specialization.HEALER);
@@ -86,20 +88,33 @@ export const GameConfigurationForm: React.FC = () => {
           >
             <CharacterConfiguration character={value} onChange={(updatedCharacter: Character) => handleAllyChange(i, updatedCharacter)} />
 
-            <DefaultButton aria-label="Remove character" color="danger" isIconOnly isDisabled={i === 0} onClick={() => removeAlly(i)}>
-              🗑️
+            <DefaultButton
+              aria-label="Remove character"
+              color="danger"
+              isIconOnly
+              isDisabled={i === 0}
+              onClick={() => removeAlly(i)}
+              data-testid="button-remove-character"
+            >
+              <Trash2 className="text-primary text-small" />
             </DefaultButton>
           </motion.div>
         ))}
         <motion.div transition={{ delay: 0.1 * (allies.length + 1) }} variants={buttonVariants}>
           <ButtonGroup>
-            <DefaultButton color="secondary" onClick={addAlly} variant="bordered" isDisabled={allies.length >= MAX_GROUP_SIZE}>
+            <DefaultButton
+              color="secondary"
+              onClick={addAlly}
+              variant="bordered"
+              isDisabled={allies.length >= MAX_GROUP_SIZE}
+              data-testid="button-add-ally"
+            >
               Add Ally
             </DefaultButton>
-            <DefaultButton onClick={() => router.push('/')} color="warning">
+            <DefaultButton onClick={() => router.push('/')} color="warning" data-testid="button-cancel">
               Cancel
             </DefaultButton>
-            <DefaultButton color="secondary" type="submit" isDisabled={!alliesValid}>
+            <DefaultButton color="secondary" type="submit" isDisabled={!alliesValid} data-testid="button-start-game">
               Start Game
             </DefaultButton>
           </ButtonGroup>

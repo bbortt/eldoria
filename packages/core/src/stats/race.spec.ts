@@ -3,6 +3,7 @@ import { Race } from './race';
 describe('Race', () => {
   it('should create a Race instance with the correct properties', () => {
     const label = 'flies';
+    // @ts-expect-error TS2673: Constructor of class Race is private and only accessible within the class declaration.
     const race = new Race(label, 10, 10, 10, 10, 10, 10);
 
     expect(race.label).toEqual(label);

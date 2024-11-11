@@ -28,11 +28,15 @@ jest.mock('@repo/ui', () => ({
 }));
 
 jest.mock('@repo/ui/components', () => ({
-  DefaultButton: ({ children, onClick, isDisabled }) => (
-    <button onClick={onClick} disabled={isDisabled} data-testid={`button-${children}`}>
-      {children}
-    </button>
-  ),
+  DefaultButton: props => {
+    const { children, onClick, isDisabled } = props;
+
+    return (
+      <button onClick={onClick} disabled={isDisabled} data-testid={props['data-testid']}>
+        {children}
+      </button>
+    );
+  },
 }));
 
 jest.mock('@repo/ui/lib', () => ({
@@ -57,16 +61,16 @@ describe('GameConfigurationForm', () => {
   it('renders the initial character configuration', () => {
     render(<GameConfigurationForm />);
     expect(screen.getByTestId('character-config')).toBeInTheDocument();
-    expect(screen.getByTestId('button-Add Ally')).toBeInTheDocument();
-    expect(screen.getByTestId('button-Cancel')).toBeInTheDocument();
-    expect(screen.getByTestId('button-Start Game')).toBeInTheDocument();
+    expect(screen.getByTestId('button-add-ally')).toBeInTheDocument();
+    expect(screen.getByTestId('button-cancel')).toBeInTheDocument();
+    expect(screen.getByTestId('button-start-game')).toBeInTheDocument();
   });
 
   it('adds a new ally when "Add Ally" button is clicked', async () => {
     const user = userEvent.setup();
     render(<GameConfigurationForm />);
 
-    const addButton = screen.getByTestId('button-Add Ally');
+    const addButton = screen.getByTestId('button-add-ally');
     await user.click(addButton);
 
     await waitFor(() => expect(screen.getAllByTestId('character-config')).toHaveLength(2));
@@ -76,12 +80,12 @@ describe('GameConfigurationForm', () => {
     const user = userEvent.setup();
     render(<GameConfigurationForm />);
 
-    const addButton = screen.getByTestId('button-Add Ally');
+    const addButton = screen.getByTestId('button-add-ally');
     await user.click(addButton);
 
     await waitFor(() => expect(screen.getAllByTestId('character-config')).toHaveLength(2));
 
-    const removeButtons = screen.getAllByText('🗑️');
+    const removeButtons = screen.getAllByTestId('button-remove-character');
     await user.click(removeButtons[1]); // Click the second remove button
 
     await waitFor(() => expect(screen.getAllByTestId('character-config')).toHaveLength(1));
@@ -91,7 +95,7 @@ describe('GameConfigurationForm', () => {
     const user = userEvent.setup();
     render(<GameConfigurationForm />);
 
-    const startButton = screen.getByTestId('button-Start Game');
+    const startButton = screen.getByTestId('button-start-game');
     expect(startButton).toBeDisabled();
 
     const nameInput = screen.getByTestId('name-input');
@@ -108,7 +112,7 @@ describe('GameConfigurationForm', () => {
     const username = 'Test Character';
     await user.type(nameInput, username);
 
-    const startButton = screen.getByTestId('button-Start Game');
+    const startButton = screen.getByTestId('button-start-game');
     await user.click(startButton);
 
     await waitFor(() =>
@@ -124,7 +128,7 @@ describe('GameConfigurationForm', () => {
     const user = userEvent.setup();
     render(<GameConfigurationForm />);
 
-    const cancelButton = screen.getByTestId('button-Cancel');
+    const cancelButton = screen.getByTestId('button-cancel');
     await user.click(cancelButton);
 
     await waitFor(() => expect(mockPush).toHaveBeenCalledWith('/'));

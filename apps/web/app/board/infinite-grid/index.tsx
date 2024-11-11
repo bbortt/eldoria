@@ -65,3 +65,5 @@ export const InfiniteGameGrid: React.FC<InfiniteGameGridProps> = ({ grid }) => {
     </div>
   );
 };
+
+export default InfiniteGameGrid;

@@ -1,11 +1,15 @@
+import { TestTube } from 'lucide-react';
+
 import { Specialization } from './specialization';
 
 describe('Specialization', () => {
   it('should create a Specialization instance with the correct properties', () => {
     const label = 'annoy';
-    const specialization = new Specialization(label, 50, 3, 2, 0, 3, -1, 1, 0);
+    // @ts-expect-error TS2673: Constructor of class Race is private and only accessible within the class declaration.
+    const specialization = new Specialization(label, TestTube, 50, 3, 2, 0, 3, -1, 1, 0);
 
     expect(specialization.label).toEqual(label);
+    expect(specialization.icon).toEqual(TestTube);
     expect(specialization.hpBonus).toEqual(50);
     expect(specialization.acBonus).toEqual(3);
     expect(specialization.strengthMod).toEqual(2);

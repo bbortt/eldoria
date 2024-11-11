@@ -9,7 +9,8 @@
     "test:watch": "pnpm run test --watch"
   },
   "dependencies": {
-    "boardgame.io": "0.50.2"
+    "boardgame.io": "0.50.2",
+    "lucide-react": "0.456.0"
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
