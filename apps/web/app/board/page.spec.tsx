@@ -9,7 +9,7 @@ import Board from './board';
 import GamePage from './page';
 
 jest.mock('@repo/core', () => ({
-  Client: jest.fn(() => () => <div data-testId="mocked-client"></div>),
+  Client: jest.fn(() => () => <div data-testid="mocked-client"></div>),
   Eldoria: { name: 'Eldoria' },
 }));
 
