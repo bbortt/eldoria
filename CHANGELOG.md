@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.7.0](https://github.com/bbortt/eldoria/compare/v1.6.2...v1.7.0) (2024-12-08)
+
+
+### Features
+
+* create character bar ([0d1d2f6](https://github.com/bbortt/eldoria/commit/0d1d2f654291b4dc6dedbf9a720e6d5d91a64749))
+* dice roll user interface ([32af1eb](https://github.com/bbortt/eldoria/commit/32af1eb02609044a731cc8d0c9c996b5693205ac))
+* introduce dice roll to begin with ([77023d3](https://github.com/bbortt/eldoria/commit/77023d3a67e2ec61c5a9ee4c9e458f182a12846c))
+
+
+### Bug Fixes
+
+* improve runtime character information ([bf428df](https://github.com/bbortt/eldoria/commit/bf428dfa9d6e32ade034a81bd6f35b39fbdf2a7c))
+* reset state only in production ([eb92a86](https://github.com/bbortt/eldoria/commit/eb92a86493286917ce30d5234d30e8a323f3ee99))
+
 ## [1.6.2](https://github.com/bbortt/eldoria/compare/v1.6.1...v1.6.2) (2024-11-09)
 
 
