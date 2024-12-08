@@ -37,13 +37,21 @@ export const DiceRoll: React.FC<DiceRollProps> = ({ diceRoll, rollDice, starting
         <ModalBody>
           <h2 className={styles.title}>Dice Roll</h2>
           <p>Let the dices decide who begins.. it's either you or the enemy!</p>
-          <AnimatePresence mode="wait">
+          <AnimatePresence>
             <div className={styles.scoreGrid}>
               <div className="font-bold">Your score:</div>
               <div>{score}</div>
             </div>
-            {startingPlayer && startingPlayer === '0' ? <p className="font-bold">You scored higher and are the first to move!</p> : null}
-            {startingPlayer && startingPlayer !== '0' ? <p className="font-bold">Enemy scored higher and is the first to move!</p> : null}
+            {startingPlayer && startingPlayer === '0' ? (
+              <p className="font-bold" key="youre-first-to-move">
+                You scored higher and are the first to move!
+              </p>
+            ) : null}
+            {startingPlayer && startingPlayer !== '0' ? (
+              <p className="font-bold" key="enemy-first-to-move">
+                Enemy scored higher and is the first to move!
+              </p>
+            ) : null}
           </AnimatePresence>
         </ModalBody>
         <ModalFooter>
