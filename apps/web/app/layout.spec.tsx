@@ -25,15 +25,17 @@ describe('Root Layout', () => {
       <RootLayout>
         <div>Test Child</div>
       </RootLayout>,
+      { container: document },
     );
 
     // Check if the html element has the correct lang attribute
     const html = getByRole('document');
     expect(html).toBeInTheDocument();
     expect(html.getAttribute('lang')).toEqual('en');
+    expect(html.childElementCount).toEqual(2);
 
     // Check if the body has the correct class names
-    const body = html.children[0];
+    const body = html.children[1];
     expect(body).toHaveClass('mocked-font-variable', 'mocked-font-variable');
 
     // Check if Providers component is rendered
