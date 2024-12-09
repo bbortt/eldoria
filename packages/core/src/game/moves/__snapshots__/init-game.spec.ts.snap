@@ -6,3 +6,10 @@ exports[`initGame should initialize the game state with the provided configurati
   "1",
 ]
 `;
+
+exports[`initGame should initialize the game state with the provided configuration 2`] = `
+[
+  "0",
+  "1",
+]
+`;

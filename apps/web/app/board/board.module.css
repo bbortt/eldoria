@@ -1,3 +1,7 @@
 .main {
   @apply main-layout;
 }
+
+.introductionText {
+  @apply absolute inset-0 flex flex-col space-y-2 items-center justify-center text-center;
+}

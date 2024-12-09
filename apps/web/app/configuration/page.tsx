@@ -1,7 +1,8 @@
 'use client';
 
 import { MAX_GROUP_SIZE } from '@repo/core';
-import { AnimatePresence, Modal, ModalBody, ModalContent } from '@repo/ui/lib';
+import { Modal, ModalBody, ModalContent } from '@repo/ui';
+import { AnimatePresence } from '@repo/ui/lib';
 
 import GameConfigurationForm from './game-configuration-form';
 

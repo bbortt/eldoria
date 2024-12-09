@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 
 import { Character, MAX_GROUP_SIZE, newCharacter, Race, Specialization } from '@repo/core';
 
-import { ButtonGroup } from '@repo/ui';
+import { ButtonGroup, Checkbox } from '@repo/ui';
 import { DefaultButton } from '@repo/ui/components';
 import { motion } from '@repo/ui/lib';
 
@@ -21,6 +21,7 @@ const initialAlly = (): Character => newCharacter('', Race.HUMAN, Specialization
 export const GameConfigurationForm: React.FC = () => {
   const [allies, setAllies] = useState([initialAlly()]);
   const [alliesValid, setAlliesValid] = useState(false);
+  const [showInGameHints, setShowInGameHints] = useState(true);
 
   useEffect(() => {
     let isValid = true;
@@ -59,6 +60,8 @@ export const GameConfigurationForm: React.FC = () => {
     persistConfiguration({
       username: allies[0]!.name,
       team: allies,
+      tutorial: false,
+      showHints: showInGameHints,
     });
 
     router.push('/board');
@@ -100,6 +103,18 @@ export const GameConfigurationForm: React.FC = () => {
             </DefaultButton>
           </motion.div>
         ))}
+        <div className={styles.inputContainer}>
+          <Checkbox
+            key="showHints"
+            isSelected={showInGameHints}
+            onValueChange={(isSelected: boolean) => setShowInGameHints(isSelected)}
+            color="secondary"
+            isRequired={true}
+            data-testid="checkbox-show-hints"
+          >
+            Enable in-game hints
+          </Checkbox>
+        </div>
         <motion.div transition={{ delay: 0.1 * (allies.length + 1) }} variants={buttonVariants}>
           <ButtonGroup>
             <DefaultButton

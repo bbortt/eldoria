@@ -48,7 +48,7 @@ describe('Tutorial', () => {
     expect(screen.getByText('Conversation 0')).toBeInTheDocument();
   });
 
-  it('navigation through conversation', async () => {
+  it('is possible to navigate through whole conversation', async () => {
     const user = userEvent.setup();
     render(<TutorialComponent />);
 
@@ -98,6 +98,8 @@ describe('Tutorial', () => {
     expect(persistConfiguration).toHaveBeenCalledWith({
       username,
       team: [expect.objectContaining({ name: username }), { name: 'Char1' }, { name: 'Char2' }],
+      tutorial: true,
+      showHints: true,
     });
     expect(mockPush).toHaveBeenCalledWith('/board');
   });

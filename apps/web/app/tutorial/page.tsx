@@ -36,7 +36,12 @@ export default () => {
 
   const continueToNextConversation = (): void => setIndex((i: number) => i + 1);
   const startGame = (): void => {
-    persistConfiguration({ username, team: [newCharacter(username, Race.HUMAN, Specialization.ARCHER), ...team] });
+    persistConfiguration({
+      username,
+      team: [newCharacter(username, Race.HUMAN, Specialization.ARCHER), ...team],
+      tutorial: true,
+      showHints: true,
+    });
     router.push('/board');
   };
 
