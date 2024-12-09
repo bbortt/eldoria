@@ -119,6 +119,33 @@ describe('GameConfigurationForm', () => {
       expect(persistConfiguration).toHaveBeenCalledWith({
         username,
         team: [expect.objectContaining({ name: username })],
+        tutorial: false,
+        showHints: true,
+      }),
+    );
+    await waitFor(() => expect(mockPush).toHaveBeenCalledWith('/board'));
+  });
+
+  it('starts game with disabled hints when form is submitted ("Start Game" button click)', async () => {
+    const user = userEvent.setup();
+    render(<GameConfigurationForm />);
+
+    const nameInput = screen.getByTestId('name-input');
+    const username = 'Test Character';
+    await user.type(nameInput, username);
+
+    const showHintsCheckbox = screen.getByTestId('checkbox-show-hints');
+    await user.click(showHintsCheckbox);
+
+    const startButton = screen.getByTestId('button-start-game');
+    await user.click(startButton);
+
+    await waitFor(() =>
+      expect(persistConfiguration).toHaveBeenCalledWith({
+        username,
+        team: [expect.objectContaining({ name: username })],
+        tutorial: false,
+        showHints: true,
       }),
     );
     await waitFor(() => expect(mockPush).toHaveBeenCalledWith('/board'));
