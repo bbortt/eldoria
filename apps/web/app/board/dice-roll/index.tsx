@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { DiceRoll as DiceRollType } from '@repo/core';
 
+import { Modal, ModalBody, ModalContent, ModalFooter } from '@repo/ui';
 import { DefaultButton } from '@repo/ui/components';
-import { AnimatePresence, Modal, ModalBody, ModalContent, ModalFooter } from '@repo/ui/lib';
+import { AnimatePresence } from '@repo/ui/lib';
 
 import styles from './index.module.css';
 
@@ -43,15 +44,17 @@ export const DiceRoll: React.FC<DiceRollProps> = ({ diceRoll, rollDice, starting
               <div>{score}</div>
             </div>
             {startingPlayer && startingPlayer === '0' ? (
-              <p className="font-bold" key="youre-first-to-move">
-                You scored higher and are the first to move!
-              </p>
-            ) : null}
+              <p className="font-bold">You scored higher and are the first to move!</p>
+            ) : (
+              <React.Fragment key="placeholder"></React.Fragment>
+            )}
             {startingPlayer && startingPlayer !== '0' ? (
-              <p className="font-bold" key="enemy-first-to-move">
+              <p className="font-bold" key="enemy-is-first-to-move">
                 Enemy scored higher and is the first to move!
               </p>
-            ) : null}
+            ) : (
+              <React.Fragment key="placeholder"></React.Fragment>
+            )}
           </AnimatePresence>
         </ModalBody>
         <ModalFooter>

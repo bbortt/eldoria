@@ -7,11 +7,11 @@ jest.mock('./tutorial.module.css', () => ({
   footer: 'mock-footer-class',
 }));
 
-jest.mock('@repo/ui/components/default-button', () => {
-  return function MockDefaultButton({ children, onClick }) {
+jest.mock('@repo/ui/components', () => ({
+  DefaultButton: function MockDefaultButton({ children, onClick }) {
     return <button onClick={onClick}>{children}</button>;
-  };
-});
+  },
+}));
 
 describe('Text with Continue Button', () => {
   const mockContinueFunction = jest.fn();

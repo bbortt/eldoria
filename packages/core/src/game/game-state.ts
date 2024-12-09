@@ -6,6 +6,8 @@ import type { Character } from '../stats';
 export interface InitGameState {
   team: Character[];
   username: string;
+  tutorial: boolean;
+  showHints: boolean;
 }
 
 export interface GameState extends InitGameState {

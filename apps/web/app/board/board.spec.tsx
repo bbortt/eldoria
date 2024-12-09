@@ -1,7 +1,8 @@
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 
-import { act, render } from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 
 import { useRouter } from 'next/navigation';
 
@@ -106,5 +107,27 @@ describe('Board', () => {
     const filePath = resolve(__dirname, './board.tsx');
     const fileContent = readFileSync(filePath, 'utf8');
     expect(fileContent.trimStart().startsWith("'use client';")).toBeTruthy();
+  });
+
+  describe('game explanation', () => {
+    it('is being shown when hints are enabled', async () => {
+      const user = userEvent.setup();
+      boardGameProps.G.showHints = true;
+
+      render(<Board {...boardGameProps} />);
+
+      expect(screen.getByTestId('game-explanation')).toBeInTheDocument();
+
+      await user.click(screen.getByTestId('button-close-game-explanation'));
+      expect(screen.queryByTestId('game-explanation')).toBeNull();
+    });
+
+    it('is hidden when hints are disabled', () => {
+      boardGameProps.G.showHints = false;
+
+      render(<Board {...boardGameProps} />);
+
+      expect(screen.queryByTestId('game-explanation')).toBeNull();
+    });
   });
 });

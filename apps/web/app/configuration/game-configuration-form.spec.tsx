@@ -3,6 +3,8 @@ import userEvent from '@testing-library/user-event';
 
 import { useRouter } from 'next/navigation';
 
+import { DefaultButtonProps } from '@repo/ui/components';
+
 import { persistConfiguration } from '@/game/configuration';
 
 import GameConfigurationForm from './game-configuration-form';
@@ -25,10 +27,11 @@ jest.mock('@/game/character-configuration', () => {
 
 jest.mock('@repo/ui', () => ({
   ButtonGroup: ({ children }) => <div data-testid="button-group">{children}</div>,
+  Checkbox: props => <div data-testid={props['data-testid']}>{props.children}</div>,
 }));
 
 jest.mock('@repo/ui/components', () => ({
-  DefaultButton: props => {
+  DefaultButton: (props: DefaultButtonProps) => {
     const { children, onClick, isDisabled } = props;
 
     return (
@@ -40,13 +43,9 @@ jest.mock('@repo/ui/components', () => ({
 }));
 
 jest.mock('@repo/ui/lib', () => ({
-  AnimatePresence: ({ children }) => children,
   motion: {
     div: ({ children }) => <div>{children}</div>,
   },
-  Modal: ({ children }) => <div data-testid="modal">{children}</div>,
-  ModalContent: ({ children }) => <div>{children}</div>,
-  ModalBody: ({ children }) => <div>{children}</div>,
 }));
 
 global.window.scrollTo = jest.fn();
@@ -119,6 +118,33 @@ describe('GameConfigurationForm', () => {
       expect(persistConfiguration).toHaveBeenCalledWith({
         username,
         team: [expect.objectContaining({ name: username })],
+        tutorial: false,
+        showHints: true,
+      }),
+    );
+    await waitFor(() => expect(mockPush).toHaveBeenCalledWith('/board'));
+  });
+
+  it('starts game with disabled hints when form is submitted ("Start Game" button click)', async () => {
+    const user = userEvent.setup();
+    render(<GameConfigurationForm />);
+
+    const nameInput = screen.getByTestId('name-input');
+    const username = 'Test Character';
+    await user.type(nameInput, username);
+
+    const showHintsCheckbox = screen.getByTestId('checkbox-show-hints');
+    await user.click(showHintsCheckbox);
+
+    const startButton = screen.getByTestId('button-start-game');
+    await user.click(startButton);
+
+    await waitFor(() =>
+      expect(persistConfiguration).toHaveBeenCalledWith({
+        username,
+        team: [expect.objectContaining({ name: username })],
+        tutorial: false,
+        showHints: true,
       }),
     );
     await waitFor(() => expect(mockPush).toHaveBeenCalledWith('/board'));

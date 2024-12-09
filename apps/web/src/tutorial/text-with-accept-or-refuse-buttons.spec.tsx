@@ -11,15 +11,15 @@ jest.mock('@repo/ui', () => ({
   ButtonGroup: ({ children }) => <div data-testid="button-group">{children}</div>,
 }));
 
-jest.mock('@repo/ui/components/default-button', () => {
-  return function MockDefaultButton({ children, onClick, color }) {
+jest.mock('@repo/ui/components', () => ({
+  DefaultButton: function MockDefaultButton({ children, onClick, color }) {
     return (
       <button onClick={onClick} data-color={color}>
         {children}
       </button>
     );
-  };
-});
+  },
+}));
 
 describe('TextWithAcceptOrRefuseButtons', () => {
   const mockAcceptFunction = jest.fn();

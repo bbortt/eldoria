@@ -3,8 +3,7 @@
 import { useState } from 'react';
 
 import { Input } from '@repo/ui';
-
-import DefaultButton from '@repo/ui/components/default-button';
+import { DefaultButton } from '@repo/ui/components';
 
 import styles from './text-with-input-and-confirm-button.module.css';
 

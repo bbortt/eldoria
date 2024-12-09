@@ -15,15 +15,15 @@ jest.mock('@repo/ui', () => ({
   ),
 }));
 
-jest.mock('@repo/ui/components/default-button', () => {
-  return function MockDefaultButton({ children, isDisabled, onClick, type }) {
+jest.mock('@repo/ui/components', () => ({
+  DefaultButton: function MockDefaultButton({ children, isDisabled, onClick, type }) {
     return (
       <button onClick={onClick} disabled={isDisabled} type={type}>
         {children}
       </button>
     );
-  };
-});
+  },
+}));
 
 describe('Text with Input and Confirm Button', () => {
   const mockContinueFunction = jest.fn();
