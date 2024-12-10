@@ -1,13 +1,11 @@
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 
-import { act, render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-
-import { useRouter } from 'next/navigation';
-
 import { initGameGrid } from '@repo/core';
 import { INIT } from '@repo/core/src/game/phases';
+import { act, render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { useRouter } from 'next/navigation';
 
 import { resetConfiguration, restoreConfiguration } from '@/game/configuration';
 

@@ -1,9 +1,8 @@
 import { FnContext } from 'boardgame.io';
 
+import initGame from '../moves/init-game';
 import { ROLL_PHASE } from './index';
 import initPhase from './init';
-
-import initGame from '../moves/init-game';
 
 describe('initPhase', () => {
   it('should have correct properties', () => {

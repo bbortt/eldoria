@@ -1,9 +1,8 @@
 import { PhaseConfig } from 'boardgame.io';
 
-import { ROLL_PHASE } from './index';
-
 import type { GameState } from '../game-state';
 import initGame from '../moves/init-game';
+import { ROLL_PHASE } from './index';
 
 const initPhase: PhaseConfig<GameState> = {
   moves: { initGame },

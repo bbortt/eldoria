@@ -1,9 +1,8 @@
-import { render, screen } from '@testing-library/react';
-
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 
 import { Client, Eldoria } from '@repo/core';
+import { render, screen } from '@testing-library/react';
 
 import Board from './board';
 import GamePage from './page';

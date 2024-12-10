@@ -2,7 +2,6 @@ import type { Game } from 'boardgame.io';
 
 import { initGameGrid } from './game-grid';
 import type { GameState } from './game-state';
-
 import { GATHER_GROUP, INIT, ROLL_PHASE } from './phases';
 import gatherGroupPhase from './phases/gather-group';
 import initPhase from './phases/init';

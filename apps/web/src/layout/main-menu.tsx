@@ -1,13 +1,11 @@
 'use client';
 
+import { DefaultButton } from '@repo/ui/components';
+import { AnimatePresence, motion } from '@repo/ui/lib';
 import Link from 'next/link';
-
 import { useState } from 'react';
 
 import { buttonVariants } from '@/layout/framer-motion.const';
-
-import { DefaultButton } from '@repo/ui/components';
-import { AnimatePresence, motion } from '@repo/ui/lib';
 
 const menuVariants = Object.freeze({
   initial: { opacity: 0 },

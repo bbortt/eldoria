@@ -1,7 +1,6 @@
 import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-org/react';
 
 import DefaultButton from './default-button';
-
 import styles from './dropdown-for-list-items.module.css';
 
 export interface ItemType {

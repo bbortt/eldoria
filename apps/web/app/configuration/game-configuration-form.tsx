@@ -1,18 +1,14 @@
-import { useEffect, useState } from 'react';
-
-import { useRouter } from 'next/navigation';
-
 import { Character, MAX_GROUP_SIZE, newCharacter, Race, Specialization } from '@repo/core';
-
 import { ButtonGroup, Checkbox } from '@repo/ui';
 import { DefaultButton } from '@repo/ui/components';
 import { motion } from '@repo/ui/lib';
+import { Trash2 } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 import CharacterConfiguration from '@/game/character-configuration';
 import { persistConfiguration } from '@/game/configuration';
 import { buttonVariants } from '@/layout/framer-motion.const';
-
-import { Trash2 } from 'lucide-react';
 
 import styles from './game-configuration-form.module.css';
 

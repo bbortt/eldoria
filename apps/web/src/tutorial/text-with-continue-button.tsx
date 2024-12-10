@@ -1,8 +1,8 @@
 'use client';
 
-import styles from './tutorial.module.css';
-
 import { DefaultButton } from '@repo/ui/components';
+
+import styles from './tutorial.module.css';
 
 export interface TextWithContinueButtonProps {
   continueFunction: () => void;

@@ -1,21 +1,18 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-
-import { useRouter } from 'next/navigation';
-
 import type { BoardProps, GameState, InitGameState } from '@repo/core';
+import { GATHER_GROUP, INIT } from '@repo/core/src/game/phases';
 import { Spinner } from '@repo/ui';
 import { DefaultButton } from '@repo/ui/components';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 import { resetConfiguration, restoreConfiguration } from '@/game/configuration';
-import { GATHER_GROUP, INIT } from '@repo/core/src/game/phases';
 
+import styles from './board.module.css';
 import CharacterBar from './character-bar';
 import DiceRoll from './dice-roll';
 import InfiniteGameGrid from './infinite-grid';
-
-import styles from './board.module.css';
 
 const getExplainGoalsContent = (close: () => void) => {
   return (

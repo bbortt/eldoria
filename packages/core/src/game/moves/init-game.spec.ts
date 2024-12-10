@@ -1,8 +1,6 @@
+import { Character } from '../../stats';
 import type { GameGrid } from '../game-grid';
 import { GameState, InitGameState } from '../game-state';
-
-import { Character } from '../../stats';
-
 import initGame from './init-game';
 
 const mockGameState: GameState = {

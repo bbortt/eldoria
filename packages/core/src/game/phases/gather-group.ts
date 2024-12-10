@@ -1,9 +1,8 @@
 import { PhaseConfig } from 'boardgame.io';
 
-import nextFunction from './next-function';
-
 import type { GameState } from '../game-state';
 import placeCharacter from '../moves/place-character';
+import nextFunction from './next-function';
 
 const gatherGroupPhase: PhaseConfig<GameState> = {
   moves: { placeCharacter },

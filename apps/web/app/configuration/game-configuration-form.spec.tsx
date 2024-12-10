@@ -1,9 +1,7 @@
+import { DefaultButtonProps } from '@repo/ui/components';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-
 import { useRouter } from 'next/navigation';
-
-import { DefaultButtonProps } from '@repo/ui/components';
 
 import { persistConfiguration } from '@/game/configuration';
 

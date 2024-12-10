@@ -1,15 +1,13 @@
 'use client';
 
-import { useEffect, useMemo, useState, WheelEvent } from 'react';
-
 import type { GameGrid } from '@repo/core';
+import { useEffect, useMemo, useState, WheelEvent } from 'react';
 
 import { calculateGridInformation, GridInformation } from './calculate-grid-information';
 import { handleWheel } from './handle-wheel';
+import styles from './index.module.css';
 import { preventDefaultZoom } from './prevent-default-zoom';
 import { renderGrid } from './render-grid';
-
-import styles from './index.module.css';
 
 export const GAME_GRID = 'game-grid';
 

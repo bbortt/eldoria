@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from 'react';
-
 import { DiceRoll as DiceRollType } from '@repo/core';
-
 import { Modal, ModalBody, ModalContent, ModalFooter } from '@repo/ui';
 import { DefaultButton } from '@repo/ui/components';
 import { AnimatePresence } from '@repo/ui/lib';
+import React, { useEffect, useState } from 'react';
 
 import styles from './index.module.css';
 

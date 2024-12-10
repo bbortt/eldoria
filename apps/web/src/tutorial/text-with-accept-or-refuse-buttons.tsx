@@ -1,10 +1,9 @@
 'use client';
 
 import { ButtonGroup } from '@repo/ui';
+import { DefaultButton } from '@repo/ui/components';
 
 import styles from './tutorial.module.css';
-
-import { DefaultButton } from '@repo/ui/components';
 
 export interface TextWithAcceptOrRefuseButtonsProps {
   acceptFunction: () => void;

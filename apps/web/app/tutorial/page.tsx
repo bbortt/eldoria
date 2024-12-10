@@ -1,11 +1,9 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-
-import { useRouter } from 'next/navigation';
-
 import { Character, newCharacter, Race, Specialization } from '@repo/core';
 import { AnimatePresence, motion } from '@repo/ui/lib';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 import { persistConfiguration } from '@/game/configuration';
 import { TextWithAcceptOrRefuseButtons, TextWithContinueButton, TextWithInputAndConfirmButton } from '@/tutorial';

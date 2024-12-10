@@ -1,9 +1,8 @@
 'use client';
 
-import { useState } from 'react';
-
 import { Input } from '@repo/ui';
 import { DefaultButton } from '@repo/ui/components';
+import { useState } from 'react';
 
 import styles from './text-with-input-and-confirm-button.module.css';
 
