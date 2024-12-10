@@ -1,7 +1,0 @@
-{
-  "extends": "@repo/typescript-config/react-library.json",
-  "compilerOptions": {
-    "outDir": "dist"
-  },
-  "include": ["components", "hooks", "lib", "providers", "turbo", "index.tsx", "tailwind.config.ts"]
-}

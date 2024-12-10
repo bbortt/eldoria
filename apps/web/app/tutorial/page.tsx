@@ -28,11 +28,11 @@ export default () => {
 
   const router = useRouter();
 
-  if (!Object.hasOwn(tutorialConversation, index)) {
-    return null;
+  if (!tutorialConversation[index]) {
+    return <></>;
   }
 
-  const { text, backgroundImage, character } = tutorialConversation[index]!;
+  const { text, backgroundImage, character } = tutorialConversation[index];
 
   const continueToNextConversation = (): void => setIndex((i: number) => i + 1);
   const startGame = (): void => {
@@ -53,9 +53,13 @@ export default () => {
     } else if (index === 5) {
       return <TextWithContinueButton continueFunction={continueToNextConversation} text={text.replace('{0}', username)} />;
     } else if (index >= 6 && index <= 10) {
+      if (!character) {
+        return <></>;
+      }
+
       return (
         <TextWithAcceptOrRefuseButtons
-          acceptFunction={() => setTeam([...team, character!])}
+          acceptFunction={() => setTeam([...team, character])}
           refuseFunction={continueToNextConversation}
           text={text}
         />

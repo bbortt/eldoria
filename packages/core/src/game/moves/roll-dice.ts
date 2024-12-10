@@ -3,7 +3,7 @@ import { INVALID_MOVE } from 'boardgame.io/core';
 
 import type { GameState } from '../game-state';
 
-const rollDice: Move<GameState> = ({ G, ctx, events, random }): void | typeof INVALID_MOVE => {
+const rollDice: Move<GameState> = ({ G, ctx, events, random }): typeof INVALID_MOVE | undefined => {
   if (!Object.keys(G.diceRoll).includes(ctx.currentPlayer)) {
     return INVALID_MOVE;
   }
@@ -18,7 +18,7 @@ const rollDice: Move<GameState> = ({ G, ctx, events, random }): void | typeof IN
       G.diceRoll = { '0': 0, '1': 0 };
     } else {
       // Set starting player
-      G.startingPlayer = G.diceRoll['0']! > G.diceRoll['1']! ? '0' : '1';
+      G.startingPlayer = G.diceRoll['0'] > G.diceRoll['1'] ? '0' : '1';
     }
   }
 

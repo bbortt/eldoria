@@ -1,4 +1,9 @@
-export type GridInformation = { startX: number; endX: number; startY: number; endY: number };
+export interface GridInformation {
+  startX: number;
+  endX: number;
+  startY: number;
+  endY: number;
+}
 
 export const calculateGridInformation = (center: { x: number; y: number }, gridSize: number, gridBoundary: number): GridInformation => {
   // Calculate initial boundaries

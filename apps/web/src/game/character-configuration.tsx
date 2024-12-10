@@ -24,7 +24,7 @@ export const CharacterConfiguration: React.FC<CharacterConfigurationProps> = ({ 
   const setCharacterRace = (selection: Set<string>): void => {
     const race = races.find((race: Race) => race.label === selection.values().next().value);
     if (race) {
-      onChange({ ...character, race: race!.label });
+      onChange({ ...character, race: race?.label });
     }
   };
   const setCharacterSpecialization = (selection: Set<string>): void => {
@@ -32,7 +32,7 @@ export const CharacterConfiguration: React.FC<CharacterConfigurationProps> = ({ 
       (specialization: Specialization) => specialization.label === selection.values().next().value,
     );
     if (specialization) {
-      onChange({ ...character, specialization: specialization!.label });
+      onChange({ ...character, specialization: specialization?.label });
     }
   };
 

@@ -71,13 +71,13 @@ export const Board: React.FC<BoardGameProps> = ({ ctx, G, moves }) => {
     } else if (!gameConfiguration && !restoredConfiguration) {
       router.push('/configuration');
     }
-  }, []);
+  }, [gameConfiguration, router]);
 
   useEffect(() => {
     if (gameConfiguration && moves.initGame) {
       moves.initGame(gameConfiguration);
     }
-  }, [gameConfiguration]);
+  }, [gameConfiguration, moves]);
 
   useEffect(() => {
     if (process.env.NODE_ENV === 'production' && ctx.phase !== INIT) {

@@ -1,16 +1,16 @@
 import { MAX_GRID_SIZE } from './constants';
 
-export type Cell = {
+export interface Cell {
   x: number;
   y: number;
-};
+}
 
-export type GameGrid = {
-  readonly cells: ReadonlyArray<ReadonlyArray<Cell>>;
-};
+export interface GameGrid {
+  readonly cells: readonly (readonly Cell[])[];
+}
 
 export const initGameGrid = (): GameGrid => {
-  const cells: ReadonlyArray<Cell>[] = [];
+  const cells: (readonly Cell[])[] = [];
 
   for (let y = 0; y < MAX_GRID_SIZE; y++) {
     const row: Cell[] = [];

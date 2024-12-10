@@ -3,11 +3,13 @@
 import { NextUIProvider } from '@nextui-org/react';
 import { ThemeProvider, type ThemeProviderProps } from 'next-themes';
 
-type ProvidersProps = {
+interface ProvidersProps {
   children: React.ReactNode;
-};
+}
 
-type AppUIProviderProps = ProvidersProps & {};
+// TODO: Remove, once `AppUIProviderProps` has additional props
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+interface AppUIProviderProps extends ProvidersProps {}
 
 export const AppUIProvider = ({ children }: AppUIProviderProps) => {
   return <NextUIProvider>{children}</NextUIProvider>;
