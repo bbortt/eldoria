@@ -57,8 +57,12 @@ export const GameConfigurationForm: React.FC = () => {
   const startGame = (e: React.FormEvent) => {
     e.preventDefault();
 
+    if (!allies[0]) {
+      return;
+    }
+
     persistConfiguration({
-      username: allies[0]!.name,
+      username: allies[0].name,
       team: allies,
       tutorial: false,
       showHints: showInGameHints,

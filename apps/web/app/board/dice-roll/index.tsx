@@ -20,7 +20,7 @@ export const DiceRoll: React.FC<DiceRollProps> = ({ diceRoll, rollDice, starting
 
   useEffect(() => {
     setScore(diceRoll['0'] === 0 ? score : diceRoll['0']);
-  }, [diceRoll]);
+  }, [diceRoll, score]);
 
   return (
     <Modal
@@ -44,16 +44,18 @@ export const DiceRoll: React.FC<DiceRollProps> = ({ diceRoll, rollDice, starting
               <div>{score}</div>
             </div>
             {startingPlayer && startingPlayer === '0' ? (
-              <p className="font-bold">You scored higher and are the first to move!</p>
+              <p className="font-bold" key="you-scored-higher">
+                You scored higher and are the first to move!
+              </p>
             ) : (
-              <React.Fragment key="placeholder"></React.Fragment>
+              <React.Fragment key="placeholder-you-scored-higher"></React.Fragment>
             )}
             {startingPlayer && startingPlayer !== '0' ? (
-              <p className="font-bold" key="enemy-is-first-to-move">
+              <p className="font-bold" key="enemy-scored-higher">
                 Enemy scored higher and is the first to move!
               </p>
             ) : (
-              <React.Fragment key="placeholder"></React.Fragment>
+              <React.Fragment key="placeholder-enemy-scored-higher"></React.Fragment>
             )}
           </AnimatePresence>
         </ModalBody>

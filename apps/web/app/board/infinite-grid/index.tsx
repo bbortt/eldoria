@@ -37,9 +37,9 @@ export const InfiniteGameGrid: React.FC<InfiniteGameGridProps> = ({ grid }) => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       document.getElementById(GAME_GRID)?.removeEventListener('wheel', preventDefaultZoom as any);
     };
-  }, [preventDefaultZoom]);
+  }, []);
 
-  useEffect(() => setGridInformation(calculateGridInformation(center, gridSize, gridBoundary)), [center, gridSize]);
+  useEffect(() => setGridInformation(calculateGridInformation(center, gridSize, gridBoundary)), [center, gridSize, gridBoundary]);
 
   const adjustCenter = (wheelEvent: WheelEvent<HTMLDivElement>): void => {
     const centerInformation = handleWheel(wheelEvent, gridSize, gridInformation, gridBoundary, MIN_GRID_SIZE, MAX_GRID_SIZE);

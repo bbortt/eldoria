@@ -1,9 +1,15 @@
 import { reactInternalConfig } from '@repo/eslint-config/react-internal.js';
+import globals from 'globals';
 
 /** @type {import("eslint").Linter.Config} */
 export default [
+  ...reactInternalConfig,
   {
-    ignores: ['components/shared-button.tsx'],
+    files: ['*.js'],
+    languageOptions: {
+      globals: {
+        ...globals.node,
+      },
+    },
   },
-  ...reactInternalConfig({ project: ['./tsconfig.lint.json'], tsconfigRootDir: import.meta.dirname }),
 ];

@@ -3,12 +3,13 @@ import { InitGameState } from '@repo/core';
 import { persistConfiguration, resetConfiguration, restoreConfiguration } from './configuration';
 
 const localStorageMock = (() => {
-  let store: { [key: string]: string } = {};
+  let store: Record<string, string> = {};
   return {
     getItem: (key: string) => store[key] || null,
     setItem: (key: string, value: string) => {
       store[key] = value.toString();
     },
+    // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
     removeItem: (key: string) => delete store[key],
     clear: () => {
       store = {};

@@ -4,9 +4,9 @@ import DefaultButton from './default-button';
 
 import styles from './dropdown-for-list-items.module.css';
 
-export type ItemType = {
+export interface ItemType {
   label: string;
-};
+}
 
 export interface DrowdownForListItemsProps {
   ariaLabel: string;

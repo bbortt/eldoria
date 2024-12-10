@@ -30,6 +30,8 @@ export const Eldoria: Game<GameState> = {
     startingPlayer: undefined,
     team: [] as Character[],
     username: '',
+    tutorial: false,
+    showHints: true,
   }),
 
   // A phase that doesn’t specify any moves just uses moves from the main moves section in the game.

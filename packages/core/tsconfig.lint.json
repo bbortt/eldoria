@@ -1,4 +1,0 @@
-{
-  "extends": "@repo/typescript-config/base.json",
-  "include": [".jest.config.ts", "index.ts", "src"]
-}

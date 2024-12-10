@@ -6,7 +6,7 @@ import { renderGrid } from './render-grid';
 describe('renderGrid', () => {
   // Helper function to create a test grid
   const createTestGrid = (size: number): GameGrid => {
-    const cells: ReadonlyArray<Cell>[] = [];
+    const cells: (readonly Cell[])[] = [];
     for (let y = 0; y < size; y++) {
       const row: Cell[] = [];
       for (let x = 0; x < size; x++) {

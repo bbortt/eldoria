@@ -1,6 +1,6 @@
 import { BROM, Character, ELYNDOR, NYSSA, SELENE, THANE } from '@repo/core';
 
-type Conversation = { [key: number]: { text: string; backgroundImage?: string; character?: Character } };
+type Conversation = Record<number, { text: string; backgroundImage?: string; character?: Character }>;
 
 export const getTutorialConversation = (): Conversation => {
   const basePath = process.env.NEXT_PUBLIC_ELDORIA_BASE_PATH ?? '';

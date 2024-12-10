@@ -1,55 +1,44 @@
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
-
-import { FlatCompat } from '@eslint/eslintrc';
 import js from '@eslint/js';
-
 import eslintConfigPrettier from 'eslint-config-prettier';
-import eslintPluginOnlyWarn from 'eslint-plugin-only-warn';
-
-import ts from 'typescript-eslint';
-
+import pluginReact from 'eslint-plugin-react';
+import pluginReactHooks from 'eslint-plugin-react-hooks';
 import globals from 'globals';
+import tseslint from 'typescript-eslint';
+import { config as baseConfig } from './base.js';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-});
-
-export const reactInternalConfig = parserOptions =>
-  ts.config(
-    {
-      ignores: ['.turbo/', 'coverage/', 'node_modules/', 'dist/'],
+/**
+ * A custom ESLint configuration for libraries that use React.
+ *
+ * @type {import("eslint").Linter.Config} */
+export const reactInternalConfig = [
+  ...baseConfig,
+  js.configs.recommended,
+  eslintConfigPrettier,
+  ...tseslint.configs.recommended,
+  {
+    ...pluginReact.configs.flat.recommended,
+    rules: {
+      'react/prop-types': ['off'],
     },
-    {
-      languageOptions: {
-        parserOptions: {
-          ecmaFeatures: {
-            jsx: true,
-          },
-        },
-        globals: {
-          ...globals.browser,
-        },
+  },
+  {
+    languageOptions: {
+      ...pluginReact.configs.flat.recommended.languageOptions,
+      globals: {
+        ...globals.serviceworker,
+        ...globals.browser,
       },
     },
-    {
-      plugins: {
-        ['only-warn']: eslintPluginOnlyWarn,
-      },
+  },
+  {
+    plugins: {
+      'react-hooks': pluginReactHooks,
     },
-    js.configs.recommended,
-    ...compat.extends('turbo'),
-    ...ts.config({
-      files: ['**/*.js?(x)', '**/*.ts?(x)'],
-      extends: [...ts.configs.recommended],
-      languageOptions: {
-        parserOptions: {
-          parserOptions,
-        },
-      },
-    }),
-    eslintConfigPrettier,
-  );
+    settings: { react: { version: 'detect' } },
+    rules: {
+      ...pluginReactHooks.configs.recommended.rules,
+      // React scope no longer necessary with new JSX transform.
+      'react/react-in-jsx-scope': 'off',
+    },
+  },
+];

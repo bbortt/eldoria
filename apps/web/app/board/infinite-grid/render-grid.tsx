@@ -14,11 +14,13 @@ export const renderGrid = (gridInformation: GridInformation, grid: GameGrid) => 
   for (let y = startY; y < endY; y++) {
     for (let x = startX; x < endX; x++) {
       // Only render cells within the boundary
-      if (x >= 0 && x < gridBoundary && y >= 0 && y < gridBoundary) {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      if (x >= 0 && x < gridBoundary && y >= 0 && y < gridBoundary && !!grid.cells[y] && !!grid.cells[y]![x]) {
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         const cell = grid.cells[y]![x]!;
         visibleCells.push(
           <div
-            key={`${cell.x},${cell.y}`}
+            key={`${x},${y}`}
             style={{
               border: '1px solid',
               display: 'flex',

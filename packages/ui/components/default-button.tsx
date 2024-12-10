@@ -10,7 +10,7 @@ export interface DefaultButtonProps extends Omit<ButtonProps, 'color'> {
   type?: 'button' | 'submit';
 }
 
-export const DefaultButton = forwardRef<HTMLButtonElement, DefaultButtonProps>(
+const DefaultButton = forwardRef<HTMLButtonElement, DefaultButtonProps>(
   ({ children, color = 'primary', type = 'button', ...props }, ref) => {
     return (
       <Button color={color} ref={ref} type={type} {...props}>
@@ -20,4 +20,7 @@ export const DefaultButton = forwardRef<HTMLButtonElement, DefaultButtonProps>(
   },
 );
 
+DefaultButton.displayName = 'DefaultButton';
+
+export { DefaultButton };
 export default DefaultButton;
