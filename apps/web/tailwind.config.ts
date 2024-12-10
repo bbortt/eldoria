@@ -1,7 +1,6 @@
+import nextUIConfig from '@repo/ui/tailwind.config';
 import { Config } from 'tailwindcss';
 import { PluginAPI } from 'tailwindcss/types/config';
-
-import nextUIConfig from '@repo/ui/tailwind.config';
 
 /** @type {import('tailwindcss').Config} */
 const config: Partial<Config> = {

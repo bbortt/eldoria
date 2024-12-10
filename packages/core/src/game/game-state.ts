@@ -1,7 +1,6 @@
+import type { Character } from '../stats';
 import type { DiceRoll } from './dice-roll';
 import type { GameGrid } from './game-grid';
-
-import type { Character } from '../stats';
 
 export interface InitGameState {
   team: Character[];

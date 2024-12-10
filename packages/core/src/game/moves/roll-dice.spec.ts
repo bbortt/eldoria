@@ -1,8 +1,7 @@
 import { INVALID_MOVE } from 'boardgame.io/core';
 
-import rollDice from './roll-dice';
-
 import { GameState } from '../game-state';
+import rollDice from './roll-dice';
 
 describe('rollDice', () => {
   const mockEndTurn = jest.fn();

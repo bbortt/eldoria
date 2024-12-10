@@ -1,11 +1,10 @@
 import { FnContext } from 'boardgame.io';
 
+import type { GameState } from '../game-state';
+import rollDice from '../moves/roll-dice';
 import { GATHER_GROUP } from './index';
 import nextFunction from './next-function';
 import rollPhase from './roll';
-
-import type { GameState } from '../game-state';
-import rollDice from '../moves/roll-dice';
 
 describe('rollPhase', () => {
   it('should have correct properties', () => {

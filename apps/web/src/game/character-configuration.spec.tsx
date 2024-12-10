@@ -1,7 +1,6 @@
+import { Character, newCharacter, Race, Specialization } from '@repo/core';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-
-import { Character, newCharacter, Race, Specialization } from '@repo/core';
 
 import { CharacterConfiguration } from './character-configuration';
 

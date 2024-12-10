@@ -1,12 +1,9 @@
 import { PhaseConfig } from 'boardgame.io';
 
-import { GATHER_GROUP } from './index';
-
-import nextFunction from './next-function';
-
 import { GameState } from '../game-state';
-
 import rollDice from '../moves/roll-dice';
+import { GATHER_GROUP } from './index';
+import nextFunction from './next-function';
 
 const rollPhase: PhaseConfig<GameState> = {
   moves: { rollDice },

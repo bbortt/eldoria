@@ -1,8 +1,7 @@
 'use client';
 
-import { forwardRef } from 'react';
-
 import { Button, ButtonProps } from '@nextui-org/react';
+import { forwardRef } from 'react';
 
 export interface DefaultButtonProps extends Omit<ButtonProps, 'color'> {
   children: React.ReactNode;

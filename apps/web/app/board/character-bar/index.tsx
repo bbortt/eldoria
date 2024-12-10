@@ -1,6 +1,5 @@
-import { Card } from '@repo/ui';
-
 import { Character, Specialization } from '@repo/core';
+import { Card } from '@repo/ui';
 
 export interface CharacterBarProps {
   characters: Character[];

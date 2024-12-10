@@ -1,4 +1,5 @@
 import { WheelEvent } from 'react';
+
 import { preventDefaultZoom } from './prevent-default-zoom';
 
 describe('preventDefaultZoom', () => {

@@ -1,6 +1,5 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-
 import { useRouter } from 'next/navigation';
 
 import { persistConfiguration } from '@/game/configuration';

@@ -5,7 +5,6 @@ import { Modal, ModalBody, ModalContent } from '@repo/ui';
 import { AnimatePresence } from '@repo/ui/lib';
 
 import GameConfigurationForm from './game-configuration-form';
-
 import styles from './page.module.css';
 
 export default () => {

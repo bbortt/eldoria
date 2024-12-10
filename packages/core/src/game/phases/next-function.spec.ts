@@ -1,8 +1,7 @@
 import { Ctx, FnContext } from 'boardgame.io';
 
-import nextFunction from './next-function';
-
 import { GameState } from '../game-state';
+import nextFunction from './next-function';
 
 describe('nextFunction', () => {
   it('should return the next player position in a 2 player game', () => {
