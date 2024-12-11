@@ -18,19 +18,22 @@ const mockGameConfiguration: Omit<InitGameState, 'tutorial' | 'showHints'> = {
 };
 
 describe('initGame', () => {
-  it.each([true, false])('should initialize the game state with the provided configuration', (booleanArg: boolean) => {
-    const context = { G: mockGameState, ctx: { numPlayers: 2 } };
+  it.each([true, false])(
+    'should initialize the game state with the provided configuration (tutorial & hints: %s)',
+    (booleanArg: boolean) => {
+      const context = { G: mockGameState, ctx: { numPlayers: 2 } };
 
-    (mockGameConfiguration as InitGameState).tutorial = booleanArg;
-    (mockGameConfiguration as InitGameState).showHints = booleanArg;
+      (mockGameConfiguration as InitGameState).tutorial = booleanArg;
+      (mockGameConfiguration as InitGameState).showHints = booleanArg;
 
-    // @ts-expect-error - type is not callable
-    initGame(context, mockGameConfiguration);
+      // @ts-expect-error - type is not callable
+      initGame(context, mockGameConfiguration);
 
-    expect(context.G.username).toEqual('bbortt');
-    expect(context.G.team).toHaveLength(1);
-    expect(context.G.tutorial).toEqual(booleanArg);
-    expect(context.G.showHints).toEqual(booleanArg);
-    expect(Object.keys(context.G.diceRoll)).toMatchSnapshot(['0', '1']);
-  });
+      expect(context.G.username).toEqual('bbortt');
+      expect(context.G.team).toHaveLength(1);
+      expect(context.G.tutorial).toEqual(booleanArg);
+      expect(context.G.showHints).toEqual(booleanArg);
+      expect(Object.keys(context.G.diceRoll)).toMatchSnapshot(['0', '1']);
+    },
+  );
 });

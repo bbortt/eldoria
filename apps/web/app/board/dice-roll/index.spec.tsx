@@ -3,6 +3,16 @@ import userEvent from '@testing-library/user-event';
 
 import { DiceRoll } from './index';
 
+jest.mock('@repo/ui/components', () => ({
+  DefaultButton: props => {
+    return (
+      <button onClick={() => props.onPress()} disabled={props.isDisabled} data-testid={props['data-testid']}>
+        {props.children}
+      </button>
+    );
+  },
+}));
+
 describe('DiceRoll Component', () => {
   const defaultProps = {
     diceRoll: { '0': 0, '1': 0 },
@@ -11,7 +21,7 @@ describe('DiceRoll Component', () => {
   };
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    jest.resetAllMocks();
   });
 
   it('renders initial state correctly', () => {
@@ -21,7 +31,7 @@ describe('DiceRoll Component', () => {
     expect(screen.getByText("Let the dices decide who begins.. it's either you or the enemy!")).toBeInTheDocument();
     expect(screen.getByText('Your score:')).toBeInTheDocument();
     expect(screen.getByText('0')).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /roll dice/i })).toBeEnabled();
+    expect(screen.getByTestId('button-roll-dice')).toBeEnabled();
   });
 
   it('updates score when diceRoll changes', () => {
@@ -40,7 +50,7 @@ describe('DiceRoll Component', () => {
   it('disables Roll Dice button when score is not 0', () => {
     render(<DiceRoll {...defaultProps} diceRoll={{ '0': 5 }} />);
 
-    const rollButton = screen.getByRole('button', { name: /roll dice/i });
+    const rollButton = screen.getByTestId('button-roll-dice');
     expect(rollButton).toBeDisabled();
   });
 
@@ -48,8 +58,7 @@ describe('DiceRoll Component', () => {
     const user = userEvent.setup();
     render(<DiceRoll {...defaultProps} />);
 
-    const rollButton = screen.getByRole('button', { name: /roll dice/i });
-    await user.click(rollButton);
+    await user.click(screen.getByTestId('button-roll-dice'));
 
     expect(defaultProps.rollDice).toHaveBeenCalledTimes(1);
   });

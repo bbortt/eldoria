@@ -11,8 +11,8 @@ describe('handleWheel', () => {
 
   beforeEach(() => {
     jest.resetAllMocks();
-    document.getElementById = jest.fn().mockReturnValue(mockGridElement);
-    mockGetBoundingClientRect.mockReturnValue({
+    document.getElementById = jest.fn().mockReturnValueOnce(mockGridElement);
+    mockGetBoundingClientRect.mockReturnValueOnce({
       left: 100,
       top: 100,
       width: 800,
@@ -40,7 +40,7 @@ describe('handleWheel', () => {
   });
 
   it('should return undefined when grid element is not found', () => {
-    document.getElementById = jest.fn().mockReturnValue(null);
+    document.getElementById = jest.fn().mockReturnValueOnce(null);
 
     const wheelEvent = {
       ctrlKey: true,
@@ -53,7 +53,7 @@ describe('handleWheel', () => {
   });
 
   it('should return undefined when grid size has not changed', () => {
-    document.getElementById = jest.fn().mockReturnValue(null);
+    document.getElementById = jest.fn().mockReturnValueOnce(null);
 
     const wheelEvent = {
       ctrlKey: true,

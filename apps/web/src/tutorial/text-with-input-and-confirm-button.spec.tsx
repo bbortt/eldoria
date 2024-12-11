@@ -16,9 +16,9 @@ jest.mock('@repo/ui', () => ({
 }));
 
 jest.mock('@repo/ui/components', () => ({
-  DefaultButton: function MockDefaultButton({ children, isDisabled, onClick, type }) {
+  DefaultButton: ({ children, isDisabled, onPress, type }) => {
     return (
-      <button onClick={onClick} disabled={isDisabled} type={type}>
+      <button onClick={onPress} disabled={isDisabled} type={type}>
         {children}
       </button>
     );

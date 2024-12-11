@@ -16,10 +16,10 @@ export const TextWithAcceptOrRefuseButtons: React.FC<TextWithAcceptOrRefuseButto
     <footer className={styles.footer}>
       <p>{text}</p>
       <ButtonGroup>
-        <DefaultButton color="success" onClick={acceptFunction}>
+        <DefaultButton color="success" onPress={acceptFunction}>
           Accept
         </DefaultButton>
-        <DefaultButton onClick={refuseFunction} color="warning">
+        <DefaultButton onPress={refuseFunction} color="warning">
           Refuse
         </DefaultButton>
       </ButtonGroup>
