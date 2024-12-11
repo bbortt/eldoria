@@ -91,8 +91,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/ui
       lucide-react:
-        specifier: 0.456.0
-        version: 0.456.0(react@19.0.0)
+        specifier: 0.468.0
+        version: 0.468.0(react@19.0.0)
       next:
         specifier: 15.0.3
         version: 15.0.3(@babel/core@7.26.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.82.0)
@@ -183,8 +183,8 @@ importers:
         specifier: 0.50.2
         version: 0.50.2
       lucide-react:
-        specifier: 0.456.0
-        version: 0.456.0(react@19.0.0)
+        specifier: 0.468.0
+        version: 0.468.0(react@19.0.0)
     devDependencies:
       '@repo/eslint-config':
         specifier: workspace:*
@@ -4902,8 +4902,8 @@ packages:
     resolution: {integrity: sha512-jumlc0BIUrS3qJGgIkWZsyfAM7NCWiBcCDhnd+3NNM5KbBmLTgHVfWBcg6W+rLUsIpzpERPsvwUP7CckAQSOoA==}
     engines: {node: '>=12'}
 
-  lucide-react@0.456.0:
-    resolution: {integrity: sha512-DIIGJqTT5X05sbAsQ+OhA8OtJYyD4NsEMCA/HQW/Y6ToPQ7gwbtujIoeAaup4HpHzV35SQOarKAWH8LYglB6eA==}
+  lucide-react@0.468.0:
+    resolution: {integrity: sha512-6koYRhnM2N0GGZIdXzSeiNwguv1gt/FAjZOiPl76roBi3xKEXa4WmfpxgQwTTL4KipXjefrnf3oV4IsYhi4JFA==}
     peerDependencies:
       react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0-rc
 
@@ -12785,7 +12785,7 @@ snapshots:
 
   lru-cache@7.18.3: {}
 
-  lucide-react@0.456.0(react@19.0.0):
+  lucide-react@0.468.0(react@19.0.0):
     dependencies:
       react: 19.0.0
 
