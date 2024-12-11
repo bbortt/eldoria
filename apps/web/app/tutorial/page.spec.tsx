@@ -35,7 +35,7 @@ describe('Tutorial', () => {
   const mockPush = jest.fn();
 
   beforeEach(() => {
-    (useRouter as jest.Mock).mockReturnValue({ push: mockPush });
+    (useRouter as jest.Mock).mockReturnValueOnce({ push: mockPush });
   });
 
   afterEach(() => {

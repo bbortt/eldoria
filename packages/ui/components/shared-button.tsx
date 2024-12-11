@@ -8,7 +8,7 @@ type SharedButtonProps = {
 
 export const SharedButton = ({ appName, children, className }: SharedButtonProps) => {
   return (
-    <button className={className} onClick={() => alert(`Hello from your ${appName} app!`)}>
+    <button className={className} onPress={() => alert(`Hello from your ${appName} app!`)}>
       {children}
     </button>
   );

@@ -30,10 +30,10 @@ jest.mock('@repo/ui', () => ({
 
 jest.mock('@repo/ui/components', () => ({
   DefaultButton: (props: DefaultButtonProps) => {
-    const { children, onClick, isDisabled } = props;
+    const { children, onPress, isDisabled } = props;
 
     return (
-      <button onClick={onClick} disabled={isDisabled} data-testid={props['data-testid']}>
+      <button onClick={onPress} disabled={isDisabled} data-testid={props['data-testid']}>
         {children}
       </button>
     );
@@ -52,7 +52,7 @@ describe('GameConfigurationForm', () => {
   const mockPush = jest.fn();
 
   beforeEach(() => {
-    (useRouter as jest.Mock).mockReturnValue({ push: mockPush });
+    (useRouter as jest.Mock).mockReturnValueOnce({ push: mockPush });
   });
 
   it('renders the initial character configuration', () => {

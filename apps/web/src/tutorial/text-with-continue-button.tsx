@@ -14,7 +14,7 @@ export const TextWithContinueButton: React.FC<TextWithContinueButtonProps> = ({ 
     <footer className={styles.footer}>
       <p>{text}</p>
       <div>
-        <DefaultButton onClick={continueFunction}>Continue</DefaultButton>
+        <DefaultButton onPress={continueFunction}>Continue</DefaultButton>
       </div>
     </footer>
   );
