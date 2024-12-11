@@ -42,7 +42,7 @@ describe('Board', () => {
   beforeEach(() => {
     jest.resetModules();
     jest.resetAllMocks();
-    (useRouter as jest.Mock).mockReturnValue({ push: mockPush });
+    (useRouter as jest.Mock).mockReturnValueOnce({ push: mockPush });
 
     originalEnv = { ...process.env };
   });
@@ -58,7 +58,7 @@ describe('Board', () => {
 
   it('should call initGame when gameConfiguration is set', async () => {
     const mockGameState = { someKey: 'someValue' };
-    (restoreConfiguration as jest.Mock).mockReturnValue(mockGameState);
+    (restoreConfiguration as jest.Mock).mockReturnValueOnce(mockGameState);
 
     await act(async () => {
       render(<Board {...boardGameProps} />);
@@ -70,7 +70,7 @@ describe('Board', () => {
   });
 
   it('should not do anything if gameConfiguration is null', () => {
-    (restoreConfiguration as jest.Mock).mockReturnValue(null);
+    (restoreConfiguration as jest.Mock).mockReturnValueOnce(null);
 
     render(<Board {...boardGameProps} />);
 
@@ -115,6 +115,8 @@ describe('Board', () => {
       render(<Board {...boardGameProps} />);
 
       expect(screen.getByTestId('game-explanation')).toBeInTheDocument();
+
+      (useRouter as jest.Mock).mockReturnValueOnce({ push: jest.fn() });
 
       await user.click(screen.getByTestId('button-close-game-explanation'));
       expect(screen.queryByTestId('game-explanation')).toBeNull();

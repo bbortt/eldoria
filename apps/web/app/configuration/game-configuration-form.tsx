@@ -96,7 +96,7 @@ export const GameConfigurationForm: React.FC = () => {
               color="danger"
               isIconOnly
               isDisabled={i === 0}
-              onClick={() => removeAlly(i)}
+              onPress={() => removeAlly(i)}
               data-testid="button-remove-character"
             >
               <Trash2 className="text-primary text-small" />
@@ -119,14 +119,14 @@ export const GameConfigurationForm: React.FC = () => {
           <ButtonGroup>
             <DefaultButton
               color="secondary"
-              onClick={addAlly}
+              onPress={addAlly}
               variant="bordered"
               isDisabled={allies.length >= MAX_GROUP_SIZE}
               data-testid="button-add-ally"
             >
               Add Ally
             </DefaultButton>
-            <DefaultButton onClick={() => router.push('/')} color="warning" data-testid="button-cancel">
+            <DefaultButton onPress={() => router.push('/')} color="warning" data-testid="button-cancel">
               Cancel
             </DefaultButton>
             <DefaultButton color="secondary" type="submit" isDisabled={!alliesValid} data-testid="button-start-game">

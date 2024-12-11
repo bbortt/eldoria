@@ -40,7 +40,7 @@ describe('rollPhase', () => {
       expect(result).toBeTruthy();
     });
 
-    it.each([null, ''])('should return false when G.startingPlayer is not set (%s)', startingPlayer => {
+    it.each([null, ''])('should return false when G.startingPlayer is not set (startingPlayer: %s)', startingPlayer => {
       const G = { startingPlayer };
 
       const result = rollPhase.endIf!({ G } as unknown as FnContext);

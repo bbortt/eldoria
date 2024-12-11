@@ -8,8 +8,8 @@ jest.mock('./tutorial.module.css', () => ({
 }));
 
 jest.mock('@repo/ui/components', () => ({
-  DefaultButton: function MockDefaultButton({ children, onClick }) {
-    return <button onClick={onClick}>{children}</button>;
+  DefaultButton: function MockDefaultButton({ children, onPress }) {
+    return <button onClick={onPress}>{children}</button>;
   },
 }));
 

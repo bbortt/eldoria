@@ -28,7 +28,7 @@ describe('initPhase', () => {
       expect(result).toBeTruthy();
     });
 
-    it.each([null, ''])('should return false when G.username is not set (%s)', username => {
+    it.each([null, ''])('should return false when G.username is not set (username: %s)', username => {
       const G = { username };
 
       const result = initPhase.endIf!({ G } as unknown as FnContext);

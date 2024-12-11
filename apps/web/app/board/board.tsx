@@ -1,5 +1,7 @@
 'use client';
 
+import { DndContext } from '@dnd-kit/core';
+import type { DragEndEvent } from '@dnd-kit/core/dist/types';
 import type { BoardProps, GameState, InitGameState } from '@repo/core';
 import { GATHER_GROUP, INIT } from '@repo/core/src/game/phases';
 import { Spinner } from '@repo/ui';
@@ -44,7 +46,7 @@ const getExplainGoalsContent = (close: () => void) => {
         You stand here, not as an observer but as a defender, summoned by fate and bound by resolve. The Core must be protected. Eldoria’s
         future lies in your hands, even as its people slumber, unaware of the storm you will face in their name.
       </p>
-      <DefaultButton color="secondary" onClick={() => close()} data-testid="button-close-game-explanation">
+      <DefaultButton color="secondary" onPress={() => close()} data-testid="button-close-game-explanation">
         Understood
       </DefaultButton>
     </div>
@@ -95,12 +97,27 @@ export const Board: React.FC<BoardGameProps> = ({ ctx, G, moves }) => {
     );
   }
 
+  const handleDragEnd = (event: DragEndEvent) => {
+    if (!event.over || !moves.placeCharacter) {
+      return;
+    }
+
+    const sourceData = event.active.data.current;
+    const targetData = event.over.data.current;
+
+    if (!sourceData || !targetData) {
+      return;
+    }
+
+    moves.placeCharacter(sourceData.character, targetData.x, targetData.y);
+  };
+
   return (
-    <div>
+    <DndContext onDragEnd={handleDragEnd}>
       {moves.rollDice ? <DiceRoll diceRoll={G.diceRoll} rollDice={moves.rollDice} startingPlayer={G.startingPlayer} /> : <></>}
       <InfiniteGameGrid grid={G.grid} />
       {ctx.phase === GATHER_GROUP ? <CharacterBar characters={G.team} /> : <></>}
-    </div>
+    </DndContext>
   );
 };
 

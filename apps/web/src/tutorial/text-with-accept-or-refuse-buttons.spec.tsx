@@ -12,9 +12,9 @@ jest.mock('@repo/ui', () => ({
 }));
 
 jest.mock('@repo/ui/components', () => ({
-  DefaultButton: function MockDefaultButton({ children, onClick, color }) {
+  DefaultButton: function MockDefaultButton({ children, onPress, color }) {
     return (
-      <button onClick={onClick} data-color={color}>
+      <button onClick={onPress} data-color={color}>
         {children}
       </button>
     );
