@@ -5,12 +5,3 @@
 .characterCardContent {
   @apply flex items-center justify-center h-full gap-8 px-4;
 }
-
-.cardIcon {
-  touch-action: none;
-  @apply flex flex-col items-center justify-center transition-all rounded-lg border-2 hover:border-primary hover:scale-110 p-2;
-}
-
-.cardIconInner {
-  @apply text-secondary text-small;
-}
