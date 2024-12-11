@@ -13,7 +13,7 @@ describe('rollDice', () => {
   };
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    jest.resetAllMocks();
   });
 
   it('should return INVALID_MOVE for invalid player', () => {
@@ -39,7 +39,7 @@ describe('rollDice', () => {
       diceRoll: { '0': 0, '1': 0 },
     } as unknown as GameState;
 
-    mockD20.mockReturnValue(4);
+    mockD20.mockReturnValueOnce(4);
 
     // @ts-expect-error - type is not callable
     rollDice({ G, ctx: { currentPlayer: '0' }, events, random: mockRandom });
@@ -56,7 +56,7 @@ describe('rollDice', () => {
       diceRoll: { '0': 0, '1': 0 },
     } as unknown as GameState;
 
-    mockD20.mockReturnValue(3);
+    mockD20.mockReturnValueOnce(3);
 
     // @ts-expect-error - type is not callable
     rollDice({ G, ctx: { currentPlayer: '1' }, events, random: mockRandom });
@@ -73,7 +73,7 @@ describe('rollDice', () => {
       diceRoll: { '0': 6, '1': 0 },
     } as unknown as GameState;
 
-    mockD20.mockReturnValue(3);
+    mockD20.mockReturnValueOnce(3);
 
     // @ts-expect-error - type is not callable
     rollDice({ G, ctx: { currentPlayer: '1' }, events, random: mockRandom });
@@ -89,7 +89,7 @@ describe('rollDice', () => {
       diceRoll: { '0': 2, '1': 0 },
     } as unknown as GameState;
 
-    mockD20.mockReturnValue(5);
+    mockD20.mockReturnValueOnce(5);
 
     // @ts-expect-error - type is not callable
     rollDice({ G, ctx: { currentPlayer: '1' }, events, random: mockRandom });
@@ -105,7 +105,7 @@ describe('rollDice', () => {
       diceRoll: { '0': 4, '1': 0 },
     } as unknown as GameState;
 
-    mockD20.mockReturnValue(4);
+    mockD20.mockReturnValueOnce(4);
 
     // @ts-expect-error - type is not callable
     rollDice({ G, ctx: { currentPlayer: '1' }, events, random: mockRandom });

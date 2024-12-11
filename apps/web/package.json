@@ -9,10 +9,11 @@
     "lint": "eslint . --max-warnings 0",
     "serve": "http-server out -o /eldoria -P http://localhost:8080?",
     "start": "next start",
-    "test": "jest --config .jest.config.ts",
+    "test": "cross-env-shell NODE_OPTIONS=\"$NODE_OPTIONS --experimental-vm-modules\" jest --config .jest.config.ts",
     "test:watch": "pnpm run test --watch"
   },
   "dependencies": {
+    "@dnd-kit/core": "6.3.1",
     "@repo/core": "workspace:*",
     "@repo/ui": "workspace:*",
     "lucide-react": "0.456.0",
@@ -33,6 +34,7 @@
     "@types/react-dom": "19.0.1",
     "autoprefixer": "10.4.20",
     "copy": "0.3.2",
+    "cross-env": "7.0.3",
     "dotenv": "16.4.7",
     "eslint": "9.16.0",
     "globals": "15.13.0",

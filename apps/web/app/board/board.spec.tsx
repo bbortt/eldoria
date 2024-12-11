@@ -58,7 +58,7 @@ describe('Board', () => {
 
   it('should call initGame when gameConfiguration is set', async () => {
     const mockGameState = { someKey: 'someValue' };
-    (restoreConfiguration as jest.Mock).mockReturnValue(mockGameState);
+    (restoreConfiguration as jest.Mock).mockReturnValueOnce(mockGameState);
 
     await act(async () => {
       render(<Board {...boardGameProps} />);
@@ -70,7 +70,7 @@ describe('Board', () => {
   });
 
   it('should not do anything if gameConfiguration is null', () => {
-    (restoreConfiguration as jest.Mock).mockReturnValue(null);
+    (restoreConfiguration as jest.Mock).mockReturnValueOnce(null);
 
     render(<Board {...boardGameProps} />);
 

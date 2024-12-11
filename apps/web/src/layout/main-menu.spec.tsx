@@ -7,6 +7,16 @@ jest.mock('next/link', () => {
   return ({ children }) => children;
 });
 
+jest.mock('@repo/ui/components', () => ({
+  DefaultButton: ({ children, color, onPress }) => {
+    return (
+      <button onClick={onPress} className={`bg-${color}`}>
+        {children}
+      </button>
+    );
+  },
+}));
+
 global.window.scrollTo = jest.fn();
 
 describe('Main Menu', () => {

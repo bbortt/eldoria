@@ -14,6 +14,12 @@ jest.mock('@/game/configuration', () => ({
   persistConfiguration: jest.fn(),
 }));
 
+jest.mock('@repo/ui/components', () => ({
+  DefaultButton: ({ children, onPress }) => {
+    return <button onClick={onPress}>{children}</button>;
+  },
+}));
+
 jest.mock('./tutorial.conversation', () => ({
   getTutorialConversation: () => ({
     0: { text: 'Conversation 0', backgroundImage: '/bg0.png' },
@@ -35,11 +41,8 @@ describe('Tutorial', () => {
   const mockPush = jest.fn();
 
   beforeEach(() => {
-    (useRouter as jest.Mock).mockReturnValue({ push: mockPush });
-  });
-
-  afterEach(() => {
     jest.resetAllMocks();
+    (useRouter as jest.Mock).mockReturnValue({ push: mockPush });
   });
 
   it('renders initial conversation', () => {

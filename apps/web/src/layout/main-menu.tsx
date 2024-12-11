@@ -39,7 +39,7 @@ export const MainMenu = () => {
             </Link>
           </motion.div>
           <motion.div transition={{ delay: 0.3 }} variants={buttonVariants}>
-            <DefaultButton color="warning" onClick={() => setStartGame(false)}>
+            <DefaultButton color="warning" onPress={() => setStartGame(false)}>
               Cancel
             </DefaultButton>
           </motion.div>
@@ -55,7 +55,7 @@ export const MainMenu = () => {
           variants={menuVariants}
         >
           <motion.div transition={{ delay: 0.1 }} variants={buttonVariants}>
-            <DefaultButton color="secondary" onClick={() => setStartGame(true)}>
+            <DefaultButton color="secondary" onPress={() => setStartGame(true)}>
               Start Game
             </DefaultButton>
           </motion.div>

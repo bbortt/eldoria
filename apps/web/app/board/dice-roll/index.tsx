@@ -58,7 +58,7 @@ export const DiceRoll: React.FC<DiceRollProps> = ({ diceRoll, rollDice, starting
           </AnimatePresence>
         </ModalBody>
         <ModalFooter>
-          <DefaultButton color="secondary" onClick={rollDice} isDisabled={score !== 0} data-testid="button-roll-dice">
+          <DefaultButton color="secondary" onPress={rollDice} isDisabled={score !== 0} data-testid="button-roll-dice">
             Roll Dice
           </DefaultButton>
         </ModalFooter>

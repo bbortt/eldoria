@@ -1,7 +1,12 @@
+import { useDroppable } from '@dnd-kit/core';
 import type { Cell, GameGrid } from '@repo/core';
 
 import { GridInformation } from './calculate-grid-information';
 import { renderGrid } from './render-grid';
+
+jest.mock('@dnd-kit/core', () => ({
+  useDroppable: jest.fn(),
+}));
 
 describe('renderGrid', () => {
   // Helper function to create a test grid
@@ -17,7 +22,14 @@ describe('renderGrid', () => {
     return { cells: Object.freeze(cells) };
   };
 
+  beforeEach(() => {
+    jest.resetModules();
+    jest.resetAllMocks();
+  });
+
   it('should render cells within the visible area', () => {
+    useDroppable.mockReturnValue({ isOver: false, setNodeRef: jest.fn() });
+
     const grid = createTestGrid(4);
     const gridInfo: GridInformation = {
       startX: 0,
@@ -28,8 +40,9 @@ describe('renderGrid', () => {
 
     const result = renderGrid(gridInfo, grid);
 
-    // Should render 4 cells (2x2 area)
+    // Should render 4 droppable cells (2x2 area)
     expect(result).toHaveLength(4);
+    expect(useDroppable).toHaveBeenCalledTimes(4);
 
     // Check content of rendered cells
     expect(result[0]?.key).toEqual('0,0');
@@ -39,6 +52,8 @@ describe('renderGrid', () => {
   });
 
   it('should respect grid boundaries when rendering', () => {
+    useDroppable.mockReturnValue({ isOver: false, setNodeRef: jest.fn() });
+
     const grid = createTestGrid(3);
     const gridInfo: GridInformation = {
       startX: -1, // Outside grid
@@ -51,6 +66,7 @@ describe('renderGrid', () => {
 
     // Should only render cells within 3x3 grid
     expect(result).toHaveLength(9);
+    expect(useDroppable).toHaveBeenCalledTimes(9);
 
     // Verify all rendered cells are within bounds
     result.forEach(cell => {
@@ -62,7 +78,12 @@ describe('renderGrid', () => {
     });
   });
 
-  it('should render cells with correct content and styling', () => {
+  it.each([
+    [true, 'bg-secondary/50'],
+    [false, 'bg-transparent'],
+  ])('should render cells with correct content and styling (isOver: %s)', (isOver: boolean, className: string) => {
+    useDroppable.mockReturnValue({ isOver, setNodeRef: jest.fn() });
+
     const grid = createTestGrid(2);
     const gridInfo: GridInformation = {
       startX: 0,
@@ -78,13 +99,7 @@ describe('renderGrid', () => {
       expect(cell.type).toEqual('div');
 
       // Check styling
-      const style = cell.props.style;
-      expect(style).toEqual({
-        border: '1px solid',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-      });
+      expect(cell.props.className).toEqual(`gridCell ${className}`);
 
       // Check content format
       const [x, y] = (cell.key as string).split(',').map(Number);
@@ -119,6 +134,8 @@ describe('renderGrid', () => {
   });
 
   it('should render correct cells when grid area partially overlaps', () => {
+    useDroppable.mockReturnValue({ isOver: false, setNodeRef: jest.fn() });
+
     const grid = createTestGrid(4);
     const gridInfo: GridInformation = {
       startX: 2,
@@ -131,6 +148,7 @@ describe('renderGrid', () => {
 
     // Should only render the cells that are within bounds
     expect(result).toHaveLength(4); // 2x2 area from (2,2) to (3,3)
+    expect(useDroppable).toHaveBeenCalledTimes(4);
 
     // Verify correct cells are rendered
     const cellCoords = result.map(cell => cell.key);
