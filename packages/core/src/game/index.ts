@@ -7,6 +7,7 @@ import gatherGroupPhase from './phases/gather-group';
 import initPhase from './phases/init';
 import rollPhase from './phases/roll';
 
+export * from './cell';
 export * from './constants';
 export * from './dice-roll';
 export * from './game-grid';

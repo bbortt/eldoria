@@ -4,10 +4,10 @@ import type { GameGrid } from '@repo/core';
 import { useEffect, useMemo, useState, WheelEvent } from 'react';
 
 import { calculateGridInformation, GridInformation } from './calculate-grid-information';
+import { GameViewModelMapper } from './game-view-model-mapper';
 import { handleWheel } from './handle-wheel';
 import styles from './index.module.css';
 import { preventDefaultZoom } from './prevent-default-zoom';
-import { renderGrid } from './render-grid';
 
 export const GAME_GRID = 'game-grid';
 
@@ -16,9 +16,10 @@ const MAX_GRID_SIZE = 12;
 
 export interface InfiniteGameGridProps {
   grid: GameGrid;
+  gameViewModelMapper?: GameViewModelMapper;
 }
 
-export const InfiniteGameGrid: React.FC<InfiniteGameGridProps> = ({ grid }) => {
+export const InfiniteGameGrid: React.FC<InfiniteGameGridProps> = ({ grid, gameViewModelMapper = new GameViewModelMapper() }) => {
   const gridBoundary = grid.cells.length;
 
   const initialCenter = useMemo(() => Math.floor(gridBoundary / 2), [gridBoundary]);
@@ -39,6 +40,11 @@ export const InfiniteGameGrid: React.FC<InfiniteGameGridProps> = ({ grid }) => {
 
   useEffect(() => setGridInformation(calculateGridInformation(center, gridSize, gridBoundary)), [center, gridSize, gridBoundary]);
 
+  const cellViewModels = useMemo(
+    () => gameViewModelMapper.toViewModel(grid, gridInformation),
+    [gameViewModelMapper, grid, gridInformation],
+  );
+
   const adjustCenter = (wheelEvent: WheelEvent<HTMLDivElement>): void => {
     const centerInformation = handleWheel(wheelEvent, gridSize, gridInformation, gridBoundary, MIN_GRID_SIZE, MAX_GRID_SIZE);
     if (centerInformation) {
@@ -58,7 +64,7 @@ export const InfiniteGameGrid: React.FC<InfiniteGameGridProps> = ({ grid }) => {
           gridTemplateColumns: `repeat(${gridSize}, 1fr)`,
         }}
       >
-        {renderGrid(gridInformation, grid)}
+        {cellViewModels.map(vm => vm.draw())}
       </div>
     </div>
   );
