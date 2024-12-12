@@ -2,7 +2,7 @@ import { useDroppable } from '@dnd-kit/core';
 import { Cell } from '@repo/core';
 import { render, screen } from '@testing-library/react';
 
-import { DRAGGABLE_TYPE_CHARACTER } from '../constants';
+import { CELL_BACKGROUND_BRIGHT, CELL_BACKGROUND_DARK, CELL_BACKGROUND_VALID, DRAGGABLE_TYPE_CHARACTER } from '../constants';
 import GridCell from './grid-cell';
 
 jest.mock('@dnd-kit/core', () => ({
@@ -45,16 +45,17 @@ describe('GridCell', () => {
   });
 
   it.each([
-    [true, 'bg-secondary/50'],
-    [false, 'bg-transparent'],
-  ])('should render cells with correct content and styling (isOver: %s)', (isOver: boolean, className: string) => {
+    [{ x: 0, y: 0 }, true, CELL_BACKGROUND_VALID],
+    [{ x: 0, y: 1 }, true, CELL_BACKGROUND_VALID],
+    [{ x: 0, y: 0 }, false, CELL_BACKGROUND_BRIGHT],
+    [{ x: 0, y: 1 }, false, CELL_BACKGROUND_DARK],
+  ])('should render cells with correct content and styling (cell: %s, isOver: %s)', (cell: Cell, isOver: boolean, className: string) => {
     (useDroppable as jest.Mock).mockReturnValueOnce({ isOver, setNodeRef: jest.fn() });
 
-    const cell: Cell = { x: 0, y: 0 };
     render(<GridCell cell={cell} />);
 
     // Check styling
-    const gridCell = screen.getByTestId('cell-0-0');
+    const gridCell = screen.getByTestId(`cell-${cell.x}-${cell.y}`);
     expect(gridCell).toBeInTheDocument();
     expect(gridCell).toHaveClass(className);
   });
