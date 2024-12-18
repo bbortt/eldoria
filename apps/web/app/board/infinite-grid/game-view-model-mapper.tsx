@@ -1,6 +1,6 @@
-import { CELL_TYPE_CORE, GameGrid } from '@repo/core';
+import { CELL_TYPE_CHARACTER, CELL_TYPE_CORE, GameGrid } from '@repo/core';
 
-import { CoreCell, EmptyCell } from '../cell-representations';
+import { CharacterCell, CoreCell, EmptyCell } from '../cell-representations';
 import { GridInformation } from './calculate-grid-information';
 
 export interface CellViewModel {
@@ -34,6 +34,15 @@ export class GameViewModelMapper {
           }
 
           switch (cell.content.type) {
+            case CELL_TYPE_CHARACTER: {
+              visibleCells.push({
+                x,
+                y,
+                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                draw: () => <CharacterCell cell={cell} key={key} character={cell.content!.character} />,
+              });
+              break;
+            }
             case CELL_TYPE_CORE: {
               visibleCells.push({
                 x,
