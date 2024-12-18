@@ -1,7 +1,8 @@
 import { useDroppable } from '@dnd-kit/core';
 
-import { DRAGGABLE_TYPE_CHARACTER } from '../constants';
-import { calculateBgColor } from './calculate-bg-color';
+import { DRAGGABLE_TYPE_CHARACTER } from '@/game/constants';
+import { calculateBgColor } from '@/game/styling/calculate-bg-color';
+
 import styles from './grid-cell.module.css';
 import { GridCellProps } from './index';
 

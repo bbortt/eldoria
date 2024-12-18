@@ -2,7 +2,8 @@ import { useDraggable } from '@dnd-kit/core';
 import { Character, Specialization } from '@repo/core';
 import { render } from '@testing-library/react';
 
-import { DRAGGABLE_TYPE_CHARACTER } from '../constants';
+import { DRAGGABLE_TYPE_CHARACTER } from '@/game/constants';
+
 import { CharacterCard } from './character-card';
 
 jest.mock('@dnd-kit/core', () => ({
