@@ -2,7 +2,8 @@ import { DragOverlay, useDraggable } from '@dnd-kit/core';
 import { Character, Specialization } from '@repo/core';
 import React, { useMemo } from 'react';
 
-import { DRAGGABLE_TYPE_CHARACTER } from '../constants';
+import { DRAGGABLE_TYPE_CHARACTER } from '@/game/constants';
+
 import styles from './character-card.module.css';
 
 export interface CharacterCardProps {

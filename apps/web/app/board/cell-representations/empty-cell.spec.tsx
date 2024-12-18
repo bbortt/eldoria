@@ -2,7 +2,8 @@ import { useDroppable } from '@dnd-kit/core';
 import { Cell } from '@repo/core';
 import { render, screen } from '@testing-library/react';
 
-import { DRAGGABLE_TYPE_CHARACTER } from '../constants';
+import { DRAGGABLE_TYPE_CHARACTER } from '@/game/constants';
+
 import { EmptyCell } from './empty-cell';
 
 jest.mock('@dnd-kit/core', () => ({
