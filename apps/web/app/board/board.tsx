@@ -9,6 +9,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 import { resetConfiguration, restoreConfiguration } from '@/game/configuration';
+import { Notification } from '@/notification';
 
 import styles from './board.module.css';
 import CharacterBar from './character-bar';
@@ -79,6 +80,17 @@ export const Board: React.FC<BoardGameProps> = ({ ctx, G, moves }) => {
     <DndContext onDragEnd={handleDragEnd}>
       {moves.rollDice ? <DiceRoll diceRoll={G.diceRoll} rollDice={moves.rollDice} startingPlayer={G.startingPlayer} /> : <></>}
       <InfiniteGameGrid grid={G.grid} />
+      {G.showHints && ctx.phase === GATHER_GROUP ? (
+        <Notification title="Ah, my dear friend, let me guide you through this peculiar little endeavor.">
+          <p>
+            Cast your gaze upon the bar below, where the characters await, each brimming with quiet purpose. Gently take hold of them - yes,
+            just so - and place them upon the grid, as one would carefully lay stones for a hearth. Only when all have found their proper
+            place will the game unfold, like the turning of a great and wondrous key.
+          </p>
+        </Notification>
+      ) : (
+        <></>
+      )}
       {ctx.phase === GATHER_GROUP ? <CharacterBar characters={G.team} /> : <></>}
     </DndContext>
   );

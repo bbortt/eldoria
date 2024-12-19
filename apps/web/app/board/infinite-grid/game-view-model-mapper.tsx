@@ -39,7 +39,7 @@ export class GameViewModelMapper {
                 x,
                 y,
                 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                draw: () => <CharacterCell cell={cell} key={key} character={cell.content!.character} />,
+                draw: () => <CharacterCell cell={cell} key={key} character={cell.content!.character!} />,
               });
               break;
             }
