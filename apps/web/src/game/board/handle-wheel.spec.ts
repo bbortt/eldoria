@@ -1,7 +1,5 @@
-import type { GridInformation } from './calculate-grid-information';
+import type { GridInformation } from './grid-information';
 import { handleWheel } from './handle-wheel';
-
-const gridInformation: GridInformation = { startX: 0, endX: 10, startY: 0, endY: 10 };
 
 describe('handleWheel', () => {
   const mockGetBoundingClientRect = jest.fn();
@@ -9,8 +7,11 @@ describe('handleWheel', () => {
     getBoundingClientRect: mockGetBoundingClientRect,
   };
 
+  let gridInformation: GridInformation;
+
   beforeEach(() => {
     jest.resetAllMocks();
+
     document.getElementById = jest.fn().mockReturnValueOnce(mockGridElement);
     mockGetBoundingClientRect.mockReturnValueOnce({
       left: 100,
@@ -18,6 +19,8 @@ describe('handleWheel', () => {
       width: 800,
       height: 600,
     });
+
+    gridInformation = { startX: 5, endX: 10, startY: 5, endY: 10 };
   });
 
   it('should return undefined when ctrl key is not pressed', () => {
@@ -28,11 +31,11 @@ describe('handleWheel', () => {
 
     const result = handleWheel(
       wheelEvent,
-      10, // gridSize
+      5, // gridSize
       gridInformation,
       100, // gridBoundary
-      5, // MIN_GRID_SIZE
-      20, // MAX_GRID_SIZE
+      2, // MIN_GRID_SIZE
+      10, // MAX_GRID_SIZE
     );
 
     expect(result).toBeUndefined();
@@ -47,9 +50,9 @@ describe('handleWheel', () => {
       preventDefault: jest.fn(),
     } as unknown as React.WheelEvent<HTMLDivElement>;
 
-    const result = handleWheel(wheelEvent, 10, gridInformation, 100, 5, 20);
-
+    const result = handleWheel(wheelEvent, 5, gridInformation, 100, 2, 10);
     expect(result).toBeUndefined();
+    expect(wheelEvent.preventDefault).toHaveBeenCalled();
   });
 
   it('should return undefined when grid size has not changed', () => {
@@ -60,7 +63,7 @@ describe('handleWheel', () => {
       preventDefault: jest.fn(),
     } as unknown as React.WheelEvent<HTMLDivElement>;
 
-    const result = handleWheel(wheelEvent, 10, gridInformation, 100, 5, 20);
+    const result = handleWheel(wheelEvent, 5, gridInformation, 100, 2, 10);
 
     expect(result).toBeUndefined();
   });
@@ -76,18 +79,18 @@ describe('handleWheel', () => {
 
     const result = handleWheel(
       wheelEvent,
-      10, // current grid size
+      5, // current grid size
       gridInformation,
       100,
-      5,
-      20,
+      2,
+      10,
     );
 
     expect(wheelEvent.preventDefault).toHaveBeenCalled();
     expect(result).toBeDefined();
-    expect(result.newCenterX).toEqual(5);
-    expect(result.newCenterY).toEqual(5);
-    expect(result.newGridSize).toEqual(9); // Should decrease by 1
+    expect(result.startX).toEqual(6);
+    expect(result.startY).toEqual(6);
+    expect(result.newGridSize).toEqual(4); // Should decrease by 1
   });
 
   it('should zoom out when deltaY is positive', () => {
@@ -99,13 +102,13 @@ describe('handleWheel', () => {
       clientY: 400,
     } as unknown as React.WheelEvent<HTMLDivElement>;
 
-    const result = handleWheel(wheelEvent, 10, gridInformation, 100, 5, 20);
+    const result = handleWheel(wheelEvent, 5, gridInformation, 100, 2, 10);
 
     expect(wheelEvent.preventDefault).toHaveBeenCalled();
     expect(result).toBeDefined();
-    expect(result.newCenterX).toEqual(5);
-    expect(result.newCenterY).toEqual(5);
-    expect(result.newGridSize).toEqual(11); // Should increase by 1
+    expect(result.startX).toEqual(5);
+    expect(result.startY).toEqual(5);
+    expect(result.newGridSize).toEqual(6); // Should increase by 1
   });
 
   it('should not exceed MAX_GRID_SIZE when zooming out', () => {
@@ -119,11 +122,11 @@ describe('handleWheel', () => {
 
     const result = handleWheel(
       wheelEvent,
-      20, // current size is MAX_GRID_SIZE
+      10, // current size is MAX_GRID_SIZE
       gridInformation,
       100,
       5,
-      20,
+      10,
     );
 
     expect(result).toBeUndefined(); // Should stay at MAX_GRID_SIZE
@@ -140,11 +143,11 @@ describe('handleWheel', () => {
 
     const result = handleWheel(
       wheelEvent,
-      5, // current size is MIN_GRID_SIZE
+      2, // current size is MIN_GRID_SIZE
       gridInformation,
       100,
-      5,
-      20,
+      2,
+      10,
     );
 
     expect(result).toBeUndefined(); // Should stay at MIN_GRID_SIZE
@@ -161,17 +164,55 @@ describe('handleWheel', () => {
 
     const result = handleWheel(
       wheelEvent,
-      10,
+      5,
       gridInformation, // Starting from middle of the grid
       100,
-      5,
-      20,
+      2,
+      10,
     );
 
     expect(result).toBeDefined();
     // The center coordinates should be clamped within the grid boundary
-    expect(result.newCenterX).toEqual(5);
-    expect(result.newCenterY).toEqual(5);
-    expect(result.newGridSize).toEqual(11);
+    expect(result.startX).toEqual(5);
+    expect(result.startY).toEqual(5);
+    expect(result.newGridSize).toEqual(6);
+  });
+
+  it('should not go below 0/0 when zooming out', () => {
+    gridInformation = { startX: 0, endX: 5, startY: 0, endY: 5 };
+    const wheelEvent = {
+      ctrlKey: true,
+      preventDefault: jest.fn(),
+      deltaY: 100,
+      clientX: 500,
+      clientY: 400,
+    } as unknown as React.WheelEvent<HTMLDivElement>;
+
+    const result = handleWheel(wheelEvent, 5, gridInformation, 100, 2, 10);
+
+    expect(wheelEvent.preventDefault).toHaveBeenCalled();
+    expect(result).toBeDefined();
+    expect(result.startX).toEqual(0);
+    expect(result.startY).toEqual(0);
+    expect(result.newGridSize).toEqual(6); // Should increase by 1
+  });
+
+  it('should not go above gridBoundary when zooming out', () => {
+    gridInformation = { startX: 95, endX: 100, startY: 95, endY: 100 };
+    const wheelEvent = {
+      ctrlKey: true,
+      preventDefault: jest.fn(),
+      deltaY: 100,
+      clientX: 500,
+      clientY: 400,
+    } as unknown as React.WheelEvent<HTMLDivElement>;
+
+    const result = handleWheel(wheelEvent, 5, gridInformation, 100, 2, 10);
+
+    expect(wheelEvent.preventDefault).toHaveBeenCalled();
+    expect(result).toBeDefined();
+    expect(result.startX).toEqual(94);
+    expect(result.startY).toEqual(94);
+    expect(result.newGridSize).toEqual(6); // Should increase by 1
   });
 });

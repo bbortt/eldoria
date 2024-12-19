@@ -1,7 +1,8 @@
 import { CELL_TYPE_CHARACTER, CELL_TYPE_CORE, GameGrid } from '@repo/core';
 
+import type { GridInformation } from '@/game/board/grid-information';
+
 import { CharacterCell, CoreCell, EmptyCell } from '../cell-representations';
-import { GridInformation } from './calculate-grid-information';
 
 export interface CellViewModel {
   x: number;
