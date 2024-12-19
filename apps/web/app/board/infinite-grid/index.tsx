@@ -3,13 +3,13 @@
 import type { GameGrid } from '@repo/core';
 import { useEffect, useMemo, useState, WheelEvent } from 'react';
 
-import { calculateGridInformation, GridInformation } from './calculate-grid-information';
+import { GridInformation } from '@/game/board/grid-information';
+import { handleWheel } from '@/game/board/handle-wheel';
+import { GAME_GRID_ELEMENT_ID } from '@/game/constants';
+
 import { GameViewModelMapper } from './game-view-model-mapper';
-import { handleWheel } from './handle-wheel';
 import styles from './index.module.css';
 import { preventDefaultZoom } from './prevent-default-zoom';
-
-export const GAME_GRID = 'game-grid';
 
 const MIN_GRID_SIZE = 4;
 const MAX_GRID_SIZE = 12;
@@ -22,43 +22,69 @@ export interface InfiniteGameGridProps {
 export const InfiniteGameGrid: React.FC<InfiniteGameGridProps> = ({ grid, gameViewModelMapper = new GameViewModelMapper() }) => {
   const gridBoundary = grid.cells.length;
 
-  const initialCenter = useMemo(() => Math.floor(gridBoundary / 2), [gridBoundary]);
-  const [center, setCenter] = useState({ x: initialCenter, y: initialCenter });
-
+  // We track the start position (top-left corner)
   const [gridSize, setGridSize] = useState(10);
-  const [gridInformation, setGridInformation] = useState({ startX: 0, endX: 10, startY: 0, endY: 10 } as GridInformation);
+  const [startPosition, setStartPosition] = useState({ x: 0, y: 0 });
+
+  // Calculate grid information based on start position and size
+  const [gridInformation, setGridInformation] = useState({
+    startX: startPosition.x,
+    endX: gridSize,
+    startY: startPosition.y,
+    endY: gridSize,
+  } as GridInformation);
+
   const [isDragging] = useState(false);
 
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    document.getElementById(GAME_GRID)?.addEventListener('wheel', preventDefaultZoom as any, { passive: false });
+    document.getElementById(GAME_GRID_ELEMENT_ID)?.addEventListener('wheel', preventDefaultZoom as any, { passive: false });
     return () => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      document.getElementById(GAME_GRID)?.removeEventListener('wheel', preventDefaultZoom as any);
+      document.getElementById(GAME_GRID_ELEMENT_ID)?.removeEventListener('wheel', preventDefaultZoom as any);
     };
   }, []);
 
-  useEffect(() => setGridInformation(calculateGridInformation(center, gridSize, gridBoundary)), [center, gridSize, gridBoundary]);
+  // Update grid information whenever start position or size changes
+  useEffect(
+    () =>
+      setGridInformation({
+        startX: startPosition.x,
+        endX: startPosition.x + gridSize,
+        startY: startPosition.y,
+        endY: startPosition.y + gridSize,
+      }),
+    [startPosition, gridSize],
+  );
 
   const cellViewModels = useMemo(
     () => gameViewModelMapper.toViewModel(grid, gridInformation),
     [gameViewModelMapper, grid, gridInformation],
   );
 
-  const adjustCenter = (wheelEvent: WheelEvent<HTMLDivElement>): void => {
-    const centerInformation = handleWheel(wheelEvent, gridSize, gridInformation, gridBoundary, MIN_GRID_SIZE, MAX_GRID_SIZE);
-    if (centerInformation) {
-      setGridSize(centerInformation.newGridSize);
-      setCenter({ x: centerInformation.newCenterX, y: centerInformation.newCenterY });
+  const handleGridWheel = (wheelEvent: WheelEvent<HTMLDivElement>): void => {
+    const zoomInfo = handleWheel(wheelEvent, gridSize, gridInformation, gridBoundary, MIN_GRID_SIZE, MAX_GRID_SIZE);
+    if (zoomInfo) {
+      setGridSize(zoomInfo.newGridSize);
+      setStartPosition({ x: zoomInfo.startX, y: zoomInfo.startY });
     }
   };
+
+  // Initial position should be centered in the grid
+  useEffect(() => {
+    const initialSize = 10;
+    const initialX = Math.floor((gridBoundary - initialSize) / 2);
+    const initialY = Math.floor((gridBoundary - initialSize) / 2);
+    setStartPosition({ x: initialX, y: initialY });
+    setGridSize(initialSize);
+  }, [gridBoundary]);
 
   return (
     <div className={styles.gameGridContainer}>
       <div
-        id={GAME_GRID}
+        id={GAME_GRID_ELEMENT_ID}
         className={`${styles.gameGrid} ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
-        onWheel={adjustCenter}
+        onWheel={handleGridWheel}
         style={{
           display: 'grid',
           gridTemplateColumns: `repeat(${gridSize}, 1fr)`,

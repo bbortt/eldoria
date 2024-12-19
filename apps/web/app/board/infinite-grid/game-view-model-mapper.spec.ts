@@ -1,6 +1,7 @@
 import { Cell, GameGrid } from '@repo/core';
 
-import { GridInformation } from './calculate-grid-information';
+import type { GridInformation } from '@/game/board/grid-information';
+
 import { CellViewModel, GameViewModelMapper } from './game-view-model-mapper';
 
 describe('GameViewModelMapper', () => {
