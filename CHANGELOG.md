@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.8.0](https://github.com/bbortt/eldoria/compare/v1.7.0...v1.8.0) (2024-12-19)
+
+
+### Features
+
+* place characters on board using dnd ([71eaf35](https://github.com/bbortt/eldoria/commit/71eaf35f7027a626fde0259793d6ccb4f350b6bd))
+
+
+### Bug Fixes
+
+* clanky zoom behavior with too much math ([6d7fb71](https://github.com/bbortt/eldoria/commit/6d7fb712bbb1e78f089911e3e14913e6bbeda979))
+* simple character placement on board ([72b3a1a](https://github.com/bbortt/eldoria/commit/72b3a1a380044c72c27859e2d5b8512a3e2b2850))
+
 ## [1.7.0](https://github.com/bbortt/eldoria/compare/v1.6.2...v1.7.0) (2024-12-08)
 
 
