@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.8.1](https://github.com/bbortt/eldoria/compare/v1.8.0...v1.8.1) (2024-12-22)
+
+
+### Bug Fixes
+
+* check character is already present in grid ([c03d762](https://github.com/bbortt/eldoria/commit/c03d7629e88aeaba7f4a49b336522c40a2cfea49))
+* display race on grid ([5d1efe5](https://github.com/bbortt/eldoria/commit/5d1efe55eee4e9d27b10588d55371310c81a7f5c))
+* make sure no duplicate names can be configured ([eee7d6a](https://github.com/bbortt/eldoria/commit/eee7d6a1c4a90389e2bdcccc7c696a74c492731c))
+* save only team index instead of char array ([e8dbab0](https://github.com/bbortt/eldoria/commit/e8dbab078d17e15198910f881dfc37e22b732f65))
+
 ## [1.8.0](https://github.com/bbortt/eldoria/compare/v1.7.0...v1.8.0) (2024-12-19)
 
 
