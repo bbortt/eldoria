@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.8.2](https://github.com/bbortt/eldoria/compare/v1.8.1...v1.8.2) (2024-12-22)
+
+
+### Bug Fixes
+
+* drawing of 0 index character ([a378869](https://github.com/bbortt/eldoria/commit/a378869ce6efa6f9835c2347d019678afe77a2a3))
+
 ## [1.8.1](https://github.com/bbortt/eldoria/compare/v1.8.0...v1.8.1) (2024-12-22)
 
 
