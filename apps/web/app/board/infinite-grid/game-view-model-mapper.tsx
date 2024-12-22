@@ -11,18 +11,24 @@ export interface CellViewModel {
 }
 
 export class GameViewModelMapper {
-  toViewModel = (grid: GameGrid, gridInformation: GridInformation, team: Character[]): CellViewModel[] => {
+  constructor(
+    private grid: GameGrid,
+    private team: Character[],
+    private highlightCharacter: (characterIndex: number) => void,
+  ) {}
+
+  toViewModel = (gridInformation: GridInformation): CellViewModel[] => {
     const { startX, endX, startY, endY } = gridInformation;
-    const gridBoundary = grid.cells.length;
+    const gridBoundary = this.grid.cells.length;
 
     const visibleCells: CellViewModel[] = [];
     for (let y = startY; y < endY; y++) {
       for (let x = startX; x < endX; x++) {
         // Only render cells within the boundary
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        if (x >= 0 && x < gridBoundary && y >= 0 && y < gridBoundary && !!grid.cells[y] && !!grid.cells[y]![x]) {
+        if (x >= 0 && x < gridBoundary && y >= 0 && y < gridBoundary && !!this.grid.cells[y] && !!this.grid.cells[y]![x]) {
           // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-          const cell = grid.cells[y]![x]!;
+          const cell = this.grid.cells[y]![x]!;
           const key = `${x},${y}`;
 
           if (!cell.content) {
@@ -38,11 +44,23 @@ export class GameViewModelMapper {
             case CELL_TYPE_CHARACTER: {
               const cellViewModel: CellViewModel = { x, y, draw: () => undefined };
               // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-              if (cell.content!.characterIndex === undefined || team[cell.content!.characterIndex] === undefined) {
+              if (cell.content!.characterIndex === undefined || this.team[cell.content!.characterIndex] === undefined) {
                 cellViewModel.draw = () => <EmptyCell cell={cell} key={key} />;
               } else {
-                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                cellViewModel.draw = () => <CharacterCell cell={cell} key={key} character={team[cell.content!.characterIndex!]!} />;
+                cellViewModel.draw = () => {
+                  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                  const characterIndex = cell.content!.characterIndex!;
+
+                  return (
+                    <CharacterCell
+                      cell={cell}
+                      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                      character={this.team[characterIndex]!}
+                      highlightCharacter={() => this.highlightCharacter(characterIndex)}
+                      key={key}
+                    />
+                  );
+                };
               }
 
               visibleCells.push(cellViewModel);

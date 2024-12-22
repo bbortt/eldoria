@@ -10,9 +10,15 @@ export interface CharacterCardProps {
   character: Character;
   index: number;
   isPlacementPossible: boolean;
+  highlightCharacter: () => void;
 }
 
-export const CharacterCard: React.FC<CharacterCardProps> = ({ character, index, isPlacementPossible }: CharacterCardProps) => {
+export const CharacterCard: React.FC<CharacterCardProps> = ({
+  character,
+  index,
+  isPlacementPossible,
+  highlightCharacter,
+}: CharacterCardProps) => {
   const { attributes, isDragging, listeners, setNodeRef } = useDraggable({
     id: `character-${index}`,
     data: {
@@ -26,14 +32,20 @@ export const CharacterCard: React.FC<CharacterCardProps> = ({ character, index, 
 
   return (
     <React.Fragment>
-      <div className={styles.cardIcon} ref={setNodeRef} {...listeners} {...attributes}>
+      <div
+        className={`${styles.cardIcon} ${isPlacementPossible && styles.cardIconFocus}`}
+        ref={setNodeRef}
+        {...listeners}
+        {...attributes}
+        onClick={highlightCharacter}
+      >
         <Icon className={styles.cardIconInner} />
         <span>{character.name}</span>
       </div>
 
       <DragOverlay dropAnimation={null}>
         {isDragging ? (
-          <div className={styles.cardIcon}>
+          <div className={`${styles.cardIcon} ${isPlacementPossible && styles.cardIconFocus}`}>
             <Icon className={styles.cardIconInner} />
             <span>{character.name}</span>
           </div>

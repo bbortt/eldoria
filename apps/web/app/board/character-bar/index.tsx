@@ -7,6 +7,8 @@ import styles from './index.module.css';
 export interface CharacterBarProps {
   characters: Character[];
   grid: GameGrid;
+  isPlayerTurn: boolean;
+  highlightCharacter: (characterIndex: number) => void;
 }
 
 const gridContainsCharacter = (grid: GameGrid, characterIndex: number): boolean => {
@@ -21,7 +23,7 @@ const gridContainsCharacter = (grid: GameGrid, characterIndex: number): boolean 
   return false;
 };
 
-export const CharacterBar: React.FC<CharacterBarProps> = ({ characters, grid }) => {
+export const CharacterBar: React.FC<CharacterBarProps> = ({ characters, grid, isPlayerTurn, highlightCharacter }) => {
   return (
     <Card className={styles.characterCard}>
       <div className={styles.characterCardContent}>
@@ -30,7 +32,8 @@ export const CharacterBar: React.FC<CharacterBarProps> = ({ characters, grid }) 
             character={character}
             index={index}
             key={`character-${index}`}
-            isPlacementPossible={!gridContainsCharacter(grid, index)}
+            isPlacementPossible={isPlayerTurn && !gridContainsCharacter(grid, index)}
+            highlightCharacter={() => highlightCharacter(index)}
           />
         ))}
       </div>

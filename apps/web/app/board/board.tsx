@@ -16,6 +16,7 @@ import CharacterBar from './character-bar';
 import DiceRoll from './dice-roll';
 import GameEntryBanner from './game-entry-banner';
 import InfiniteGameGrid from './infinite-grid';
+import { GameViewModelMapper } from './infinite-grid/game-view-model-mapper';
 
 // TODO: Remove, once `BoardGameProps` has additional properties
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
@@ -79,7 +80,9 @@ export const Board: React.FC<BoardGameProps> = ({ ctx, G, moves }) => {
   return (
     <DndContext onDragEnd={handleDragEnd}>
       {moves.rollDice ? <DiceRoll diceRoll={G.diceRoll} rollDice={moves.rollDice} startingPlayer={G.startingPlayer} /> : <></>}
-      <InfiniteGameGrid grid={G.grid} team={G.team} />
+      {moves.highlightCharacter && (
+        <InfiniteGameGrid grid={G.grid} gameViewModelMapper={new GameViewModelMapper(G.grid, G.team, moves.highlightCharacter)} />
+      )}
       {G.showHints && ctx.phase === GATHER_GROUP ? (
         <Notification title="Ah, my dear friend, let me guide you through this peculiar little endeavor.">
           <p>
@@ -91,7 +94,16 @@ export const Board: React.FC<BoardGameProps> = ({ ctx, G, moves }) => {
       ) : (
         <></>
       )}
-      {ctx.phase === GATHER_GROUP ? <CharacterBar characters={G.team} grid={G.grid} /> : <></>}
+      {ctx.phase === GATHER_GROUP && moves.highlightCharacter ? (
+        <CharacterBar
+          characters={G.team}
+          grid={G.grid}
+          isPlayerTurn={ctx.currentPlayer === '0'}
+          highlightCharacter={moves.highlightCharacter}
+        />
+      ) : (
+        <></>
+      )}
     </DndContext>
   );
 };
