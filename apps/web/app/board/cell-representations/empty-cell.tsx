@@ -21,7 +21,9 @@ export const EmptyCell: React.FC<GridCellProps> = ({ cell }: GridCellProps) => {
 
   return (
     <div ref={setNodeRef} className={`${styles.gridCell} ${bgColor}`} data-testid={`cell-${x}-${y}`}>
-      ({x}, {y})
+      <span className={styles.gridCellText}>
+        ({x}, {y})
+      </span>
     </div>
   );
 };

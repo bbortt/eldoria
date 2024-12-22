@@ -79,7 +79,7 @@ export const Board: React.FC<BoardGameProps> = ({ ctx, G, moves }) => {
   return (
     <DndContext onDragEnd={handleDragEnd}>
       {moves.rollDice ? <DiceRoll diceRoll={G.diceRoll} rollDice={moves.rollDice} startingPlayer={G.startingPlayer} /> : <></>}
-      <InfiniteGameGrid grid={G.grid} />
+      <InfiniteGameGrid grid={G.grid} team={G.team} />
       {G.showHints && ctx.phase === GATHER_GROUP ? (
         <Notification title="Ah, my dear friend, let me guide you through this peculiar little endeavor.">
           <p>

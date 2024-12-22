@@ -1,4 +1,4 @@
-import { CELL_TYPE_CHARACTER, CELL_TYPE_CORE, GameGrid } from '@repo/core';
+import { CELL_TYPE_CHARACTER, CELL_TYPE_CORE, Character, GameGrid } from '@repo/core';
 
 import type { GridInformation } from '@/game/board/grid-information';
 
@@ -11,7 +11,7 @@ export interface CellViewModel {
 }
 
 export class GameViewModelMapper {
-  toViewModel = (grid: GameGrid, gridInformation: GridInformation): CellViewModel[] => {
+  toViewModel = (grid: GameGrid, gridInformation: GridInformation, team: Character[]): CellViewModel[] => {
     const { startX, endX, startY, endY } = gridInformation;
     const gridBoundary = grid.cells.length;
 
@@ -36,12 +36,17 @@ export class GameViewModelMapper {
 
           switch (cell.content.type) {
             case CELL_TYPE_CHARACTER: {
-              visibleCells.push({
-                x,
-                y,
-                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                draw: () => <CharacterCell cell={cell} key={key} character={cell.content!.character!} />,
-              });
+              const cellViewModel: CellViewModel = { x, y, draw: () => undefined };
+              // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+              const character = team[cell.content!.characterIndex];
+
+              if (!character) {
+                cellViewModel.draw = () => <EmptyCell cell={cell} key={key} />;
+              } else {
+                cellViewModel.draw = () => <CharacterCell cell={cell} key={key} character={character} />;
+              }
+
+              visibleCells.push(cellViewModel);
               break;
             }
             case CELL_TYPE_CORE: {

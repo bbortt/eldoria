@@ -2,6 +2,6 @@
   @apply flex flex-col items-center justify-center border-1 aspect-square;
 }
 
-.raceText {
+.gridCellText {
   @apply text-sm truncate max-w-full;
 }
