@@ -28,7 +28,10 @@ export const CharacterCell: React.FC<CharacterCellProps> = ({ cell, character }:
 
   return (
     <div ref={setNodeRef} className={`${styles.gridCell} ${bgColor}`} data-testid={`cell-${x}-${y}`}>
-      <Icon />
+      <Icon className={styles.raceText} />
+      <span className={styles.raceText} data-testid="character-cell-race">
+        {character.race}
+      </span>
     </div>
   );
 };
