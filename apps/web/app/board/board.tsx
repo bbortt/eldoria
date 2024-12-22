@@ -91,7 +91,7 @@ export const Board: React.FC<BoardGameProps> = ({ ctx, G, moves }) => {
       ) : (
         <></>
       )}
-      {ctx.phase === GATHER_GROUP ? <CharacterBar characters={G.team} /> : <></>}
+      {ctx.phase === GATHER_GROUP ? <CharacterBar characters={G.team} grid={G.grid} /> : <></>}
     </DndContext>
   );
 };

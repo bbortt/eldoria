@@ -12,7 +12,11 @@ jest.mock('@dnd-kit/core', () => ({
 }));
 
 describe('CharacterCard', () => {
-  it.each([0, 1234])('is draggable', (index: number) => {
+  it.each([
+    [0, true],
+    [0, false],
+    [1234, true],
+  ])('is draggable', (index: number, isPlacementPossible: boolean) => {
     (useDraggable as jest.Mock).mockReturnValue({
       attributes: {},
       isDragging: false,
@@ -22,7 +26,7 @@ describe('CharacterCard', () => {
 
     const character = { name: 'Obi-Wan Kenobi', specialization: Specialization.WARRIOR.label } as Character;
 
-    render(<CharacterCard character={character} index={index} />);
+    render(<CharacterCard character={character} index={index} isPlacementPossible={isPlacementPossible} />);
 
     expect(useDraggable).toHaveBeenCalledWith({
       id: `character-${index}`,
@@ -30,6 +34,7 @@ describe('CharacterCard', () => {
         character,
         type: DRAGGABLE_TYPE_CHARACTER,
       },
+      disabled: !isPlacementPossible,
     });
   });
 });

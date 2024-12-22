@@ -9,15 +9,17 @@ import styles from './character-card.module.css';
 export interface CharacterCardProps {
   character: Character;
   index: number;
+  isPlacementPossible: boolean;
 }
 
-export const CharacterCard: React.FC<CharacterCardProps> = ({ character, index }: CharacterCardProps) => {
+export const CharacterCard: React.FC<CharacterCardProps> = ({ character, index, isPlacementPossible }: CharacterCardProps) => {
   const { attributes, isDragging, listeners, setNodeRef } = useDraggable({
     id: `character-${index}`,
     data: {
       character,
       type: DRAGGABLE_TYPE_CHARACTER,
     },
+    disabled: !isPlacementPossible,
   });
 
   const Icon = useMemo(() => Specialization.fromLabel(character.specialization).icon, [character.specialization]);
