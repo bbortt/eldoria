@@ -2,7 +2,6 @@
 
 import { AnimatePresence, motion } from '@repo/ui/lib';
 import { usePathname } from 'next/navigation';
-import React from 'react';
 
 export interface RouterTransitionProps {
   children: React.ReactNode;

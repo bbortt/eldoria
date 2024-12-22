@@ -38,12 +38,11 @@ export class GameViewModelMapper {
             case CELL_TYPE_CHARACTER: {
               const cellViewModel: CellViewModel = { x, y, draw: () => undefined };
               // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-              const character = team[cell.content!.characterIndex];
-
-              if (!character) {
+              if (!cell.content!.characterIndex || !team[cell.content!.characterIndex]) {
                 cellViewModel.draw = () => <EmptyCell cell={cell} key={key} />;
               } else {
-                cellViewModel.draw = () => <CharacterCell cell={cell} key={key} character={character} />;
+                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                cellViewModel.draw = () => <CharacterCell cell={cell} key={key} character={team[cell.content!.characterIndex!]!} />;
               }
 
               visibleCells.push(cellViewModel);
