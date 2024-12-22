@@ -1,6 +1,6 @@
 import { useDroppable } from '@dnd-kit/core';
 import { Cell, newCharacter, Race, Specialization } from '@repo/core';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 
 import CharacterCell from './character-cell';
 
@@ -9,6 +9,8 @@ jest.mock('@dnd-kit/core', () => ({
 }));
 
 describe('CharacterCell', () => {
+  const character = newCharacter('bbortt', Race.HUMAN, Specialization.MAGE);
+
   beforeEach(() => {
     jest.resetModules();
     jest.resetAllMocks();
@@ -19,7 +21,6 @@ describe('CharacterCell', () => {
     { x: 123, y: 456 },
   ])('should be droppable (%s)', (cell: Cell) => {
     (useDroppable as jest.Mock).mockReturnValueOnce({ isOver: false, setNodeRef: jest.fn() });
-    const character = newCharacter('bbortt', Race.HUMAN, Specialization.MAGE);
 
     render(<CharacterCell cell={cell} character={character} />);
 
@@ -31,5 +32,15 @@ describe('CharacterCell', () => {
         accepts: [],
       },
     });
+  });
+
+  it("should display the character's race", () => {
+    (useDroppable as jest.Mock).mockReturnValueOnce({ isOver: false, setNodeRef: jest.fn() });
+    const cell: Cell = { x: 0, y: 0 };
+
+    render(<CharacterCell cell={cell} character={character} />);
+
+    const raceText = screen.getByTestId('character-cell-race');
+    expect(raceText).toHaveTextContent(character.race);
   });
 });

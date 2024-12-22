@@ -1,6 +1,7 @@
 .gridCell {
-  border: 1px solid;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  @apply flex flex-col items-center justify-center border-1 aspect-square;
+}
+
+.raceText {
+  @apply text-sm truncate max-w-full;
 }
