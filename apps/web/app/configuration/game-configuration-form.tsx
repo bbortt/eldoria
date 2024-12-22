@@ -14,6 +14,11 @@ import styles from './game-configuration-form.module.css';
 
 const initialAlly = (): Character => newCharacter('', Race.HUMAN, Specialization.HEALER);
 
+const hasDuplicateNames = (array: { name: string }[]): boolean => {
+  const nameSet = new Set(array.map(item => item.name));
+  return nameSet.size !== array.length;
+};
+
 export const GameConfigurationForm: React.FC = () => {
   const [allies, setAllies] = useState([initialAlly()]);
   const [alliesValid, setAlliesValid] = useState(false);
@@ -22,7 +27,7 @@ export const GameConfigurationForm: React.FC = () => {
   useEffect(() => {
     let isValid = true;
 
-    isValid = isValid && !allies.some((ally: Character) => !ally.name);
+    isValid = isValid && !allies.some((ally: Character) => !ally.name) && !hasDuplicateNames(allies);
 
     setAlliesValid(isValid);
   }, [allies]);
