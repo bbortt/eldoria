@@ -38,7 +38,7 @@ export class GameViewModelMapper {
             case CELL_TYPE_CHARACTER: {
               const cellViewModel: CellViewModel = { x, y, draw: () => undefined };
               // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-              if (!cell.content!.characterIndex || !team[cell.content!.characterIndex]) {
+              if (cell.content!.characterIndex === undefined || team[cell.content!.characterIndex] === undefined) {
                 cellViewModel.draw = () => <EmptyCell cell={cell} key={key} />;
               } else {
                 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
