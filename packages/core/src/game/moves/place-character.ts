@@ -6,15 +6,13 @@ import type { GameState } from '../game-state';
 import { isMoveValid } from '../validation';
 
 const placeCharacter: Move<GameState> = ({ G }, character: Character, x: number, y: number): void => {
-  console.log('place character:', character);
-  console.log('coordinates:', x, '/', y);
-  console.log('grid:', G.grid);
+  const characterIndex = G.team.findIndex(c => c.name === character.name);
 
-  if (isMoveValid(G.grid, character, x, y)) {
+  if (isMoveValid(G.grid, character, x, y) && characterIndex >= 0) {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     G.grid.cells[y]![x]!.content = {
       type: CELL_TYPE_CHARACTER,
-      character,
+      characterIndex,
     };
   }
 };

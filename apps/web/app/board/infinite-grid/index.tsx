@@ -1,6 +1,6 @@
 'use client';
 
-import type { GameGrid } from '@repo/core';
+import type { Character, GameGrid } from '@repo/core';
 import { useEffect, useMemo, useState, WheelEvent } from 'react';
 
 import { GridInformation } from '@/game/board/grid-information';
@@ -16,10 +16,11 @@ const MAX_GRID_SIZE = 12;
 
 export interface InfiniteGameGridProps {
   grid: GameGrid;
+  team: Character[];
   gameViewModelMapper?: GameViewModelMapper;
 }
 
-export const InfiniteGameGrid: React.FC<InfiniteGameGridProps> = ({ grid, gameViewModelMapper = new GameViewModelMapper() }) => {
+export const InfiniteGameGrid: React.FC<InfiniteGameGridProps> = ({ grid, team, gameViewModelMapper = new GameViewModelMapper() }) => {
   const gridBoundary = grid.cells.length;
 
   // We track the start position (top-left corner)
@@ -58,8 +59,8 @@ export const InfiniteGameGrid: React.FC<InfiniteGameGridProps> = ({ grid, gameVi
   );
 
   const cellViewModels = useMemo(
-    () => gameViewModelMapper.toViewModel(grid, gridInformation),
-    [gameViewModelMapper, grid, gridInformation],
+    () => gameViewModelMapper.toViewModel(grid, gridInformation, team),
+    [gameViewModelMapper, grid, gridInformation, team],
   );
 
   const handleGridWheel = (wheelEvent: WheelEvent<HTMLDivElement>): void => {
