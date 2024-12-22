@@ -9,9 +9,10 @@ import { GridCellProps } from './index';
 
 export interface CharacterCellProps extends GridCellProps {
   character: Character;
+  highlightCharacter: () => void;
 }
 
-export const CharacterCell: React.FC<CharacterCellProps> = ({ cell, character }: CharacterCellProps) => {
+export const CharacterCell: React.FC<CharacterCellProps> = ({ cell, character, highlightCharacter }: CharacterCellProps) => {
   const { x, y } = cell;
   const { isOver, setNodeRef } = useDroppable({
     id: `grid-field-${x}-${y}`,
@@ -27,7 +28,7 @@ export const CharacterCell: React.FC<CharacterCellProps> = ({ cell, character }:
   const Icon = useMemo(() => Specialization.fromLabel(character.specialization).icon, [character.specialization]);
 
   return (
-    <div ref={setNodeRef} className={`${styles.gridCell} ${bgColor}`} data-testid={`cell-${x}-${y}`}>
+    <div ref={setNodeRef} className={`${styles.gridCell} ${bgColor}`} onClick={highlightCharacter} data-testid={`cell-${x}-${y}`}>
       <Icon className={styles.gridCellText} />
       <span className={styles.gridCellText} data-testid="character-cell-race">
         {character.race}

@@ -10,8 +10,13 @@ jest.mock('../validation', () => ({
 }));
 
 describe('placeCharacter', () => {
+  const endTurn = jest.fn();
+
   let mockGameState: GameState;
   let mockCharacter: Character;
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let boardGameIoContext: any;
 
   beforeEach(() => {
     jest.resetAllMocks();
@@ -25,6 +30,8 @@ describe('placeCharacter', () => {
       grid: initGameGrid(),
       team: [mockCharacter],
     } as unknown as GameState;
+
+    boardGameIoContext = { G: mockGameState, events: { endTurn } };
   });
 
   it('places character when move is valid', () => {
@@ -33,14 +40,14 @@ describe('placeCharacter', () => {
     (isMoveValid as jest.Mock).mockReturnValue(true);
 
     // @ts-expect-error - type is not callable
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    placeCharacter({ G: mockGameState } as any, mockCharacter, x, y);
+    placeCharacter(boardGameIoContext, mockCharacter, x, y);
 
     expect(mockGameState.grid.cells[y]![x]!.content).toEqual({
       type: CELL_TYPE_CHARACTER,
       characterIndex: 0,
     });
     expect(isMoveValid).toHaveBeenCalledWith(mockGameState.grid, mockCharacter, x, y);
+    expect(endTurn).toHaveBeenCalled();
   });
 
   it('does not place character when move is invalid', () => {
@@ -50,11 +57,11 @@ describe('placeCharacter', () => {
     const originalCell = { ...mockGameState.grid.cells[y]![x]! };
 
     // @ts-expect-error - type is not callable
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    placeCharacter({ G: mockGameState } as any, mockCharacter, x, y);
+    placeCharacter(boardGameIoContext, mockCharacter, x, y);
 
     expect(mockGameState.grid.cells[y]![x]!).toEqual(originalCell);
     expect(isMoveValid).toHaveBeenCalledWith(mockGameState.grid, mockCharacter, x, y);
+    expect(endTurn).not.toHaveBeenCalled();
   });
 
   it('finds correct character index in team array', () => {
@@ -68,13 +75,13 @@ describe('placeCharacter', () => {
     (isMoveValid as jest.Mock).mockReturnValue(true);
 
     // @ts-expect-error - type is not callable
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    placeCharacter({ G: mockGameState } as any, secondCharacter, x, y);
+    placeCharacter(boardGameIoContext, secondCharacter, x, y);
 
     expect(mockGameState.grid.cells[y]![x]!.content).toEqual({
       type: CELL_TYPE_CHARACTER,
       characterIndex: 1,
     });
+    expect(endTurn).toHaveBeenCalled();
   });
 
   it('handles character not found in team', () => {
@@ -87,10 +94,10 @@ describe('placeCharacter', () => {
     (isMoveValid as jest.Mock).mockReturnValue(true);
 
     // @ts-expect-error - type is not callable
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    placeCharacter({ G: mockGameState } as any, unknownCharacter, x, y);
+    placeCharacter(boardGameIoContext, unknownCharacter, x, y);
 
     expect(mockGameState.grid.cells[y]![x]!.content).toBeUndefined();
+    expect(endTurn).not.toHaveBeenCalled();
   });
 
   it('handles edge of grid placement', () => {
@@ -99,12 +106,12 @@ describe('placeCharacter', () => {
     (isMoveValid as jest.Mock).mockReturnValue(true);
 
     // @ts-expect-error - type is not callable
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    placeCharacter({ G: mockGameState } as any, mockCharacter, x, y);
+    placeCharacter(boardGameIoContext, mockCharacter, x, y);
 
     expect(mockGameState.grid.cells[y]![x]!.content).toEqual({
       type: CELL_TYPE_CHARACTER,
       characterIndex: 0,
     });
+    expect(endTurn).toHaveBeenCalled();
   });
 });

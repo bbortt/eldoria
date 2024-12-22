@@ -1,11 +1,12 @@
 import { PhaseConfig } from 'boardgame.io';
 
 import type { GameState } from '../game-state';
+import highlightCharacter from '../moves/highlight-character';
 import placeCharacter from '../moves/place-character';
 import nextFunction from './next-function';
 
 const gatherGroupPhase: PhaseConfig<GameState> = {
-  moves: { placeCharacter },
+  moves: { highlightCharacter, placeCharacter },
   next: 'phaseB',
   turn: {
     order: {

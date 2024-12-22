@@ -1,6 +1,14 @@
 .cardIcon {
-  @apply flex flex-col items-center justify-center transition-all rounded-lg border-2 hover:border-primary hover:scale-110 p-2;
+  @apply flex flex-col items-center justify-center transition-all rounded-lg border-2  p-2;
   touch-action: none;
+}
+
+.cardIconFocus {
+  @apply hover:border-primary hover:scale-110;
+}
+
+.cardIconActive {
+  @apply scale-110;
 }
 
 .cardIconInner {

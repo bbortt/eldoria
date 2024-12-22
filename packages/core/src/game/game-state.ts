@@ -4,6 +4,7 @@ import type { GameGrid } from './game-grid';
 
 export interface InitGameState {
   team: Character[];
+  selectedCharacterIndex?: number;
   username: string;
   tutorial: boolean;
   showHints: boolean;
