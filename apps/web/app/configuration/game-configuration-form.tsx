@@ -12,7 +12,7 @@ import { buttonVariants } from '@/layout/framer-motion.const';
 
 import styles from './game-configuration-form.module.css';
 
-const initialAlly = (): Character => newCharacter('', Race.HUMAN, Specialization.HEALER);
+const initialAlly = (): Character => newCharacter('', Race.HUMAN, Specialization.LUMINARY);
 
 const hasDuplicateNames = (array: { name: string }[]): boolean => {
   const nameSet = new Set(array.map(item => item.name));

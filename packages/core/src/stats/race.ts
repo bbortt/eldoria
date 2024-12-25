@@ -15,22 +15,17 @@ export class Race {
   static HALFLING = new Race('Halfling', 8, 13, 10, 10, 11, 12);
   static GIANT = new Race('Giant', 14, 6, 13, 7, 10, 8);
 
+  static ALL_RACES = [this.HUMAN, this.DWARF, this.ELF, this.HALFLING, this.GIANT];
+
   static fromLabel(label: string): Race {
     const normalizedLabel = label.trim().toLowerCase();
 
-    switch (normalizedLabel) {
-      case 'human':
-        return Race.HUMAN;
-      case 'dwarf':
-        return Race.DWARF;
-      case 'elf':
-        return Race.ELF;
-      case 'halfling':
-        return Race.HALFLING;
-      case 'giant':
-        return Race.GIANT;
-      default:
-        throw new Error(`Unknown race label: ${label}`);
+    for (const race of this.ALL_RACES) {
+      if (race.label.toLowerCase() === normalizedLabel) {
+        return race;
+      }
     }
+
+    throw new Error(`Unknown race label: ${label}`);
   }
 }

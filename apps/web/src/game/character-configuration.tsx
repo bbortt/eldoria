@@ -2,18 +2,6 @@ import { Character, Race, Specialization } from '@repo/core';
 import { Input } from '@repo/ui';
 import { DrowdownForListItems } from '@repo/ui/components';
 
-const races = [Race.HUMAN, Race.DWARF, Race.ELF, Race.HALFLING, Race.GIANT];
-
-const specializations = [
-  Specialization.TANK,
-  Specialization.WARRIOR,
-  Specialization.ASSASSIN,
-  Specialization.ARCHER,
-  Specialization.MAGE,
-  Specialization.HEALER,
-  Specialization.BUFFER,
-];
-
 export interface CharacterConfigurationProps {
   character: Character;
   onChange: (updatedCharacter: Character) => void;
@@ -22,18 +10,12 @@ export interface CharacterConfigurationProps {
 export const CharacterConfiguration: React.FC<CharacterConfigurationProps> = ({ character, onChange }) => {
   const setCharacterName = (e: React.ChangeEvent<HTMLInputElement>): void => onChange({ ...character, name: e.target.value });
   const setCharacterRace = (selection: Set<string>): void => {
-    const race = races.find((race: Race) => race.label === selection.values().next().value);
-    if (race) {
-      onChange({ ...character, race: race?.label });
-    }
+    const race = Race.fromLabel(selection.values().next().value || Race.HUMAN.label);
+    onChange({ ...character, race: race?.label });
   };
   const setCharacterSpecialization = (selection: Set<string>): void => {
-    const specialization = specializations.find(
-      (specialization: Specialization) => specialization.label === selection.values().next().value,
-    );
-    if (specialization) {
-      onChange({ ...character, specialization: specialization?.label });
-    }
+    const specialization = Specialization.fromLabel(selection.values().next().value || Specialization.LUMINARY.label);
+    onChange({ ...character, specialization: specialization?.label });
   };
 
   return (
@@ -52,13 +34,13 @@ export const CharacterConfiguration: React.FC<CharacterConfigurationProps> = ({ 
 
       <DrowdownForListItems
         ariaLabel="Character race selection"
-        items={races}
+        items={Race.ALL_RACES}
         label={character.race}
         onSelectionChange={setCharacterRace}
       />
       <DrowdownForListItems
         ariaLabel="Character specialization selection"
-        items={specializations}
+        items={Specialization.ALL_SPECIALIZATIONS}
         label={character.specialization}
         onSelectionChange={setCharacterSpecialization}
       />

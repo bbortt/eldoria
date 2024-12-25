@@ -24,12 +24,12 @@ export const DrowdownForListItems: React.FC<DrowdownForListItemsProps> = ({ aria
         </DefaultButton>
       </DropdownTrigger>
       <DropdownMenu
-        aria-label={ariaLabel}
         variant="flat"
         disallowEmptySelection
         items={items}
         onSelectionChange={onSelectionChange}
         selectionMode="single"
+        data-testid={ariaLabel}
       >
         {item => (
           <DropdownItem key={item.label} color="default">

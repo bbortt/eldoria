@@ -24,7 +24,7 @@ describe('CharacterCard', () => {
       setNodeRef: jest.fn(),
     });
 
-    const character = { name: 'Obi-Wan Kenobi', specialization: Specialization.WARRIOR.label } as Character;
+    const character = { name: 'Obi-Wan Kenobi', specialization: Specialization.CHAMPION.label } as Character;
 
     render(<CharacterCard character={character} index={index} isPlacementPossible={isPlacementPossible} />);
 
