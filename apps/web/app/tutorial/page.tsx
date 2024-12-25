@@ -36,7 +36,7 @@ export default () => {
   const startGame = (): void => {
     persistConfiguration({
       username,
-      team: [newCharacter(username, Race.HUMAN, Specialization.ARCHER), ...team],
+      team: [newCharacter(username, Race.HUMAN, Specialization.SHARPSHOOTER), ...team],
       tutorial: true,
       showHints: true,
     });

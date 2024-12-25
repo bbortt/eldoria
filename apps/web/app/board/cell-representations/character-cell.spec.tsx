@@ -9,7 +9,7 @@ jest.mock('@dnd-kit/core', () => ({
 }));
 
 describe('CharacterCell', () => {
-  const character = newCharacter('bbortt', Race.HUMAN, Specialization.MAGE);
+  const character = newCharacter('bbortt', Race.HUMAN, Specialization.ARCANIST);
 
   beforeEach(() => {
     jest.resetModules();

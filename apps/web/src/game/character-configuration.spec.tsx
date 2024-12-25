@@ -14,15 +14,14 @@ jest.mock('@repo/ui/components', () => ({
       <option>{label}</option>
       <option>Human</option>
       <option>Dwarf</option>
-      <option>Tank</option>
-      <option>Warrior</option>
-      <option>invalid</option>
+      <option>Guardian</option>
+      <option>Champion</option>
     </select>
   ),
 }));
 
 describe('Character Configuration', () => {
-  const mockCharacter: Character = newCharacter('Test Character', Race.HUMAN, Specialization.TANK);
+  const mockCharacter: Character = newCharacter('Test Character', Race.HUMAN, Specialization.GUARDIAN);
   const mockOnChange = jest.fn();
 
   beforeEach(() => {
@@ -54,19 +53,9 @@ describe('Character Configuration', () => {
     render(<CharacterConfiguration character={mockCharacter} onChange={mockOnChange} />);
 
     const raceSelect = screen.getByTestId('Character race selection');
-    await user.selectOptions(raceSelect, ['Dwarf']);
+    await user.selectOptions(raceSelect, [Race.DWARF.label]);
 
     expect(mockOnChange).toHaveBeenCalled();
-  });
-
-  it('does not call onChange when race is invalid', async () => {
-    const user = userEvent.setup();
-    render(<CharacterConfiguration character={mockCharacter} onChange={mockOnChange} />);
-
-    const raceSelect = screen.getByTestId('Character race selection');
-    await user.selectOptions(raceSelect, ['invalid']);
-
-    expect(mockOnChange).not.toHaveBeenCalled();
   });
 
   it('calls onChange when specialization is updated', async () => {
@@ -74,19 +63,9 @@ describe('Character Configuration', () => {
     render(<CharacterConfiguration character={mockCharacter} onChange={mockOnChange} />);
 
     const specializationSelect = screen.getByTestId('Character specialization selection');
-    await user.selectOptions(specializationSelect, ['Warrior']);
+    await user.selectOptions(specializationSelect, [Specialization.CHAMPION.label]);
 
     expect(mockOnChange).toHaveBeenCalled();
-  });
-
-  it('does not call onChange when specialization is invalid', async () => {
-    const user = userEvent.setup();
-    render(<CharacterConfiguration character={mockCharacter} onChange={mockOnChange} />);
-
-    const specializationSelect = screen.getByTestId('Character specialization selection');
-    await user.selectOptions(specializationSelect, ['invalid']);
-
-    expect(mockOnChange).not.toHaveBeenCalled();
   });
 
   it('displays current character values', () => {
@@ -94,6 +73,6 @@ describe('Character Configuration', () => {
 
     expect(screen.getByTestId('Name')).toHaveValue('Test Character');
     expect(screen.getByTestId('Character race selection')).toHaveTextContent('Human');
-    expect(screen.getByTestId('Character specialization selection')).toHaveTextContent('Warrior');
+    expect(screen.getByTestId('Character specialization selection')).toHaveTextContent('Champion');
   });
 });

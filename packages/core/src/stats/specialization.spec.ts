@@ -21,23 +21,25 @@ describe('Specialization', () => {
   });
 
   it('should have pre-defined Specialization instances', () => {
-    expect(Specialization.TANK).toBeDefined();
-    expect(Specialization.WARRIOR).toBeDefined();
-    expect(Specialization.ASSASSIN).toBeDefined();
-    expect(Specialization.ARCHER).toBeDefined();
-    expect(Specialization.MAGE).toBeDefined();
-    expect(Specialization.HEALER).toBeDefined();
-    expect(Specialization.BUFFER).toBeDefined();
+    expect(Specialization.GUARDIAN).toBeDefined();
+    expect(Specialization.CHAMPION).toBeDefined();
+    expect(Specialization.ROGUE).toBeDefined();
+    expect(Specialization.SHARPSHOOTER).toBeDefined();
+    expect(Specialization.ARCANIST).toBeDefined();
+    expect(Specialization.LUMINARY).toBeDefined();
+    expect(Specialization.MYSTIC_HERALD).toBeDefined();
   });
 
   it.each([
-    [Specialization.TANK.label, Specialization.TANK],
-    [Specialization.WARRIOR.label, Specialization.WARRIOR],
-    [Specialization.ASSASSIN.label, Specialization.ASSASSIN],
-    [Specialization.ARCHER.label, Specialization.ARCHER],
-    [Specialization.MAGE.label, Specialization.MAGE],
-    [Specialization.HEALER.label, Specialization.HEALER],
-    [Specialization.BUFFER.label, Specialization.BUFFER],
+    [Specialization.GUARDIAN.label, Specialization.GUARDIAN],
+    [Specialization.CHAMPION.label, Specialization.CHAMPION],
+    [Specialization.ROGUE.label, Specialization.ROGUE],
+    [Specialization.SHARPSHOOTER.label, Specialization.SHARPSHOOTER],
+    [Specialization.ARCANIST.label, Specialization.ARCANIST],
+    [Specialization.NECROMANCER.label, Specialization.NECROMANCER],
+    [Specialization.PALADIN.label, Specialization.PALADIN],
+    [Specialization.LUMINARY.label, Specialization.LUMINARY],
+    [Specialization.MYSTIC_HERALD.label, Specialization.MYSTIC_HERALD],
   ])('should return the correctly labelled Specialization (%s)', (label: string, specialization: Specialization) => {
     expect(Specialization.fromLabel(label)).toEqual(specialization);
   });

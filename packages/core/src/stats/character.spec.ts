@@ -17,7 +17,7 @@ jest.mock('./race', () => ({
 
 jest.mock('./specialization', () => ({
   Specialization: {
-    WARRIOR: {
+    CHAMPION: {
       strengthMod: 2,
       dexterityMod: 1,
       constitutionMod: 2,
@@ -32,11 +32,11 @@ jest.mock('./specialization', () => ({
 
 describe('Character', () => {
   it('should create a character with correct attributes', () => {
-    const character: Character = newCharacter('TestWarrior', Race.HUMAN, Specialization.WARRIOR);
+    const character: Character = newCharacter('TestWarrior', Race.HUMAN, Specialization.CHAMPION);
 
     expect(character.name).toEqual('TestWarrior');
     expect(character.race).toEqual(Race.HUMAN.label);
-    expect(character.specialization).toEqual(Specialization.WARRIOR.label);
+    expect(character.specialization).toEqual(Specialization.CHAMPION.label);
 
     // Test base attributes
     expect(character.strength).toEqual(12); // 10 (base) + 2 (mod)

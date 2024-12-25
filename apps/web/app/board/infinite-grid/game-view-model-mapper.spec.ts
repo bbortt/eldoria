@@ -146,7 +146,7 @@ describe('GameViewModelMapper', () => {
 
       grid.cells[0][0].content = content;
 
-      const character = newCharacter('bbortt', Race.HUMAN, Specialization.MAGE);
+      const character = newCharacter('bbortt', Race.HUMAN, Specialization.ARCANIST);
 
       const result: CellViewModel[] = new GameViewModelMapper(grid, [character], jest.fn()).toViewModel(gridInfo);
 
