@@ -44,13 +44,11 @@ export const CharacterCard: React.FC<CharacterCardProps> = ({
       </div>
 
       <DragOverlay dropAnimation={null}>
-        {isDragging ? (
+        {isDragging && (
           <div className={`${styles.cardIcon} ${isPlacementPossible && styles.cardIconFocus}`}>
             <Icon className={styles.cardIconInner} />
             <span>{character.name}</span>
           </div>
-        ) : (
-          <></>
         )}
       </DragOverlay>
     </React.Fragment>

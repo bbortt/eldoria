@@ -2,9 +2,10 @@ import type { Game } from 'boardgame.io';
 
 import { initGameGrid } from './game-grid';
 import type { GameState } from './game-state';
-import { GATHER_GROUP, INIT, ROLL_PHASE } from './phases';
+import { GATHER_GROUP_PHASE, INIT_PHASE, PLAY_PHASE, ROLL_PHASE } from './phases';
 import gatherGroupPhase from './phases/gather-group';
 import initPhase from './phases/init';
+import playPhase from './phases/play';
 import rollPhase from './phases/roll';
 
 export * from './cell';
@@ -41,9 +42,9 @@ export const Eldoria: Game<GameState> = {
   turn: { minMoves: 1, maxMoves: 1 },
 
   phases: {
-    [INIT]: initPhase,
+    [INIT_PHASE]: initPhase,
     [ROLL_PHASE]: rollPhase,
-    [GATHER_GROUP]: gatherGroupPhase,
-    phaseB: {},
+    [GATHER_GROUP_PHASE]: gatherGroupPhase,
+    [PLAY_PHASE]: playPhase,
   },
 };

@@ -2,12 +2,12 @@ import { PhaseConfig } from 'boardgame.io';
 
 import { GameState } from '../game-state';
 import rollDice from '../moves/roll-dice';
-import { GATHER_GROUP } from './index';
+import { GATHER_GROUP_PHASE } from './index';
 import nextFunction from './next-function';
 
 const rollPhase: PhaseConfig<GameState> = {
   moves: { rollDice },
-  next: GATHER_GROUP,
+  next: GATHER_GROUP_PHASE,
   turn: {
     order: {
       first: () => 0,
