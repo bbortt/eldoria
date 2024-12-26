@@ -85,8 +85,8 @@ describe('placeCharacter', () => {
   });
 
   it('handles character not found in team', () => {
-    const x = 5;
-    const y = 5;
+    const x = 0;
+    const y = 0;
     const unknownCharacter = {
       name: 'UnknownCharacter',
       race: 'Unknown',
@@ -101,8 +101,8 @@ describe('placeCharacter', () => {
   });
 
   it('handles edge of grid placement', () => {
-    const x = 63;
-    const y = 63;
+    const x = 11;
+    const y = 11;
     (isMoveValid as jest.Mock).mockReturnValue(true);
 
     // @ts-expect-error - type is not callable
