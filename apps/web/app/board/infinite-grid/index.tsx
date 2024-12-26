@@ -23,7 +23,7 @@ export const InfiniteGameGrid: React.FC<InfiniteGameGridProps> = ({ grid, gameVi
   const gridBoundary = grid.cells.length;
 
   // We track the start position (top-left corner)
-  const [gridSize, setGridSize] = useState(10);
+  const [gridSize, setGridSize] = useState(MIN_GRID_SIZE);
   const [startPosition, setStartPosition] = useState({ x: 0, y: 0 });
 
   // Calculate grid information based on start position and size
@@ -69,11 +69,11 @@ export const InfiniteGameGrid: React.FC<InfiniteGameGridProps> = ({ grid, gameVi
 
   // Initial position should be centered in the grid
   useEffect(() => {
-    const initialSize = 10;
-    const initialX = Math.floor((gridBoundary - initialSize) / 2);
-    const initialY = Math.floor((gridBoundary - initialSize) / 2);
+    const initialGridSize = MAX_GRID_SIZE;
+    const initialX = Math.floor((gridBoundary - initialGridSize) / 2);
+    const initialY = Math.floor((gridBoundary - initialGridSize) / 2);
     setStartPosition({ x: initialX, y: initialY });
-    setGridSize(initialSize);
+    setGridSize(initialGridSize);
   }, [gridBoundary]);
 
   return (

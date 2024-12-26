@@ -32,10 +32,10 @@ describe('initGameGrid', () => {
   });
 
   it('should calculate core size of 2x2 cells', () => {
-    expect(gameGrid.cells[31]![31]).toEqual({ x: 31, y: 31, content: { type: CELL_TYPE_CORE } });
-    expect(gameGrid.cells[31]![32]).toEqual({ x: 32, y: 31, content: { type: CELL_TYPE_CORE } });
-    expect(gameGrid.cells[32]![31]).toEqual({ x: 31, y: 32, content: { type: CELL_TYPE_CORE } });
-    expect(gameGrid.cells[32]![32]).toEqual({ x: 32, y: 32, content: { type: CELL_TYPE_CORE } });
+    expect(gameGrid.cells[5]![5]).toEqual({ x: 5, y: 5, content: { type: CELL_TYPE_CORE } });
+    expect(gameGrid.cells[5]![6]).toEqual({ x: 6, y: 5, content: { type: CELL_TYPE_CORE } });
+    expect(gameGrid.cells[6]![5]).toEqual({ x: 5, y: 6, content: { type: CELL_TYPE_CORE } });
+    expect(gameGrid.cells[6]![6]).toEqual({ x: 6, y: 6, content: { type: CELL_TYPE_CORE } });
   });
 
   it('should create immutable grid structure', () => {

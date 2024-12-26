@@ -1,7 +1,7 @@
 import { useDroppable } from '@dnd-kit/core';
 import { Mountain } from 'lucide-react';
 
-import { calculateBgColor } from '@/game/styling/calculate-bg-color';
+import { calculateBgColor } from '@/game/board/calculate-bg-color';
 
 import styles from './grid-cell.module.css';
 import { GridCellProps } from './index';

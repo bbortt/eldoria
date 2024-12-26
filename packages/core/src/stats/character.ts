@@ -15,6 +15,7 @@ export const newCharacter = (name: string, race: Race, specialization: Specializ
     specialization.label,
 
     maxHP,
+    maxHP,
     ac,
 
     race.baseStrength + specialization.strengthMod,
@@ -33,6 +34,7 @@ export class Character {
     public race: string,
     public specialization: string,
 
+    public currentHP: number,
     public maxHP: number,
     public ac: number,
 
