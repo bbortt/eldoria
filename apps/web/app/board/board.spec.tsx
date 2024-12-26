@@ -2,7 +2,7 @@ import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 
 import { initGameGrid } from '@repo/core';
-import { INIT } from '@repo/core/src/game/phases';
+import { INIT_PHASE } from '@repo/core/src/game/phases';
 import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { useRouter } from 'next/navigation';
@@ -29,7 +29,7 @@ describe('Board', () => {
 
   const boardGameProps = {
     ctx: {
-      phase: INIT,
+      phase: INIT_PHASE,
     },
     G: {
       grid: initGameGrid(),

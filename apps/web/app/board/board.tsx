@@ -3,8 +3,9 @@
 import { DndContext } from '@dnd-kit/core';
 import type { DragEndEvent } from '@dnd-kit/core/dist/types';
 import type { BoardProps, GameState, InitGameState } from '@repo/core';
-import { GATHER_GROUP, INIT } from '@repo/core/src/game/phases';
+import { GATHER_GROUP_PHASE, INIT_PHASE } from '@repo/core/src/game/phases';
 import { Spinner } from '@repo/ui';
+import { AnimatePresence, motion } from '@repo/ui/lib';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
@@ -44,7 +45,7 @@ export const Board: React.FC<BoardGameProps> = ({ ctx, G, moves }) => {
   }, [gameConfiguration, moves]);
 
   useEffect(() => {
-    if (process.env.NODE_ENV === 'production' && ctx.phase !== INIT) {
+    if (process.env.NODE_ENV === 'production' && ctx.phase !== INIT_PHASE) {
       resetConfiguration();
     }
   }, [ctx.phase]);
@@ -53,7 +54,7 @@ export const Board: React.FC<BoardGameProps> = ({ ctx, G, moves }) => {
     return <GameEntryBanner close={() => setExplainGoals(false)} />;
   }
 
-  if (!ctx.phase || ctx.phase === INIT) {
+  if (!ctx.phase || ctx.phase === INIT_PHASE) {
     return (
       <div className={styles.main}>
         <Spinner color="secondary" />
@@ -79,11 +80,11 @@ export const Board: React.FC<BoardGameProps> = ({ ctx, G, moves }) => {
 
   return (
     <DndContext onDragEnd={handleDragEnd}>
-      {moves.rollDice ? <DiceRoll diceRoll={G.diceRoll} rollDice={moves.rollDice} startingPlayer={G.startingPlayer} /> : <></>}
+      {moves.rollDice && <DiceRoll diceRoll={G.diceRoll} rollDice={moves.rollDice} startingPlayer={G.startingPlayer} />}
       {moves.highlightCharacter && (
         <InfiniteGameGrid grid={G.grid} gameViewModelMapper={new GameViewModelMapper(G.grid, G.team, moves.highlightCharacter)} />
       )}
-      {G.showHints && ctx.phase === GATHER_GROUP ? (
+      {G.showHints && (
         <Notification title="Ah, my dear friend, let me guide you through this peculiar little endeavor.">
           <p>
             Cast your gaze upon the bar below, where the characters await, each brimming with quiet purpose. Gently take hold of them - yes,
@@ -91,19 +92,29 @@ export const Board: React.FC<BoardGameProps> = ({ ctx, G, moves }) => {
             place will the game unfold, like the turning of a great and wondrous key.
           </p>
         </Notification>
-      ) : (
-        <></>
       )}
-      {ctx.phase === GATHER_GROUP && moves.highlightCharacter ? (
-        <CharacterBar
-          characters={G.team}
-          grid={G.grid}
-          isPlayerTurn={ctx.currentPlayer === '0'}
-          highlightCharacter={moves.highlightCharacter}
-        />
-      ) : (
-        <></>
-      )}
+
+      <AnimatePresence>
+        {ctx.phase === GATHER_GROUP_PHASE && moves.highlightCharacter && (
+          <motion.div
+            initial={{ opacity: 0, x: 0, y: 100 }}
+            animate={{ opacity: 1, x: 0, y: 0 }}
+            exit={{ opacity: 0, x: 0, y: 100 }}
+            transition={{
+              type: 'spring',
+              stiffness: 300,
+              damping: 30,
+            }}
+          >
+            <CharacterBar
+              characters={G.team}
+              grid={G.grid}
+              isPlayerTurn={ctx.currentPlayer === '0'}
+              highlightCharacter={moves.highlightCharacter}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </DndContext>
   );
 };

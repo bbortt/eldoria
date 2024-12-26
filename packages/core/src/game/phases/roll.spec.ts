@@ -2,14 +2,14 @@ import { FnContext } from 'boardgame.io';
 
 import type { GameState } from '../game-state';
 import rollDice from '../moves/roll-dice';
-import { GATHER_GROUP } from './index';
+import { GATHER_GROUP_PHASE } from './index';
 import nextFunction from './next-function';
 import rollPhase from './roll';
 
 describe('rollPhase', () => {
   it('should have correct properties', () => {
-    expect(rollPhase).toHaveProperty('moves');
-    expect(rollPhase).toHaveProperty('next', GATHER_GROUP);
+    expect(rollPhase).toHaveProperty('moves', { rollDice });
+    expect(rollPhase).toHaveProperty('next', GATHER_GROUP_PHASE);
     expect(rollPhase).toHaveProperty('endIf');
     expect(rollPhase).toHaveProperty('onEnd');
   });
