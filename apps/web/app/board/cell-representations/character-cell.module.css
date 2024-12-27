@@ -3,7 +3,7 @@
 }
 
 .healthBar {
-  @apply w-full h-1.5 bg-gray-200 rounded-full overflow-hidden;
+  @apply w-full h-1.5 bg-secondary-bg/50 overflow-hidden;
 }
 
 .healthBarInner {

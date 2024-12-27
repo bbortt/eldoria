@@ -180,6 +180,7 @@ describe('GameViewModelMapper', () => {
         expect(renderedComponent.type).toBe(EmptyCell);
         expect(renderedComponent.props).toEqual({
           cell: grid.cells[0][0],
+          unselectCharacter: expect.any(Function),
         });
       },
     );
@@ -194,6 +195,7 @@ describe('GameViewModelMapper', () => {
       expect(renderedComponent.type).toBe(CoreCell);
       expect(renderedComponent.props).toEqual({
         cell: grid.cells[0][0],
+        unselectCharacter: expect.any(Function),
       });
     });
   });

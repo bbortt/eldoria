@@ -6,7 +6,11 @@ import { DRAGGABLE_TYPE_CHARACTER } from '@/game/constants';
 import styles from './grid-cell.module.css';
 import { GridCellProps } from './index';
 
-export const EmptyCell: React.FC<GridCellProps> = ({ cell }: GridCellProps) => {
+export interface EmptyCellProps extends GridCellProps {
+  unselectCharacter: () => void;
+}
+
+export const EmptyCell: React.FC<EmptyCellProps> = ({ cell, unselectCharacter }) => {
   const { x, y } = cell;
   const { isOver, setNodeRef } = useDroppable({
     id: `grid-field-${x}-${y}`,
@@ -20,7 +24,7 @@ export const EmptyCell: React.FC<GridCellProps> = ({ cell }: GridCellProps) => {
   const bgColor = calculateBgColor(isOver, true, x, y);
 
   return (
-    <div ref={setNodeRef} className={`${styles.gridCell} ${bgColor}`} data-testid={`cell-${x}-${y}`}>
+    <div ref={setNodeRef} className={`${styles.gridCell} ${bgColor}`} onClick={unselectCharacter} data-testid={`cell-${x}-${y}`}>
       <span className={styles.gridCellText}>
         ({x}, {y})
       </span>

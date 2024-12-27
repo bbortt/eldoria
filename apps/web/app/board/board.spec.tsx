@@ -35,6 +35,7 @@ describe('Board', () => {
       grid: initGameGrid(),
     },
     moves: mockMoves,
+    chatMessages: [],
   } as unknown as BoardGameProps;
 
   let originalEnv: NodeJS.ProcessEnv;

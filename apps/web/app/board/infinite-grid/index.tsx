@@ -7,7 +7,7 @@ import { GridInformation } from '@/game/board/grid-information';
 import { handleWheel } from '@/game/board/handle-wheel';
 import { GAME_GRID_ELEMENT_ID } from '@/game/constants';
 
-import { GameViewModelMapper } from './game-view-model-mapper';
+import GameViewModelMapper from './game-view-model-mapper';
 import styles from './index.module.css';
 import { preventDefaultZoom } from './prevent-default-zoom';
 
