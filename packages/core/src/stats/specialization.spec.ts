@@ -30,19 +30,16 @@ describe('Specialization', () => {
     expect(Specialization.MYSTIC_HERALD).toBeDefined();
   });
 
-  it.each([
-    [Specialization.GUARDIAN.label, Specialization.GUARDIAN],
-    [Specialization.CHAMPION.label, Specialization.CHAMPION],
-    [Specialization.ROGUE.label, Specialization.ROGUE],
-    [Specialization.SHARPSHOOTER.label, Specialization.SHARPSHOOTER],
-    [Specialization.ARCANIST.label, Specialization.ARCANIST],
-    [Specialization.NECROMANCER.label, Specialization.NECROMANCER],
-    [Specialization.PALADIN.label, Specialization.PALADIN],
-    [Specialization.LUMINARY.label, Specialization.LUMINARY],
-    [Specialization.MYSTIC_HERALD.label, Specialization.MYSTIC_HERALD],
-  ])('should return the correctly labelled Specialization (%s)', (label: string, specialization: Specialization) => {
-    expect(Specialization.fromLabel(label)).toEqual(specialization);
+  it('ALL_SPECIALIZATIONS should contain all Specializations', () => {
+    expect(Specialization.ALL_SPECIALIZATIONS).toHaveLength(9);
   });
+
+  it.each(Specialization.ALL_SPECIALIZATIONS)(
+    'should return the correctly labelled Specialization (%s)',
+    (specialization: Specialization) => {
+      expect(Specialization.fromLabel(specialization.label)).toEqual(specialization);
+    },
+  );
 
   it('should throw an error on unknown label', () => {
     expect(() => Specialization.fromLabel('unknown')).toThrow('Unknown specialization label: unknown');

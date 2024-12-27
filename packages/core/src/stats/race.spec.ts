@@ -23,14 +23,12 @@ describe('Race', () => {
     expect(Race.GIANT).toBeDefined();
   });
 
-  it.each([
-    [Race.HUMAN.label, Race.HUMAN],
-    [Race.DWARF.label, Race.DWARF],
-    [Race.ELF.label, Race.ELF],
-    [Race.HALFLING.label, Race.HALFLING],
-    [Race.GIANT.label, Race.GIANT],
-  ])('should return the correctly labelled Race (%s)', (label: string, race: Race) => {
-    expect(Race.fromLabel(label)).toEqual(race);
+  it('ALL_RACES should contain all Races', () => {
+    expect(Race.ALL_RACES).toHaveLength(5);
+  });
+
+  it.each(Race.ALL_RACES)('should return the correctly labelled Race (%s)', (race: Race) => {
+    expect(Race.fromLabel(race.label)).toEqual(race);
   });
 
   it('should throw an error on unknown label', () => {

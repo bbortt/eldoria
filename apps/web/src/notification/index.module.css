@@ -1,5 +1,5 @@
 .notificationTopRightCorner {
-  @apply fixed top-4 max-w-sm w-full;
+  @apply fixed top-4 max-w-sm w-full z-10;
 }
 
 .notificationBody {

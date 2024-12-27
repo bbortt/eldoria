@@ -15,7 +15,7 @@ export interface CharacterCellProps extends GridCellProps {
   highlightCharacter: () => void;
 }
 
-export const CharacterCell: React.FC<CharacterCellProps> = ({ cell, character, highlightCharacter }: CharacterCellProps) => {
+export const CharacterCell: React.FC<CharacterCellProps> = ({ cell, character, highlightCharacter }) => {
   const { x, y } = cell;
   const { isOver, setNodeRef } = useDroppable({
     id: `grid-field-${x}-${y}`,

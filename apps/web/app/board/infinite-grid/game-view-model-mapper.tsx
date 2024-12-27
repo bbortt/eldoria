@@ -14,7 +14,7 @@ export class GameViewModelMapper {
   constructor(
     private grid: GameGrid,
     private team: Character[],
-    private highlightCharacter: (characterIndex: number) => void,
+    private highlightCharacter: (characterIndex: number | undefined) => void,
   ) {}
 
   toViewModel = (gridInformation: GridInformation): CellViewModel[] => {
@@ -35,7 +35,7 @@ export class GameViewModelMapper {
             visibleCells.push({
               x,
               y,
-              draw: () => <EmptyCell cell={cell} key={key} />,
+              draw: () => <EmptyCell cell={cell} unselectCharacter={() => this.highlightCharacter(undefined)} key={key} />,
             });
             continue;
           }
@@ -45,7 +45,7 @@ export class GameViewModelMapper {
               const cellViewModel: CellViewModel = { x, y, draw: () => undefined };
               // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
               if (cell.content!.characterIndex === undefined || this.team[cell.content!.characterIndex] === undefined) {
-                cellViewModel.draw = () => <EmptyCell cell={cell} key={key} />;
+                cellViewModel.draw = () => <EmptyCell cell={cell} unselectCharacter={() => this.highlightCharacter(undefined)} key={key} />;
               } else {
                 cellViewModel.draw = () => {
                   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -70,7 +70,7 @@ export class GameViewModelMapper {
               visibleCells.push({
                 x,
                 y,
-                draw: () => <CoreCell cell={cell} key={key} />,
+                draw: () => <CoreCell cell={cell} unselectCharacter={() => this.highlightCharacter(undefined)} key={key} />,
               });
               break;
             }
@@ -82,3 +82,5 @@ export class GameViewModelMapper {
     return visibleCells;
   };
 }
+
+export default GameViewModelMapper;
