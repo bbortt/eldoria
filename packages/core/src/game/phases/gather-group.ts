@@ -4,12 +4,12 @@ import { CELL_TYPE_CHARACTER } from '../cell';
 import type { GameState } from '../game-state';
 import highlightCharacter from '../moves/highlight-character';
 import placeCharacter from '../moves/place-character';
-import { PLAY_PHASE } from './index';
+import { MOVEMENT_PHASE } from './index';
 import nextFunction from './next-function';
 
 const gatherGroupPhase: PhaseConfig<GameState> = {
   moves: { highlightCharacter, placeCharacter },
-  next: PLAY_PHASE,
+  next: MOVEMENT_PHASE,
   turn: {
     order: {
       first: () => 0,

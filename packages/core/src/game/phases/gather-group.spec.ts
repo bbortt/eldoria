@@ -7,7 +7,7 @@ import type { GameState } from '../game-state';
 import highlightCharacter from '../moves/highlight-character';
 import placeCharacter from '../moves/place-character';
 import gatherGroupPhase from './gather-group';
-import { PLAY_PHASE } from './index';
+import { MOVEMENT_PHASE } from './index';
 import nextFunction from './next-function';
 
 describe('gatherGroupPhase', () => {
@@ -30,7 +30,7 @@ describe('gatherGroupPhase', () => {
 
   it('should have correct properties', () => {
     expect(gatherGroupPhase).toHaveProperty('moves', { highlightCharacter, placeCharacter });
-    expect(gatherGroupPhase).toHaveProperty('next', PLAY_PHASE);
+    expect(gatherGroupPhase).toHaveProperty('next', MOVEMENT_PHASE);
     expect(gatherGroupPhase).toHaveProperty('endIf');
   });
 

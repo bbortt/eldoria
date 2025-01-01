@@ -6,14 +6,14 @@ describe('log', () => {
   });
 
   describe('getActionLog', () => {
-    test('should add and retrieve messages', () => {
+    it('should add and retrieve messages', () => {
       logAction('Hello');
       logAction('World');
 
       expect(getActionLog()).toEqual(['Hello', 'World']);
     });
 
-    test('should return a copy of messages array', () => {
+    it('should return a copy of messages array', () => {
       logAction('Original');
       const messages = getActionLog();
       messages.push('Modified');
@@ -23,14 +23,14 @@ describe('log', () => {
   });
 
   describe('getLastNActions', () => {
-    test('should get last message', () => {
+    it('should get last message', () => {
       logAction('First');
       logAction('Last');
 
       expect(getLastNActions(1)).toEqual(['Last']);
     });
 
-    test('should get last N message', () => {
+    it('should get last N message', () => {
       logAction('First');
       logAction('Second');
       logAction('Third');
@@ -38,13 +38,13 @@ describe('log', () => {
       expect(getLastNActions(2)).toEqual(['Second', 'Third']);
     });
 
-    test('should return empty array for last N message when chat is empty', () => {
+    it('should return empty array for last N message when chat is empty', () => {
       expect(getLastNActions(1)).toEqual([]);
     });
   });
 
   describe('clearActionLog', () => {
-    test('should clear chat', () => {
+    it('should clear chat', () => {
       logAction('Test');
       clearActionLog();
 

@@ -1,12 +1,8 @@
-.notificationTopRightCorner {
-  @apply fixed top-4 max-w-sm w-full z-10;
+.notificationContainer {
+  @apply bg-primary-100 border-t-4 border-primary-500 rounded-b text-primary-900 px-4 py-3 mb-2 shadow-md;
 }
 
 .notificationBody {
-  @apply bg-primary-100 border-t-4 border-primary-500 rounded-b text-primary-900 px-4 py-3 shadow-md;
-}
-
-.notificationBodyFlex {
   @apply flex items-start;
 }
 
