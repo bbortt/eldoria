@@ -2,11 +2,13 @@ import type { Game } from 'boardgame.io';
 
 import { initGameGrid } from './game-grid';
 import type { GameState } from './game-state';
-import { GATHER_GROUP_PHASE, INIT_PHASE, PLAY_PHASE, ROLL_PHASE } from './phases';
+import { ACTION_PHASE, GATHER_GROUP_PHASE, INIT_PHASE, MOVEMENT_PHASE, ROLL_PHASE, TURN_END_PHASE } from './phases';
+import actionPhase from './phases/action';
 import gatherGroupPhase from './phases/gather-group';
 import initPhase from './phases/init';
-import playPhase from './phases/play';
+import movementPhase from './phases/movement';
 import rollPhase from './phases/roll';
+import turnEndPhase from './phases/turn-end';
 
 export * from './cell';
 export * from './constants';
@@ -47,6 +49,8 @@ export const Eldoria: Game<GameState> = {
     [INIT_PHASE]: initPhase,
     [ROLL_PHASE]: rollPhase,
     [GATHER_GROUP_PHASE]: gatherGroupPhase,
-    [PLAY_PHASE]: playPhase,
+    [MOVEMENT_PHASE]: movementPhase,
+    [ACTION_PHASE]: actionPhase,
+    [TURN_END_PHASE]: turnEndPhase,
   },
 };

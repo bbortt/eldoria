@@ -1,4 +1,8 @@
-export const INIT_PHASE = 'INIT';
+export const INIT_PHASE = 'INIT_PHASE';
+
 export const ROLL_PHASE = 'ROLL_PHASE';
-export const GATHER_GROUP_PHASE = 'GATHER_GROUP';
-export const PLAY_PHASE = 'PLAY';
+export const GATHER_GROUP_PHASE = 'GATHER_GROUP_PHASE';
+
+export const MOVEMENT_PHASE = 'MOVEMENT_PHASE';
+export const ACTION_PHASE = 'ACTION_PHASE';
+export const TURN_END_PHASE = 'TURN_END_PHASE';
