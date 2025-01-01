@@ -2,7 +2,7 @@
 
 import { DndContext } from '@dnd-kit/core';
 import type { DragEndEvent } from '@dnd-kit/core/dist/types';
-import { BoardProps, GameState, getSelectedCharacter, InitGameState } from '@repo/core';
+import { BoardProps, GameState, getActionLog, getSelectedCharacter, InitGameState } from '@repo/core';
 import { GATHER_GROUP_PHASE, INIT_PHASE } from '@repo/core/src/game/phases';
 import { Spinner } from '@repo/ui';
 import { AnimatePresence, motion } from '@repo/ui/lib';
@@ -24,7 +24,7 @@ import Sidebar from './sidebar';
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface BoardGameProps extends BoardProps<GameState> {}
 
-export const Board: React.FC<BoardGameProps> = ({ G, ctx, moves, chatMessages }) => {
+export const Board: React.FC<BoardGameProps> = ({ G, ctx, moves }) => {
   const [gameConfiguration, setGameConfiguration] = useState(null as InitGameState | null);
   const [explainGoals, setExplainGoals] = useState(true);
 
@@ -119,7 +119,7 @@ export const Board: React.FC<BoardGameProps> = ({ G, ctx, moves, chatMessages })
         </AnimatePresence>
       </DndContext>
 
-      <Sidebar chatMessages={chatMessages} selectedCharacter={getSelectedCharacter(G)} />
+      <Sidebar chatMessages={getActionLog()} selectedCharacter={getSelectedCharacter(G)} />
     </>
   );
 };

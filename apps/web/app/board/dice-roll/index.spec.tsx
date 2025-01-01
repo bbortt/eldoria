@@ -66,7 +66,7 @@ describe('DiceRoll Component', () => {
   it('shows player win message when startingPlayer is "0"', () => {
     render(<DiceRoll {...defaultProps} startingPlayer="0" />);
 
-    expect(screen.getByText('You scored higher and are the first to move!')).toBeInTheDocument();
+    expect(screen.getByText('Player scored higher and is the first to move!')).toBeInTheDocument();
   });
 
   it('shows enemy win message when startingPlayer is "1"', () => {
