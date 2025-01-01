@@ -3,6 +3,7 @@ import { Move } from 'boardgame.io';
 import type { Character } from '../../stats';
 import { CELL_TYPE_CHARACTER } from '../cell';
 import type { GameState } from '../game-state';
+import { logAction } from '../log';
 import { isMoveValid } from '../validation';
 
 const placeCharacter: Move<GameState> = ({ G, events }, character: Character, x: number, y: number): void => {
@@ -14,6 +15,8 @@ const placeCharacter: Move<GameState> = ({ G, events }, character: Character, x:
       type: CELL_TYPE_CHARACTER,
       characterIndex,
     };
+
+    logAction(`Placed character '${character.name}' onto (${x}/${y})`);
 
     events.endTurn();
   }

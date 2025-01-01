@@ -1,5 +1,5 @@
 import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@nextui-org/react';
-import { Character, ChatMessage, Race } from '@repo/core';
+import { Character, Race } from '@repo/core';
 import { Heart, Shield } from 'lucide-react';
 
 import { getRaceColors } from '@/game/styling/get-race-colors';
@@ -7,7 +7,7 @@ import { getRaceColors } from '@/game/styling/get-race-colors';
 import styles from './index.module.css';
 
 interface SidebarProps {
-  chatMessages: ChatMessage[];
+  chatMessages: string[];
   selectedCharacter?: Character;
 }
 
@@ -20,7 +20,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ chatMessages, selectedCharacte
             <h2 className={styles.heading}>Game Log</h2>
             <div className={styles.chatWindow}>
               {chatMessages.map((chatMessage, index) => (
-                <p key={index}>{JSON.stringify(chatMessage)}</p>
+                <p key={index}>{chatMessage}</p>
               ))}
             </div>
           </div>

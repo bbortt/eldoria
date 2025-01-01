@@ -1,4 +1,4 @@
-import { DiceRoll as DiceRollType } from '@repo/core';
+import { DiceRoll as DiceRollType, getPlayerString } from '@repo/core';
 import { Modal, ModalBody, ModalContent, ModalFooter } from '@repo/ui';
 import { DefaultButton } from '@repo/ui/components';
 import { AnimatePresence } from '@repo/ui/lib';
@@ -41,19 +41,12 @@ export const DiceRoll: React.FC<DiceRollProps> = ({ diceRoll, rollDice, starting
               <div className="font-bold">Your score:</div>
               <div>{score}</div>
             </div>
-            {startingPlayer && startingPlayer === '0' ? (
+            {startingPlayer ? (
               <p className="font-bold" key="you-scored-higher">
-                You scored higher and are the first to move!
+                {getPlayerString(startingPlayer)} scored higher and is the first to move!
               </p>
             ) : (
               <React.Fragment key="placeholder-you-scored-higher"></React.Fragment>
-            )}
-            {startingPlayer && startingPlayer !== '0' ? (
-              <p className="font-bold" key="enemy-scored-higher">
-                Enemy scored higher and is the first to move!
-              </p>
-            ) : (
-              <React.Fragment key="placeholder-enemy-scored-higher"></React.Fragment>
             )}
           </AnimatePresence>
         </ModalBody>
