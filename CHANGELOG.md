@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.9.0](https://github.com/bbortt/eldoria/compare/v1.8.1...v1.9.0) (2025-01-02)
+
+
+### Features
+
+* sidebar ([40593e4](https://github.com/bbortt/eldoria/commit/40593e47dee16df0bbe960a9e612c2cab7ab2cc5))
+
+
+### Bug Fixes
+
+* create notification container instead of single components ([e15c550](https://github.com/bbortt/eldoria/commit/e15c550f71daff704f6d0919207f04a566104da7))
+* drawing of 0 index character ([a378869](https://github.com/bbortt/eldoria/commit/a378869ce6efa6f9835c2347d019678afe77a2a3))
+* finish group gathering phase into play phase ([82493e1](https://github.com/bbortt/eldoria/commit/82493e10a4de90cda912aa1fe85f658a971c3111))
+
 ## [1.8.1](https://github.com/bbortt/eldoria/compare/v1.8.0...v1.8.1) (2024-12-22)
 
 
