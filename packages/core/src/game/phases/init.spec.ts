@@ -1,13 +1,13 @@
 import { FnContext } from 'boardgame.io';
 
 import initGame from '../moves/init-game';
-import { ROLL_PHASE } from './index';
+import { ROLL_PLACEMENT_PHASE } from './index';
 import initPhase from './init';
 
 describe('initPhase', () => {
   it('should have correct properties', () => {
     expect(initPhase).toHaveProperty('moves');
-    expect(initPhase).toHaveProperty('next', ROLL_PHASE);
+    expect(initPhase).toHaveProperty('next', ROLL_PLACEMENT_PHASE);
     expect(initPhase).toHaveProperty('endIf');
     expect(initPhase).toHaveProperty('start', true);
   });
