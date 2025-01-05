@@ -19,6 +19,7 @@ import rollPhase from './phases/roll';
 import rollTurnOrderPhase from './phases/roll-turn-order';
 import turnEndPhase from './phases/turn-end';
 
+export { eldoriaBot } from './bot';
 export * from './cell';
 export * from './constants';
 export * from './dice-roll';
