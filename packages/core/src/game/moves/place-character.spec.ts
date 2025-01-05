@@ -2,8 +2,13 @@ import type { Character } from '../../stats';
 import { CELL_TYPE_CHARACTER } from '../cell';
 import { initGameGrid } from '../game-grid';
 import type { GameState } from '../game-state';
+import { logAction } from '../log';
 import { isMoveValid } from '../validation';
 import placeCharacter from './place-character';
+
+jest.mock('../log', () => ({
+  logAction: jest.fn(),
+}));
 
 jest.mock('../validation', () => ({
   isMoveValid: jest.fn(),
@@ -48,6 +53,8 @@ describe('placeCharacter', () => {
     });
     expect(isMoveValid).toHaveBeenCalledWith(mockGameState.grid, mockCharacter, x, y);
     expect(endTurn).toHaveBeenCalled();
+
+    expect(logAction).toHaveBeenCalled();
   });
 
   it('does not place character when move is invalid', () => {
@@ -62,6 +69,8 @@ describe('placeCharacter', () => {
     expect(mockGameState.grid.cells[y]![x]!).toEqual(originalCell);
     expect(isMoveValid).toHaveBeenCalledWith(mockGameState.grid, mockCharacter, x, y);
     expect(endTurn).not.toHaveBeenCalled();
+
+    expect(logAction).not.toHaveBeenCalled();
   });
 
   it('finds correct character index in team array', () => {
@@ -82,6 +91,8 @@ describe('placeCharacter', () => {
       characterIndex: 1,
     });
     expect(endTurn).toHaveBeenCalled();
+
+    expect(logAction).toHaveBeenCalled();
   });
 
   it('handles character not found in team', () => {
@@ -98,6 +109,8 @@ describe('placeCharacter', () => {
 
     expect(mockGameState.grid.cells[y]![x]!.content).toBeUndefined();
     expect(endTurn).not.toHaveBeenCalled();
+
+    expect(logAction).not.toHaveBeenCalled();
   });
 
   it('handles edge of grid placement', () => {
@@ -113,5 +126,7 @@ describe('placeCharacter', () => {
       characterIndex: 0,
     });
     expect(endTurn).toHaveBeenCalled();
+
+    expect(logAction).toHaveBeenCalled();
   });
 });
