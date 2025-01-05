@@ -27,7 +27,10 @@ export * from './game-state';
 export * from './log';
 export * from './utils';
 
-import type { Character } from '../stats';
+import EldoriaBot from '@/game/bot';
+import type { Character } from '@/stats';
+
+const bot = new EldoriaBot();
 
 export const Eldoria: Game<GameState> = {
   name: 'fantasy-board-game',
@@ -63,4 +66,6 @@ export const Eldoria: Game<GameState> = {
     [ACTION_PHASE]: actionPhase,
     [TURN_END_PHASE]: turnEndPhase,
   },
+
+  ai: { enumerate: bot.enumerate },
 };
