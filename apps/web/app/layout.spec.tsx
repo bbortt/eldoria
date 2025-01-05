@@ -6,18 +6,14 @@ jest.mock('next/font/local', () => () => ({
   variable: 'mocked-font-variable',
 }));
 
-jest.mock('@/layout/router-transition', () => {
-  return {
-    __esModule: true,
-    default: ({ children }: { children: React.ReactNode }) => <div data-testid="router-transition">{children}</div>,
-  };
-});
+jest.mock('@/layout/router-transition', () => ({
+  __esModule: true,
+  default: ({ children }: { children: React.ReactNode }) => <div data-testid="router-transition">{children}</div>,
+}));
 
-jest.mock('./providers', () => {
-  return {
-    Providers: ({ children }: { children: React.ReactNode }) => <div data-testid="providers">{children}</div>,
-  };
-});
+jest.mock('./providers', () => ({
+  Providers: ({ children }: { children: React.ReactNode }) => <div data-testid="providers">{children}</div>,
+}));
 
 describe('Root Layout', () => {
   it('renders correctly', () => {

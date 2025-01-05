@@ -1,7 +1,13 @@
 import { INVALID_MOVE } from 'boardgame.io/core';
 
 import { GameState } from '../game-state';
+import { logAction } from '../log';
 import rollDice from './roll-dice';
+
+jest.mock('../log', () => ({
+  getPlayerString: jest.fn(),
+  logAction: jest.fn(),
+}));
 
 describe('rollDice', () => {
   const mockEndTurn = jest.fn();
@@ -32,6 +38,8 @@ describe('rollDice', () => {
     expect(result).toEqual(INVALID_MOVE);
     expect(mockD20).not.toHaveBeenCalled();
     expect(mockEndTurn).not.toHaveBeenCalled();
+
+    expect(logAction).not.toHaveBeenCalled();
   });
 
   it('should set dice roll for player 0', () => {
@@ -49,6 +57,7 @@ describe('rollDice', () => {
     expect(G.startingPlayer).toBeUndefined();
     expect(mockD20).toHaveBeenCalledTimes(1);
     expect(mockEndTurn).toHaveBeenCalledTimes(1);
+    expect(logAction).toHaveBeenCalledTimes(1);
   });
 
   it('should set dice roll for player 1', () => {
@@ -66,6 +75,7 @@ describe('rollDice', () => {
     expect(G.startingPlayer).toBeUndefined();
     expect(mockD20).toHaveBeenCalledTimes(1);
     expect(mockEndTurn).toHaveBeenCalledTimes(1);
+    expect(logAction).toHaveBeenCalledTimes(1);
   });
 
   it('should determine winner when player 0 rolls higher', () => {
@@ -82,6 +92,7 @@ describe('rollDice', () => {
     expect(G.diceRoll['1']).toEqual(3);
     expect(G.startingPlayer).toEqual('0');
     expect(mockEndTurn).toHaveBeenCalledTimes(1);
+    expect(logAction).toHaveBeenCalledTimes(2);
   });
 
   it('should determine winner when player 1 rolls higher', () => {
@@ -98,6 +109,7 @@ describe('rollDice', () => {
     expect(G.diceRoll['1']).toEqual(5);
     expect(G.startingPlayer).toEqual('1');
     expect(mockEndTurn).toHaveBeenCalledTimes(1);
+    expect(logAction).toHaveBeenCalledTimes(2);
   });
 
   it('should reset dice on tie', () => {
@@ -113,5 +125,6 @@ describe('rollDice', () => {
     expect(G.diceRoll).toEqual({ '0': 0, '1': 0 });
     expect(G.startingPlayer).toBeUndefined();
     expect(mockEndTurn).toHaveBeenCalledTimes(1);
+    expect(logAction).toHaveBeenCalledTimes(2);
   });
 });
