@@ -19,7 +19,7 @@
     "tailwindcss": "3.4.17"
   },
   "devDependencies": {
-    "@nextui-org/react": "2.6.10",
+    "@nextui-org/react": "2.6.11",
     "@repo/eslint-config": "workspace:*",
     "@repo/tailwind-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
