@@ -7,6 +7,7 @@ import { DefaultButton, DefaultButtonProps } from './default-button';
 
 jest.mock('@nextui-org/react', () => ({
   Button: ({ children, color, ...props }: DefaultButtonProps) => (
+    // @ts-expect-error TS2322: Type
     <button data-testid="mock-button" data-color={color} {...props}>
       {children}
     </button>
