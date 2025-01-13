@@ -2,7 +2,7 @@ import { Character, MAX_GROUP_SIZE, newCharacter, Race, Specialization } from '@
 import { ButtonGroup, Checkbox } from '@repo/ui';
 import { DefaultButton } from '@repo/ui/components';
 import { motion } from '@repo/ui/lib';
-import { Trash2 } from 'lucide-react';
+import { Trash2Icon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
@@ -104,7 +104,7 @@ export const GameConfigurationForm: React.FC = () => {
               onPress={() => removeAlly(i)}
               data-testid="button-remove-character"
             >
-              <Trash2 className="text-primary text-small" />
+              <Trash2Icon className="text-primary text-small" />
             </DefaultButton>
           </motion.div>
         ))}
