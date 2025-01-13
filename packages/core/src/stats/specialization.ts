@@ -1,4 +1,14 @@
-import { Crosshair, Heart, LucideProps, ShieldHalf, ShieldPlus, Skull, Stars, Swords, WandSparkles } from 'lucide-react';
+import {
+  CrosshairIcon,
+  HeartIcon,
+  LucideProps,
+  ShieldHalfIcon,
+  ShieldPlusIcon,
+  SkullIcon,
+  StarsIcon,
+  SwordsIcon,
+  WandSparklesIcon,
+} from 'lucide-react';
 
 export class Specialization {
   private constructor(
@@ -14,15 +24,15 @@ export class Specialization {
     public charismaMod: number,
   ) {}
 
-  static GUARDIAN = new Specialization('Guardian', ShieldHalf, 50, 3, 2, 0, 3, -1, 1, 0);
-  static CHAMPION = new Specialization('Champion', Swords, 30, 1, 3, 1, 1, 0, 0, 0);
-  static ROGUE = new Specialization('Rogue', Skull, 10, 1, 1, 4, 0, 1, 1, 0);
-  static SHARPSHOOTER = new Specialization('Sharpshooter', Crosshair, 20, 0, 1, 3, 0, 1, 2, 0);
-  static ARCANIST = new Specialization('Arcanist', WandSparkles, 0, 0, -1, 1, 0, 4, 2, 1);
-  static NECROMANCER = new Specialization('Necromancer', Skull, 10, 0, 0, 1, 1, 3, 0, 2);
-  static PALADIN = new Specialization('Paladin', ShieldPlus, 40, 2, 2, 0, 2, 0, 2, 1);
-  static LUMINARY = new Specialization('Luminary', Heart, 20, 0, 0, 0, 1, 1, 4, 1);
-  static MYSTIC_HERALD = new Specialization('Mystic Herald', Stars, 10, 0, 0, 1, 1, 2, 2, 2);
+  static GUARDIAN = new Specialization('Guardian', ShieldHalfIcon, 50, 3, 2, 0, 3, -1, 1, 0);
+  static CHAMPION = new Specialization('Champion', SwordsIcon, 30, 1, 3, 1, 1, 0, 0, 0);
+  static ROGUE = new Specialization('Rogue', SkullIcon, 10, 1, 1, 4, 0, 1, 1, 0);
+  static SHARPSHOOTER = new Specialization('Sharpshooter', CrosshairIcon, 20, 0, 1, 3, 0, 1, 2, 0);
+  static ARCANIST = new Specialization('Arcanist', WandSparklesIcon, 0, 0, -1, 1, 0, 4, 2, 1);
+  static NECROMANCER = new Specialization('Necromancer', SkullIcon, 10, 0, 0, 1, 1, 3, 0, 2);
+  static PALADIN = new Specialization('Paladin', ShieldPlusIcon, 40, 2, 2, 0, 2, 0, 2, 1);
+  static LUMINARY = new Specialization('Luminary', HeartIcon, 20, 0, 0, 0, 1, 1, 4, 1);
+  static MYSTIC_HERALD = new Specialization('Mystic Herald', StarsIcon, 10, 0, 0, 1, 1, 2, 2, 2);
 
   static ALL_SPECIALIZATIONS = [
     this.GUARDIAN,

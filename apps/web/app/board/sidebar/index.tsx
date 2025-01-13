@@ -1,6 +1,6 @@
 import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@nextui-org/react';
 import { Character, Race } from '@repo/core';
-import { Heart, Shield } from 'lucide-react';
+import { HeartIcon } from 'lucide-react';
 
 import { getRaceColors } from '@/game/styling/get-race-colors';
 
@@ -40,13 +40,13 @@ export const Sidebar: React.FC<SidebarProps> = ({ chatMessages, selectedCharacte
 
                 <div className={styles.characterMainStatsContainer}>
                   <div className={styles.characterMainStats}>
-                    <Heart className={`${styles.characterMainStatsIcon} text-danger`} />
+                    <HeartIcon className={`${styles.characterMainStatsIcon} text-danger`} />
                     <span>
                       {selectedCharacter.currentHP}/{selectedCharacter.maxHP}
                     </span>
                   </div>
                   <div className={styles.characterMainStats}>
-                    <Shield className={styles.characterMainStatsIcon} />
+                    <HeartIcon className={styles.characterMainStatsIcon} />
                     <span>Defense: {selectedCharacter.ac}</span>
                   </div>
                 </div>

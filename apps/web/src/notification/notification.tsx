@@ -1,6 +1,6 @@
 'use client';
 
-import { X } from 'lucide-react';
+import { XIcon } from 'lucide-react';
 
 import { removeNotification } from '@/notification/notifications';
 
@@ -21,7 +21,7 @@ export const Notification: React.FC<NotificationProps> = ({ children, index, tit
           <div className={styles.message}>{children}</div>
         </div>
         <button onClick={() => removeNotification(index)} className={styles.closeButton}>
-          <X size={16} />
+          <XIcon size={16} />
         </button>
       </div>
     </div>

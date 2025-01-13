@@ -1,5 +1,5 @@
 import { useDroppable } from '@dnd-kit/core';
-import { Mountain } from 'lucide-react';
+import { MountainIcon } from 'lucide-react';
 
 import { calculateBgColor } from '@/game/board/calculate-bg-color';
 
@@ -25,7 +25,7 @@ export const CoreCell: React.FC<CoreCellProps> = ({ cell, unselectCharacter }) =
 
   return (
     <div ref={setNodeRef} className={`${styles.gridCell} ${bgColor}`} onClick={unselectCharacter} data-testid={`cell-${x}-${y}`}>
-      <Mountain />
+      <MountainIcon />
     </div>
   );
 };
