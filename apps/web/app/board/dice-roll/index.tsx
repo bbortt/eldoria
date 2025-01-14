@@ -1,7 +1,6 @@
 import { DiceRoll as DiceRollType, getPlayerString } from '@repo/core';
 import { Modal, ModalBody, ModalContent, ModalFooter } from '@repo/ui';
 import { DefaultButton } from '@repo/ui/components';
-import { AnimatePresence } from '@repo/ui/lib';
 import React, { useEffect, useState } from 'react';
 
 import styles from './index.module.css';
@@ -36,19 +35,17 @@ export const DiceRoll: React.FC<DiceRollProps> = ({ diceRoll, rollDice, starting
         <ModalBody>
           <h2 className={styles.title}>Dice Roll</h2>
           <p>Let the dices decide who begins.. it's either you or the enemy!</p>
-          <AnimatePresence>
-            <div className={styles.scoreGrid}>
-              <div className="font-bold">Your score:</div>
-              <div>{score}</div>
-            </div>
-            {startingPlayer ? (
-              <p className="font-bold" key="you-scored-higher">
-                {getPlayerString(startingPlayer)} scored higher and is the first to move!
-              </p>
-            ) : (
-              <React.Fragment key="placeholder-you-scored-higher"></React.Fragment>
-            )}
-          </AnimatePresence>
+          <div className={styles.scoreGrid}>
+            <div className="font-bold">Your score:</div>
+            <div>{score}</div>
+          </div>
+          {startingPlayer ? (
+            <p className="font-bold" key="you-scored-higher">
+              {getPlayerString(startingPlayer)} scored higher and is the first to move!
+            </p>
+          ) : (
+            <React.Fragment key="placeholder-you-scored-higher"></React.Fragment>
+          )}
         </ModalBody>
         <ModalFooter>
           <DefaultButton color="secondary" onPress={rollDice} isDisabled={score !== 0} data-testid="button-roll-dice">

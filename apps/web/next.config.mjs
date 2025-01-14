@@ -4,7 +4,7 @@ const nextConfig = {
   basePath: process.env.NEXT_PUBLIC_ELDORIA_BASE_PATH ?? '',
   output: 'export',
   reactStrictMode: true,
-  transpilePackages: ['ui', 'tailwind-config'],
+  transpilePackages: ['tailwind-config', 'ui'],
 };
 
 export default nextConfig;
