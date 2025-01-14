@@ -10,6 +10,7 @@ const config: Config = {
   coverageReporters: ['lcov', 'text'],
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
+    'lucide-react': require.resolve('lucide-react'),
   },
   setupFilesAfterEnv: ['<rootDir>/.jest.setup.ts'],
   testEnvironment: 'jsdom',

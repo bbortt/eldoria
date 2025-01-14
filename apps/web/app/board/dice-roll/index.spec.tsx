@@ -6,11 +6,18 @@ import { DiceRoll } from './index';
 jest.mock('@repo/ui/components', () => ({
   DefaultButton: props => {
     return (
-      <button onClick={() => props.onPress()} disabled={props.isDisabled} data-testid={props['data-testid']}>
+      <button onClick={props.onPress} disabled={props.isDisabled} data-testid={props['data-testid']}>
         {props.children}
       </button>
     );
   },
+}));
+
+jest.mock('@repo/ui', () => ({
+  Modal: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
+  ModalBody: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
+  ModalContent: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
+  ModalFooter: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
 }));
 
 describe('DiceRoll Component', () => {

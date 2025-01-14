@@ -1,6 +1,7 @@
 {
   "name": "@repo/core",
   "private": true,
+  "type": "module",
   "main": "./index.tsx",
   "types": "./index.tsx",
   "scripts": {
@@ -10,7 +11,7 @@
   },
   "dependencies": {
     "boardgame.io": "0.50.2",
-    "lucide-react": "0.470.0"
+    "lucide-react": "0.471.1"
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
