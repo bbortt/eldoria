@@ -1,7 +1,6 @@
 import { PhaseConfig } from 'boardgame.io';
 
-import type { GameState } from '@/game';
-
+import type { GameState } from '../';
 import highlightCharacter from '../moves/highlight-character';
 import { ACTION_PHASE } from './index';
 

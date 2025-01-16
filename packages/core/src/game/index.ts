@@ -27,8 +27,8 @@ export * from './game-state';
 export * from './log';
 export * from './utils';
 
-import EldoriaBot from '@/game/bot';
-import type { Character } from '@/stats';
+import type { Character } from '../stats';
+import EldoriaBot from './bot';
 
 const bot = new EldoriaBot();
 
