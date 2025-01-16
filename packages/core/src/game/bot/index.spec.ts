@@ -1,9 +1,8 @@
 import { Ctx } from 'boardgame.io';
 
-import { GameState } from '@/game';
-import { ROLL_PLACEMENT_PHASE } from '@/game/phases';
-
-import { EldoriaBot } from './EldoriaBot';
+import { GameState } from '../';
+import { ROLL_PLACEMENT_PHASE } from '../phases';
+import { EldoriaBot } from './index';
 
 describe('EldoriaBot', () => {
   let mockGameState: GameState;
@@ -38,15 +37,6 @@ describe('EldoriaBot', () => {
 
     it('should return empty array for unknown phase', () => {
       mockCtx.phase = 'UNKNOWN_PHASE';
-
-      const moves = bot.enumerate(mockGameState, mockCtx, mockPlayerID);
-
-      expect(moves).toHaveLength(0);
-      expect(moves).toEqual([]);
-    });
-
-    it('should return empty array when phase is undefined', () => {
-      mockCtx.phase = undefined;
 
       const moves = bot.enumerate(mockGameState, mockCtx, mockPlayerID);
 

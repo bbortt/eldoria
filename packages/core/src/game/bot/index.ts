@@ -1,10 +1,11 @@
-import { AiEnumerate, Ctx } from 'boardgame.io';
+import { AiEnumerate, Ctx, PlayerID } from 'boardgame.io';
 
-import { GameState } from '@/game';
-import { ROLL_PLACEMENT_PHASE } from '@/game/phases';
+import { GameState } from '..';
+import { ROLL_PLACEMENT_PHASE } from '../phases';
 
 export class EldoriaBot {
-  public enumerate = (G: GameState, ctx: Ctx): AiEnumerate => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  public enumerate = (G: GameState, ctx: Ctx, playerID: PlayerID): AiEnumerate => {
     const { phase } = ctx;
 
     switch (phase) {
