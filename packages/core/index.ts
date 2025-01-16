@@ -1,3 +1,4 @@
+// eslint-disable-next-line simple-import-sort/exports
 export * from 'boardgame.io';
 export type { Move } from 'boardgame.io';
 export { MCTSBot } from 'boardgame.io/ai';
