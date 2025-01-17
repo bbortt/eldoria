@@ -1,20 +1,48 @@
 'use client';
 
-import { Client, Eldoria, Local, MCTSBot } from '@repo/core';
+import { BotClient, Client, Eldoria, initBot, Local, PlainJSClient } from '@repo/core';
+import { useEffect, useMemo, useState } from 'react';
 
 import Board from './board';
 
 export default () => {
-  const Game: ReturnType<typeof Client> = Client({
-    game: Eldoria,
-    board: Board,
-    numPlayers: 2,
-    multiplayer: Local({
-      bots: {
-        1: MCTSBot,
-      },
-    }),
-  });
+  const [client, setClient] = useState<BotClient>();
+
+  const matchID = 'eldoria';
+
+  const Game: ReturnType<typeof Client> = useMemo(
+    () =>
+      Client({
+        game: Eldoria,
+        board: Board,
+        multiplayer: Local(),
+      }),
+    [],
+  );
+
+  useEffect(() => {
+    const botClient = PlainJSClient({
+      game: Eldoria,
+      debug: false,
+      multiplayer: Local(),
+      matchID,
+      playerID: '1',
+    });
+
+    botClient.start();
+    setClient(botClient);
+
+    return () => botClient.stop();
+  }, []);
+
+  useEffect(() => {
+    if (!client) {
+      return;
+    }
+
+    return initBot(client);
+  }, [client]);
+
   // @ts-expect-error TS2786: Game cannot be used as a JSX component.
-  return <Game playerID="0" matchID="vs-game" />;
+  return <Game playerID="0" matchID={matchID} />;
 };

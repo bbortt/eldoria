@@ -10,7 +10,7 @@ const rollDice: Move<GameState> = ({ G, ctx, events, random }): typeof INVALID_M
   }
 
   const diceRoll = random.D20();
-  // @ts-expect-error we've checked this with the condition above
+  // @ts-expect-error - we've checked this with the condition above
   G.diceRoll[ctx.currentPlayer] = diceRoll;
   logAction(`${getPlayerString(ctx.currentPlayer)} rolled ${diceRoll}.`);
 

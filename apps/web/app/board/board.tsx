@@ -24,7 +24,7 @@ import Sidebar from './sidebar';
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface BoardGameProps extends BoardProps<GameState> {}
 
-export const Board: React.FC<BoardGameProps> = ({ G, ctx, moves }) => {
+export const Board: React.FC<BoardGameProps> = ({ G, ctx, moves, playerID }) => {
   const [gameConfiguration, setGameConfiguration] = useState(null as InitGameState | null);
   const [explainGoals, setExplainGoals] = useState(true);
 

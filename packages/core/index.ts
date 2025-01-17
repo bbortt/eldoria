@@ -1,7 +1,7 @@
 // eslint-disable-next-line simple-import-sort/exports
 export * from 'boardgame.io';
-export type { Move } from 'boardgame.io';
-export { MCTSBot } from 'boardgame.io/ai';
+export type { Game, Move } from 'boardgame.io';
+export { Client as PlainJSClient } from 'boardgame.io/client';
 export { Local } from 'boardgame.io/multiplayer';
 export { Client } from 'boardgame.io/react';
 export type { BoardProps } from 'boardgame.io/react';
