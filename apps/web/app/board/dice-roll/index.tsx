@@ -1,3 +1,4 @@
+import type { PlayerID } from '@repo/core';
 import { DiceRoll as DiceRollType, getPlayerString } from '@repo/core';
 import { Modal, ModalBody, ModalContent, ModalFooter } from '@repo/ui';
 import { DefaultButton } from '@repo/ui/components';
@@ -7,17 +8,21 @@ import styles from './index.module.css';
 
 export interface DiceRollProps {
   diceRoll: DiceRollType;
+  playerId: PlayerID;
   rollDice: () => void;
   startingPlayer: string | undefined;
 }
 
-export const DiceRoll: React.FC<DiceRollProps> = ({ diceRoll, rollDice, startingPlayer }) => {
+export const DiceRoll: React.FC<DiceRollProps> = ({ diceRoll, playerId, rollDice, startingPlayer }) => {
   const [isOpen, setIsOpen] = useState(true);
   const [score, setScore] = useState(0);
 
   useEffect(() => {
-    setScore(diceRoll['0'] === 0 ? score : diceRoll['0']);
-  }, [diceRoll, score]);
+    if (playerId) {
+      // @ts-expect-error TS7053: Element implicitly has an any type because expression of type string can't be used to index type DiceRoll
+      setScore(diceRoll[playerId] === 0 ? score : diceRoll[playerId]);
+    }
+  }, [diceRoll, playerId, score]);
 
   return (
     <Modal
@@ -41,7 +46,7 @@ export const DiceRoll: React.FC<DiceRollProps> = ({ diceRoll, rollDice, starting
           </div>
           {startingPlayer ? (
             <p className="font-bold" key="you-scored-higher">
-              {getPlayerString(startingPlayer)} scored higher and is the first to move!
+              {getPlayerString(startingPlayer, playerId)} scored higher and is the first to move!
             </p>
           ) : (
             <React.Fragment key="placeholder-you-scored-higher"></React.Fragment>

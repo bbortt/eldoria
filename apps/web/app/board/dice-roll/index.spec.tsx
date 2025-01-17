@@ -23,6 +23,7 @@ jest.mock('@repo/ui', () => ({
 describe('DiceRoll Component', () => {
   const defaultProps = {
     diceRoll: { '0': 0, '1': 0 },
+    playerId: '0',
     rollDice: jest.fn(),
     startingPlayer: undefined,
   };

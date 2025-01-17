@@ -1,13 +1,18 @@
+import { PlayerID } from 'boardgame.io';
+
 import { getPlayerString } from './get-player-string';
 
 describe('getPlayerString', () => {
-  it('returns "Player" when activePlayer is "0"', () => {
-    expect(getPlayerString('0')).toBe('Player');
+  it('returns "Player" when activePlayer is equal to playerId', () => {
+    expect(getPlayerString('0', '0')).toBe('Player');
   });
 
-  it('returns "Enemy" when activePlayer is not "0"', () => {
-    expect(getPlayerString('1')).toBe('Enemy');
-    expect(getPlayerString('2')).toBe('Enemy');
-    expect(getPlayerString('')).toBe('Enemy');
+  it.each([
+    ['1', '2'],
+    ['1', ''],
+    ['', '2'],
+    ['', ''],
+  ])('returns "Enemy" when activePlayer is not equal to playerId: %s', (activePlayer: PlayerID, playerId: PlayerID) => {
+    expect(getPlayerString(activePlayer, playerId)).toBe('Enemy');
   });
 });

@@ -19,6 +19,9 @@ import rollPhase from './phases/roll';
 import rollTurnOrderPhase from './phases/roll-turn-order';
 import turnEndPhase from './phases/turn-end';
 
+// eslint-disable-next-line simple-import-sort/exports
+export { initBot } from './bot';
+export type { BotClient } from './bot';
 export * from './cell';
 export * from './constants';
 export * from './dice-roll';
@@ -28,9 +31,6 @@ export * from './log';
 export * from './utils';
 
 import type { Character } from '../stats';
-import EldoriaBot from './bot';
-
-const bot = new EldoriaBot();
 
 export const Eldoria: Game<GameState> = {
   name: 'fantasy-board-game',
@@ -66,6 +66,4 @@ export const Eldoria: Game<GameState> = {
     [ACTION_PHASE]: actionPhase,
     [TURN_END_PHASE]: turnEndPhase,
   },
-
-  ai: { enumerate: bot.enumerate },
 };
