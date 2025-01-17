@@ -1,5 +1,5 @@
 import { PlayerID } from 'boardgame.io';
 
-export const getPlayerString = (activePlayer: PlayerID): string => {
-  return activePlayer === '0' ? 'Player' : 'Enemy';
+export const getPlayerString = (activePlayer: PlayerID, playerId: PlayerID): string => {
+  return activePlayer && playerId && activePlayer === playerId ? 'Player' : 'Enemy';
 };

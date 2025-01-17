@@ -24,7 +24,7 @@ import Sidebar from './sidebar';
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface BoardGameProps extends BoardProps<GameState> {}
 
-export const Board: React.FC<BoardGameProps> = ({ G, ctx, moves }) => {
+export const Board: React.FC<BoardGameProps> = ({ G, ctx, moves, playerID }) => {
   const [gameConfiguration, setGameConfiguration] = useState(null as InitGameState | null);
   const [explainGoals, setExplainGoals] = useState(true);
 
@@ -115,7 +115,9 @@ export const Board: React.FC<BoardGameProps> = ({ G, ctx, moves }) => {
       <NotificationsContainer />
 
       <DndContext onDragEnd={handleDragEnd}>
-        {moves.rollDice && <DiceRoll diceRoll={G.diceRoll} rollDice={moves.rollDice} startingPlayer={G.startingPlayer} />}
+        {moves.rollDice && playerID && (
+          <DiceRoll diceRoll={G.diceRoll} playerId={playerID} rollDice={moves.rollDice} startingPlayer={G.startingPlayer} />
+        )}
         {moves.highlightCharacter && (
           <InfiniteGameGrid grid={G.grid} gameViewModelMapper={new GameViewModelMapper(G.grid, G.team, moves.highlightCharacter)} />
         )}
@@ -135,7 +137,7 @@ export const Board: React.FC<BoardGameProps> = ({ G, ctx, moves }) => {
               <CharacterBar
                 characters={G.team}
                 grid={G.grid}
-                isPlayerTurn={ctx.currentPlayer === '0'}
+                isPlayerTurn={ctx.currentPlayer === playerID}
                 highlightCharacter={moves.highlightCharacter}
               />
             </motion.div>

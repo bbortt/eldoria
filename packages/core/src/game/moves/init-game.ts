@@ -10,7 +10,7 @@ const initGame: Move<GameState> = ({ G, ctx }, gameConfiguration: InitGameState)
   G.showHints = showHints;
 
   for (let i = 0; i < ctx.numPlayers; i++) {
-    // @ts-expect-error this will match ['0', '1'] in a 2 player game
+    // @ts-expect-error - this will match ['0', '1'] in a 2 player game
     G.diceRoll[`${i}`] = 0;
   }
 };
