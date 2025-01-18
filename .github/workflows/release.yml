@@ -30,7 +30,7 @@ jobs:
           node-version: 23
           cache: 'pnpm'
       - name: Install Dependencies
-        run: pnpm install
+        run: pnpm install --frozen-lockfile
       - name: Prepare Build
         run: |
           echo 'NEXT_PUBLIC_ELDORIA_BASE_PATH="/eldoria"' > apps/web/.env
