@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.10.0](https://github.com/bbortt/eldoria/compare/v1.9.0...v1.10.0) (2025-01-20)
+
+
+### Features
+
+* bot can roll the dices ([7cba1b7](https://github.com/bbortt/eldoria/commit/7cba1b7d3150ae127863bc085abf5b51097c8398))
+
+
+### Bug Fixes
+
+* **deps:** downgrade lucide-react to 0.470.0 ([335cc29](https://github.com/bbortt/eldoria/commit/335cc29785e68ced17c71b44c68bded39d7c80de))
+* **lucide-react:** react 19 incompatibility ([fa08e61](https://github.com/bbortt/eldoria/commit/fa08e61040d94151910d5aeaa95d60d247c0845b))
+
 ## [1.9.0](https://github.com/bbortt/eldoria/compare/v1.8.1...v1.9.0) (2025-01-02)
 
 
