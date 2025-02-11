@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "boardgame.io": "0.50.2",
-    "lucide-react": "0.473.0"
+    "lucide-react": "0.475.0"
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
