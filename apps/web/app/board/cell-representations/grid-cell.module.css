@@ -1,3 +1,5 @@
+@reference "../../globals.css";
+
 .gridCell {
   @apply flex flex-col items-center justify-center border-1 aspect-square;
 }

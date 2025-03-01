@@ -1,3 +1,5 @@
+@reference '../../globals.css'
+
 .modalBody {
   @apply bg-primary py-4;
 }

@@ -1,3 +1,5 @@
+@reference "../../globals.css";
+
 .characterIconContainer {
   @apply flex-grow flex items-center justify-center;
 }

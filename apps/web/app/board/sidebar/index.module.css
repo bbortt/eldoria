@@ -1,3 +1,5 @@
+@reference '../../globals.css'
+
 .sidebar {
   @apply fixed top-0 right-0 max-w-sm w-full h-full bg-background border-l;
 }

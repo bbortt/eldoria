@@ -1,3 +1,5 @@
+@reference '../../globals.css'
+
 .gameGridContainer {
   @apply flex items-center justify-center h-screen w-screen;
 }

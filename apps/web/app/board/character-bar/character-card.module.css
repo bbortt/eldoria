@@ -1,10 +1,12 @@
+@reference "../../globals.css";
+
 .cardIcon {
   @apply flex flex-col items-center justify-center transition-all rounded-lg border-2  p-2;
   touch-action: none;
 }
 
 .cardIconFocus {
-  @apply hover:border-primary hover:scale-110;
+  @apply git hover:border-primary hover:scale-110;
 }
 
 .cardIconActive {

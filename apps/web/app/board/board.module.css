@@ -1,3 +1,5 @@
+@reference "../globals.css";
+
 .main {
   @apply main-layout;
 }
