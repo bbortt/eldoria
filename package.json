@@ -13,7 +13,7 @@
   },
   "devDependencies": {
     "@commitlint/config-conventional": "19.7.1",
-    "commitlint": "19.7.1",
+    "commitlint": "19.8.0",
     "gh-pages": "6.3.0",
     "husky": "9.1.7",
     "lint-staged": "15.4.3",
