@@ -85,7 +85,7 @@ jobs:
       - name: Build Static Sites
         run: pnpm run build
       - name: Upload Website Artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: website
           path: apps/web/out
