@@ -1,5 +1,21 @@
 # Changelog
 
+## [1.10.0](https://github.com/bbortt/eldoria/compare/v1.9.0...v1.10.0) (2025-10-28)
+
+
+### Features
+
+* bot can roll the dices ([7cba1b7](https://github.com/bbortt/eldoria/commit/7cba1b7d3150ae127863bc085abf5b51097c8398))
+
+
+### Bug Fixes
+
+* **bot:** do not use mcts for simple moves ([f5b97df](https://github.com/bbortt/eldoria/commit/f5b97dfb42d049333b278cdf0e08c818cc8fb0f9))
+* **deps:** downgrade lucide-react to 0.470.0 ([335cc29](https://github.com/bbortt/eldoria/commit/335cc29785e68ced17c71b44c68bded39d7c80de))
+* **lucide-react:** react 19 incompatibility ([fa08e61](https://github.com/bbortt/eldoria/commit/fa08e61040d94151910d5aeaa95d60d247c0845b))
+* router-transition.spec.tsx ([9624427](https://github.com/bbortt/eldoria/commit/96244277278cf2be9087b14c1891db8cd392131d))
+* **talwind:** v4 migration ([51f9885](https://github.com/bbortt/eldoria/commit/51f9885e8135792cdf41c5d8d0394c756beb05fa))
+
 ## [1.9.0](https://github.com/bbortt/eldoria/compare/v1.8.1...v1.9.0) (2025-01-02)
 
 
